@@ -1,0 +1,88 @@
+[15-Apr-2018 23:15:20 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:96
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 96
+[15-Apr-2018 23:15:41 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:96
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 96
+[15-Apr-2018 23:16:17 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:159
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 159
+[15-Apr-2018 23:18:47 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:159
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 159
+[15-Apr-2018 23:18:49 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:159
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 159
+[15-Apr-2018 23:18:51 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:159
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 159
+[15-Apr-2018 23:19:15 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:159
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 159
+[15-Apr-2018 23:19:16 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:159
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 159
+[15-Apr-2018 23:19:17 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:159
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 159
+[15-Apr-2018 23:19:30 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:159
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 159
+[15-Apr-2018 23:22:20 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:106
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 106
+[15-Apr-2018 23:29:49 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:115
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 115
+[15-Apr-2018 23:30:59 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:115
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 115
+[15-Apr-2018 23:32:54 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_fetch_all() in /home/webollo4/public_html/wortlabor/system/data.php:32
+Stack trace:
+#0 /home/webollo4/public_html/wortlabor/system/data.php(157): get_data_result('select * from c...')
+#1 /home/webollo4/public_html/wortlabor/add_cat.php(20): get_categories()
+#2 {main}
+  thrown in /home/webollo4/public_html/wortlabor/system/data.php on line 32
+[15-Apr-2018 23:32:55 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_fetch_all() in /home/webollo4/public_html/wortlabor/system/data.php:32
+Stack trace:
+#0 /home/webollo4/public_html/wortlabor/system/data.php(157): get_data_result('select * from c...')
+#1 /home/webollo4/public_html/wortlabor/add_cat.php(20): get_categories()
+#2 {main}
+  thrown in /home/webollo4/public_html/wortlabor/system/data.php on line 32
+[15-Apr-2018 23:35:37 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 126
+[15-Apr-2018 23:35:39 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 126
+[15-Apr-2018 23:35:49 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 126
+[15-Apr-2018 23:35:58 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:124
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 124
+[15-Apr-2018 23:36:00 CST6CDT] PHP Fatal error:  Uncaught Error: Call to undefined function base_url() in /home/webollo4/public_html/wortlabor/add_cat.php:124
+Stack trace:
+#0 {main}
+  thrown in /home/webollo4/public_html/wortlabor/add_cat.php on line 124
+[16-Apr-2018 00:34:03 CST6CDT] PHP Parse error:  syntax error, unexpected ')' in /home/webollo4/public_html/wortlabor/add_word.php on line 56
+[16-Apr-2018 00:34:10 CST6CDT] PHP Parse error:  syntax error, unexpected ')' in /home/webollo4/public_html/wortlabor/add_word.php on line 56
+[16-Apr-2018 00:34:11 CST6CDT] PHP Parse error:  syntax error, unexpected ')' in /home/webollo4/public_html/wortlabor/add_word.php on line 56
+[16-Apr-2018 00:34:13 CST6CDT] PHP Parse error:  syntax error, unexpected ')' in /home/webollo4/public_html/wortlabor/add_word.php on line 56
