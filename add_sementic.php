@@ -127,13 +127,14 @@ $sementic = get_records('sementic');
 
         <!-- jQuery -->
         <script>
-
-            $(document).ready(function ()
-            {
-                $('#data-table1').DataTable();
+            $(document).ready(function () {
+                $('#data-table1').DataTable( {
+					"oLanguage": {
+						"sSearch": "Suche:",
+						"sNext": "Nächste Seite",
+					}
+				});
             });
-
-
         </script>
     </body>
 </html>

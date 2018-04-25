@@ -127,13 +127,13 @@ $categories = get_records('category');
 
         <!-- jQuery -->
         <script>
-
-            $(document).ready(function ()
-            {
-                $('#data-table1').DataTable();
+            $(document).ready(function () {
+                $('#data-table1').DataTable( {
+					"oLanguage": {
+						"sSearch": "Suche:"
+					}
+				});
             });
-
-
         </script>
     </body>
 </html>

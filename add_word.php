@@ -228,7 +228,11 @@ $words = get_words();
 
             $(document).ready(function ()
             {
-                $('#data-table1').DataTable();
+                $('#data-table1').DataTable( {
+					"oLanguage": {
+						"sSearch": "Suche:"
+					}
+				});
                 $('.select2').select2();
             });
 
