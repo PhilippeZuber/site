@@ -52,7 +52,7 @@ $categories = get_records('category');
                                 <div class="panel-heading">
                                     <div class="panel-heading-btn">
                                     </div>
-                                    <h4 class="panel-title">Category</h4>
+                                    <h4 class="panel-title">Wortarten</h4>
                                 </div>
                                 <div class="panel-body col-md-12">
 
@@ -62,7 +62,7 @@ $categories = get_records('category');
 
                                                 <tbody>
                                                     <tr>
-                                                        <td>Category Name</td>
+                                                        <td>Wortart</td>
                                                         <td>
                                                             <input type="text" name="data[name]" class="form-control" value="<?php echo @$cat['name']; ?>">
                                                             <input type="hidden" name="data[id]" class="form-control" value="<?php echo @$cat['id']; ?>">
@@ -87,12 +87,12 @@ $categories = get_records('category');
                                             <table id="data-table1" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th colspan="2">Category</th>
+                                                        <th colspan="2">Wortart</th>
                                                     </tr>
                                                     <tr>
 
                                                         <th>Name</th>
-                                                        <th>Edit / DELETE</th>
+                                                        <th>Löschen / Bearbeiten</th>
 
                                                     </tr>
                                                 </thead>
@@ -103,8 +103,8 @@ $categories = get_records('category');
                                                         <tr>
                                                             <td><?php echo $value['name']; ?></td>
                                                             <td>
-                                                                <a class="btn btn-warning" href="add_cat.php?action=edit&id=<?php echo $value['id']; ?>">Edit</a>
-                                                                <a class="btn btn-danger" onclick="return confirm('Are you sure ?');" href="add_cat.php?action=delete&id=<?php echo $value['id']; ?>">Delete</a>
+                                                                <a class="btn btn-warning" href="add_cat.php?action=edit&id=<?php echo $value['id']; ?>">Bearbeiten</a>
+                                                                <a class="btn btn-danger" onclick="return confirm('Sind Sie sicher?');" href="add_cat.php?action=delete&id=<?php echo $value['id']; ?>">Löschen</a>
                                                             </td>
                                                         </tr>
                                                         <?php

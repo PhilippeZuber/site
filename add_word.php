@@ -76,7 +76,7 @@ $words = get_words();
                                 <div class="panel-heading">
                                     <div class="panel-heading-btn">
                                     </div>
-                                    <h4 class="panel-title">Word</h4>
+                                    <h4 class="panel-title">Wort hinzufügen</h4>
                                 </div>
                                 <div class="panel-body col-md-12">
 
@@ -86,7 +86,7 @@ $words = get_words();
 
                                                 <tbody>
                                                     <tr>
-                                                        <td>Word</td>
+                                                        <td>Wort</td>
                                                         <td>
                                                             <input type="text" name="data[name]" class="form-control" value="<?php echo @$word['name']; ?>">
                                                             <input type="hidden" name="data[id]" class="form-control" value="<?php echo @$word['id']; ?>">
@@ -94,7 +94,7 @@ $words = get_words();
 
                                                     </tr>
                                                     <tr>
-                                                        <td>Category</td>
+                                                        <td>Wortart</td>
                                                         <td>
                                                             <select class="form-control select2"  name="data[category][]"  >
                                                                 <?php
@@ -110,7 +110,7 @@ $words = get_words();
 
                                                     </tr>
                                                     <tr>
-                                                        <td>Sementic</td>
+                                                        <td>Themengebiet</td>
                                                         <td>
                                                             <select class="form-control select2"  name="data[sementic][]"  multiple="multiple">
                                                                 <?php
@@ -142,7 +142,7 @@ $words = get_words();
 
                                                     </tr>
                                                     <tr>
-                                                        <td>Image</td>
+                                                        <td>Bild</td>
                                                         <td>
                                                             <input type="file" class="form-control" name="image" >
                                                             <?php
@@ -171,16 +171,16 @@ $words = get_words();
                                             <table id="data-table1" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th colspan="6">Words</th>
+                                                        <th colspan="6">Wörter</th>
                                                     </tr>
                                                     <tr>
 
                                                         <th>Name</th>
-                                                        <th>Category</th>
-                                                        <th>Sementic</th>
+                                                        <th>Wortart</th>
+                                                        <th>Themengebiet</th>
                                                         <th>Alter</th>
-                                                        <th>Image</th>
-                                                        <th>Edit / DELETE</th>
+                                                        <th>Bild</th>
+                                                        <th>Bearbeiten / Löschen</th>
 
                                                     </tr>
                                                 </thead>
@@ -201,8 +201,8 @@ $words = get_words();
                                                                 ?> 
                                                             </td>
                                                             <td>
-                                                                <a class="btn btn-warning" href="add_word.php?action=edit&id=<?php echo $value['id']; ?>">Edit</a>
-                                                                <a class="btn btn-danger" onclick="return confirm('Are you sure ?');" href="add_word.php?action=delete&id=<?php echo $value['id']; ?>">Delete</a>
+                                                                <a class="btn btn-warning" href="add_word.php?action=edit&id=<?php echo $value['id']; ?>">Bearbeiten</a>
+                                                                <a class="btn btn-danger" onclick="return confirm('Sind Sie sicher?');" href="add_word.php?action=delete&id=<?php echo $value['id']; ?>">Löschen</a>
                                                             </td>
                                                         </tr>
                                                         <?php

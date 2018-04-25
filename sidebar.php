@@ -9,31 +9,38 @@
         <?php
         if ($_SESSION['role'] == 1) {
             ?>
-            <li class="<?php echo $page=='add_word' ? 'active' : ''; ?>">
-                <a href="add_word.php">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    Add Word
-                </a>
-            </li>
-            <li class="<?php echo $page=='add_cat' ? 'active' : ''; ?>">
-                <a href="add_cat.php">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    Add Word Category
-                </a>
-            </li>
-            <li class="<?php echo $page=='add_sementic' ? 'active' : ''; ?>">
-                <a href="add_sementic.php">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    Add Semantic fields
-                </a>
-            </li>
-            <li class="<?php echo $page=='add_alters' ? 'active' : ''; ?>">
-                <a href="add_alters.php">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    Alter
-                </a>
-            </li>
-
+			<li>
+				<a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false">
+					<i class="glyphicon glyphicon-wrench"></i>
+					Wörter verwalten
+				</a>
+				<ul class="collapse list-unstyled" id="pageSubmenu1">
+					<li class="<?php echo $page=='add_word' ? 'active' : ''; ?>">
+						<a href="add_word.php">
+							<i class="glyphicon glyphicon-plus"></i>
+							Wörter
+						</a>
+   			        </li>
+					<li class="<?php echo $page=='add_cat' ? 'active' : ''; ?>">
+						<a href="add_cat.php">
+							<i class="glyphicon glyphicon-plus"></i>
+							Wortarten
+						</a>
+					</li>
+					<li class="<?php echo $page=='add_sementic' ? 'active' : ''; ?>">
+						<a href="add_sementic.php">
+							<i class="glyphicon glyphicon-plus"></i>
+							Themengebiete
+						</a>
+					</li>
+					<li class="<?php echo $page=='add_alters' ? 'active' : ''; ?>">
+						<a href="add_alters.php">
+							<i class="glyphicon glyphicon-plus"></i>
+							Alterskategorien
+						</a>
+					</li>
+				</ul>
+			</li>
             <?php
         }
         ?>
@@ -50,11 +57,11 @@
             </a>
         </li>
         <li>
-            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
+            <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false">
                 <i class="glyphicon glyphicon-info-sign"></i>
                 Über Wortlabor
             </a>
-            <ul class="collapse list-unstyled" id="pageSubmenu">
+            <ul class="collapse list-unstyled" id="pageSubmenu2">
                 <li><a href="#">Seite 1</a></li>
                 <li><a href="#">Seite 2</a></li>
             </ul>

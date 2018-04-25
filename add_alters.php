@@ -52,7 +52,7 @@ $alters = get_records('alters');
                                 <div class="panel-heading">
                                     <div class="panel-heading-btn">
                                     </div>
-                                    <h4 class="panel-title">Alter</h4>
+                                    <h4 class="panel-title">Alterskategorie</h4>
                                 </div>
                                 <div class="panel-body col-md-12">
 
@@ -62,7 +62,7 @@ $alters = get_records('alters');
 
                                                 <tbody>
                                                     <tr>
-                                                        <td>Alter Name</td>
+                                                        <td>Alter eingeben</td>
                                                         <td>
                                                             <input type="text" name="data[name]" class="form-control" value="<?php echo @$alt['name']; ?>">
                                                             <input type="hidden" name="data[id]" class="form-control" value="<?php echo @$alt['id']; ?>">
@@ -87,12 +87,12 @@ $alters = get_records('alters');
                                             <table id="data-table1" class="table table-striped table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th colspan="2">Sementic</th>
+                                                        <th colspan="2">Alterskategorien</th>
                                                     </tr>
                                                     <tr>
 
                                                         <th>Name</th>
-                                                        <th>Edit / DELETE</th>
+                                                        <th>Löschen / Bearbeiten</th>
 
                                                     </tr>
                                                 </thead>
@@ -103,8 +103,8 @@ $alters = get_records('alters');
                                                         <tr>
                                                             <td><?php echo $value['name']; ?></td>
                                                             <td>
-                                                                <a class="btn btn-warning" href="add_alters.php?action=edit&id=<?php echo $value['id']; ?>">Edit</a>
-                                                                <a class="btn btn-danger" onclick="return confirm('Are you sure ?');" href="add_alters.php?action=delete&id=<?php echo $value['id']; ?>">Delete</a>
+                                                                <a class="btn btn-warning" href="add_alters.php?action=edit&id=<?php echo $value['id']; ?>">Bearbeiten</a>
+                                                                <a class="btn btn-danger" onclick="return confirm('Sind Sie sicher?');" href="add_alters.php?action=delete&id=<?php echo $value['id']; ?>">Löschen</a>
                                                             </td>
                                                         </tr>
                                                         <?php
