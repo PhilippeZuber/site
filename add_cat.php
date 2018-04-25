@@ -129,8 +129,8 @@ $categories = get_records('category');
         <script>
             $(document).ready(function () {
                 $('#data-table1').DataTable( {
-					"oLanguage": {
-						"sSearch": "Suche:"
+					"language": {
+						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
 					}
 				});
             });

@@ -129,11 +129,10 @@ $sementic = get_records('sementic');
         <script>
             $(document).ready(function () {
                 $('#data-table1').DataTable( {
-					"oLanguage": {
-						"sSearch": "Suche:",
-						"sNext": "Nächste Seite",
+					"language": {
+						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
 					}
-				});
+				} );
             });
         </script>
     </body>

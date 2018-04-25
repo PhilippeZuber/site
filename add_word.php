@@ -226,16 +226,14 @@ $words = get_words();
         <!-- jQuery -->
         <script>
 
-            $(document).ready(function ()
-            {
+            $(document).ready(function (){
                 $('#data-table1').DataTable( {
-					"oLanguage": {
-						"sSearch": "Suche:"
+					"language": {
+						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
 					}
 				});
                 $('.select2').select2();
             });
-
 
         </script>
     </body>
