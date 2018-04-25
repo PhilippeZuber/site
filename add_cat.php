@@ -72,7 +72,7 @@ $categories = get_records('category');
                                                     <tr>
                                                         <td></td>
                                                         <td>
-                                                            <input type="submit"  class="form-control btn btn-primary" value="Submit">
+                                                            <input type="submit"  class="form-control btn btn-primary" value="Speichern">
                                                         </td>
 
                                                     </tr>
