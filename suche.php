@@ -106,7 +106,7 @@ $page = 'search';
                             <div class="card">
                                 <div class="card-header" id="headingThree">
                                     <h4 data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                                        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> Semantische Felder
+                                        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> Themengebiete
                                     </h4>
                                 </div>
                                 <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
@@ -138,8 +138,8 @@ $page = 'search';
                             <table  class="table table-responsive table-striped" id="data-table1">
                                 <thead>
                                     <tr>
-                                        <th>Word</th>
-                                        <th class="search_image_column">Image</th>
+                                        <th>Wort</th>
+                                        <th class="search_image_column">Bild</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -156,11 +156,11 @@ $page = 'search';
         <script>
             var table;
             $(document).ready(function (){
-				$('#example').dataTable({
-					"oLanguage": {
-				  		"sProcessing": "Einen Moment..."
+				$('#data-table1').DataTable( {
+					"language": {
+						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
 					}
-				});
+				} );
             });
 			
 
@@ -181,6 +181,9 @@ $page = 'search';
                 $('#data-table1').DataTable().clear().destroy();
 
                 table = $('#data-table1').DataTable({
+					"language": {
+						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+					},
                     ajax: {
                         url: 'search_word.php',
                         data: {
