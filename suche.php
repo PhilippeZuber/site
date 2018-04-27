@@ -16,7 +16,7 @@ $alters = get_records('alters');
 $page = 'search';
 ?>
 <html !DOCTYPE>
-    <?php include './header.php'; ?><!--CSS+JS files/modal window/ sideba collapse-->
+    <?php include './header.php'; ?><!--CSS+JS files/modal window/ sidebar collapse-->
     <body>
         <div class="wrapper">
             <?php include 'sidebar.php'; ?>
@@ -69,8 +69,6 @@ $page = 'search';
                                     </div>
                                 </div>
                             </div>
-                            <!--                        </div>
-                                                    <div class="col-md-4">-->
                             <div class="card">
                                 <div class="card-header" id="headingTwo">
                                     <h4 data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -101,8 +99,6 @@ $page = 'search';
                                     </div>
                                 </div>
                             </div>
-                            <!--                        </div>
-                                                    <div class="col-md-4">-->
                             <div class="card">
                                 <div class="card-header" id="headingThree">
                                     <h4 data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
