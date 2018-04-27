@@ -16,7 +16,7 @@ if ($_REQUEST['search_text'] != '') {
 
     if (substr($_REQUEST['search_text'], -1) == '*' && substr($_REQUEST['search_text'], 0, 1) == '*') {
         $wh .= " and (  ";
-        $wh .= "  name like '%" . str_replace('*', '', $_REQUEST['search_text']) . "%' )";
+        $wh .= "  name like '%_" . str_replace('*', '', $_REQUEST['search_text']) . "_%' )";
     } else if (substr($_REQUEST['search_text'], -1) == '*') {
         $wh .= " and (  ";
         $wh .= "  name like '" . str_replace('*', '', $_REQUEST['search_text']) . "%' )";
@@ -26,7 +26,7 @@ if ($_REQUEST['search_text'] != '') {
     }
     else{
         $wh .= " and (  ";
-        $wh .= "  name = '" . str_replace('*', '', $_REQUEST['search_text']) . "' )";
+        $wh .= "  name like '%" . str_replace('*', '', $_REQUEST['search_text']) . "%' )";
     }
 
 //    $wh .= "  name REGEXP  '" . $_REQUEST['search_text'] . "' )";
