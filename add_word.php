@@ -144,7 +144,7 @@ $words = get_words();
                                                     <tr>
                                                         <td>Bild</td>
                                                         <td>
-                                                            <input type="file" class="form-control" name="image" >
+                                                            <input type="file" class="form-control" name="image" style="padding:0px">
                                                             <?php
                                                             if (isset($word['image']) && $word['image'] != '') {
                                                                 echo '<img src="images/' . $word['image'] . '" style="width:200px;">';
