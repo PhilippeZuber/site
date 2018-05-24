@@ -42,7 +42,11 @@ if (isset($_POST['data'])) {
     $_POST['data']['category'] = implode(',', $_POST['data']['category']);
     $_POST['data']['sementic'] = implode(',', $_POST['data']['sementic']);
     $_POST['data']['alters'] = implode(',', $_POST['data']['alters']);
-    if ($_POST['data']['id'] != '') {
+    if ($_POST['data']['id'] != '') { /*when no new image is chosen*/
+		if($image=='')
+        {
+            unset($_POST['data']['image']);
+        }
         update_record('words', $_POST['data']['id'], $_POST['data']);
     } else {
         add_record('words', $_POST['data']);
