@@ -7,7 +7,7 @@
 
     <ul class="list-unstyled components">
         <?php
-        if ($_SESSION['role'] == 1) {
+        if ($_SESSION['role'] == 1) {/*visible for admin only*/
             ?>
 			<li>
 				<a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false">
@@ -79,9 +79,9 @@
             </a>
         </li>
     </ul>
-
+	<!-- Only visible when sidebar not collapsed
     <ul class="list-unstyled CTAs">
         <li><a href="#" class="btn1">Button 1</a></li>
         <li><a href="#" class="btn2">Button 2</a></li>
-    </ul>
+    </ul>-->
 </nav>
