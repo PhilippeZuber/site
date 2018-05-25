@@ -30,13 +30,13 @@
 					<li class="<?php echo $page=='add_sementic' ? 'active' : ''; ?>">
 						<a href="add_sementic.php">
 							<i class="glyphicon glyphicon-plus"></i>
-							Themengebiete
+							Themen
 						</a>
 					</li>
 					<li class="<?php echo $page=='add_alters' ? 'active' : ''; ?>">
 						<a href="add_alters.php">
 							<i class="glyphicon glyphicon-plus"></i>
-							Alterskategorien
+							Alter
 						</a>
 					</li>
 				</ul>
