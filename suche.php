@@ -31,7 +31,7 @@ $page = 'search';
                             <div class="input-group">
                                 <input type="text" id="search_text" class="form-control" placeholder="Suche nach...">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button" onclick="search();">Los!</button>
+                                    <button id="searchbtn" class="btn btn-default" type="button" onclick="search();">Los!</button>
                                 </span>
                             </div>
                             <p>Suche mithilfe von <strong>*</strong> z.B. nach *le</p>
@@ -150,6 +150,15 @@ $page = 'search';
 
         <!-- jQuery -->
         <script>
+			/*Enter key possible for search function trigger onclick*/
+			var input = document.getElementById("search_text");
+				input.addEventListener("keyup", function(event) {
+					event.preventDefault();
+					if (event.keyCode === 13) {
+						document.getElementById("searchbtn").click();
+					}
+				});
+			
             var table;
             $(document).ready(function (){
 				$('#data-table1').DataTable( {
