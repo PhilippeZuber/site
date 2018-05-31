@@ -83,7 +83,7 @@
 			  <div class="panel-heading">
 				<div class="row">
 				  <div class="col-xs-12">
-					<h1 class="text-center">WORTLABOR</h1>
+					<img src="images/wortlabor_logo.svg" alt="Logo Wortlabor"/>
 				  </div>
 				</div>
 				<div class="btn-group btn-group-justified" role="group">

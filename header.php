@@ -81,7 +81,7 @@ if (isset($_POST['update-submit'])) {
 
         if ($upload_ok) {
             $image_name = time() . "_" . $user['user_id'] . "." . $file_extension;
-            move_uploaded_file($_FILES['profil_img']['tmp_name'], $upload_path . $image_name);
+			move_uploaded_file($_FILES['profil_img']['tmp_name'], $upload_path . $image_name);
         } else {
             echo "Leider konnte die Datei nicht hochgeladen werden. ";
         }
@@ -148,8 +148,7 @@ $last_update = $update_time['day'] . "." . $update_time['month'] . "." . $update
                     </div>
 
                     <div class="form-group row">
-                        <!-- http://plugins.krajee.com/file-input -->
-                        <label for="Tel" class="col-sm-2 form-control-label">Profilbild</label>
+                        <label for="img" class="col-sm-2 form-control-label">Profilbild</label>
                         <div class="col-sm-10">
                             <input type="file" name="profil_img">
                         </div>
