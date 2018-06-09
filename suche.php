@@ -34,7 +34,8 @@ $page = 'search';
                                     <button id="searchbtn" class="btn btn-default" type="button" onclick="search();">Los!</button>
                                 </span>
                             </div>
-                            <p>Suche mithilfe von <strong>*</strong> z.B. nach *le</p>
+							<p>Suche mithilfe von <strong>*</strong> z.B. nach *le  um Wörter zu finden die auf le Enden.</p>
+							<p><strong title="* (Der Stern) steht für beliebige Buchstaben und kann so kombiniert werden. Um Wörter zu finden, die beispielsweise pf in der Wortmitte haben, suche nach *pf*.">Weitere Informationen zur Suche &#10068;</strong></p>
                         </div>
                     </div>
                     <div class="row">
