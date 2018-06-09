@@ -34,8 +34,8 @@ if ($_REQUEST['search_text'] != '') {
 if (!empty($_REQUEST['category'])) {
     $wh .= "  and category in ('" . implode("','", $_REQUEST['category']) . "')";
 }
-if (!empty($_REQUEST['sementic'])) {
-    $wh .= "  and sementic in ('" . implode("','", $_REQUEST['sementic']) . "')";
+if (!empty($_REQUEST['semantic'])) {
+    $wh .= "  and semantic in ('" . implode("','", $_REQUEST['semantic']) . "')";
 }
 if (!empty($_REQUEST['alter'])) {
     $wh .= "  and alters in ('" . implode("','", $_REQUEST['alter']) . "')";

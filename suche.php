@@ -11,7 +11,7 @@ require_once('system/security.php');
 
 
 $categories = get_records('category');
-$sementic = get_records('sementic');
+$semantic = get_records('semantic');
 $alters = get_records('alters');
 $page = 'search';
 ?>
@@ -111,12 +111,12 @@ $page = 'search';
                                         <table width="100%" border="0">
                                             <tbody>
                                                 <?php
-                                                foreach ($sementic as $key => $value) {
+                                                foreach ($semantic as $key => $value) {
 //                                                    if ($key % 2 == 0) {
                                                     echo '<tr>';
 //                                                    }
                                                     ?>
-                                                <td><label><input type="checkbox" name="sementic[]"  value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
+                                                <td><label><input type="checkbox" name="semantic[]"  value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
 
                                                 <?php
 //                                                if ($key + 1 % 2 == 0) {
@@ -172,13 +172,13 @@ $page = 'search';
 
             function search() {
                 var category = [];
-                var sementic = [];
+                var semantic = [];
                 var alter = [];
                 $.each($("input[name='category[]']:checked"), function () {
                     category.push($(this).val());
                 });
-                $.each($("input[name='sementic[]']:checked"), function () {
-                    sementic.push($(this).val());
+                $.each($("input[name='semantic[]']:checked"), function () {
+                    semantic.push($(this).val());
                 });
                 $.each($("input[name='alter[]']:checked"), function () {
                     alter.push($(this).val());
@@ -196,7 +196,7 @@ $page = 'search';
                             search_image: $('#search_image').prop('checked'),
                             search_text: $('#search_text').val(),
                             category: category,
-                            sementic: sementic,
+                            semantic: semantic,
                             alter: alter,
 
                         }

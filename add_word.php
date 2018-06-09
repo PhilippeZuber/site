@@ -40,7 +40,7 @@ if (isset($_POST['data'])) {
     }
     $_POST['data']['image'] = $image;
     $_POST['data']['category'] = implode(',', $_POST['data']['category']);
-    $_POST['data']['sementic'] = implode(',', $_POST['data']['sementic']);
+    $_POST['data']['semantic'] = implode(',', $_POST['data']['semantic']);
     $_POST['data']['alters'] = implode(',', $_POST['data']['alters']);
     if ($_POST['data']['id'] != '') { /*when no new image is chosen*/
 		if($image=='')
@@ -56,7 +56,7 @@ if (isset($_POST['data'])) {
 
 
 $categories = get_records('category');
-$sementic = get_records('sementic');
+$semantic = get_records('semantic');
 $alters = get_records('alters');
 $words = get_words();
 ?>
@@ -116,11 +116,11 @@ $words = get_words();
                                                     <tr>
                                                         <td>Themengebiet</td>
                                                         <td>
-                                                            <select class="form-control select2"  name="data[sementic][]"  multiple="multiple">
+                                                            <select class="form-control select2"  name="data[semantic][]"  multiple="multiple">
                                                                 <?php
-                                                                foreach ($sementic as $key => $value) {
+                                                                foreach ($semantic as $key => $value) {
                                                                     ?>
-                                                                    <option <?php echo in_array($value['id'], @explode(',', @$word['sementic'])) ? 'selected' : ''; ?>  value="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></option>
+                                                                    <option <?php echo in_array($value['id'], @explode(',', @$word['semantic'])) ? 'selected' : ''; ?>  value="<?php echo $value['id']; ?>"><?php echo $value['name']; ?></option>
                                                                     <?php
                                                                 }
                                                                 ?>
@@ -195,7 +195,7 @@ $words = get_words();
                                                         <tr>
                                                             <td><?php echo $value['name']; ?></td>
                                                             <td><?php echo implode(',', array_unique(explode(',', $value['category']))); ?></td>
-                                                            <td><?php echo implode(',', array_unique(explode(',', $value['sementic']))); ?></td>
+                                                            <td><?php echo implode(',', array_unique(explode(',', $value['semantic']))); ?></td>
                                                             <td><?php echo implode(',', array_unique(explode(',', $value['alters']))); ?></td>
                                                             <td>
                                                                 <?php

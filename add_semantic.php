@@ -9,28 +9,28 @@ if (!isset($_SESSION['id'])) {
 require_once('system/data.php');
 require_once('system/security.php');
 
-$page = 'add_sementic';
+$page = 'add_semantic';
 
 if (isset($_GET['action'])) {
     if ($_GET['action'] == 'edit') {
-        $sem = get_single_record('sementic', $_GET['id']);
+        $sem = get_single_record('semantic', $_GET['id']);
     }
     if ($_GET['action'] == 'delete') {
-        $sem = delete_record('sementic', $_GET['id']);
-        header("Location:add_sementic.php");
+        $sem = delete_record('semantic', $_GET['id']);
+        header("Location:add_semantic.php");
     }
 }
 if (isset($_POST['data'])) {
     if ($_POST['data']['id'] != '') {
-        update_record('sementic', $_POST['data']['id'], $_POST['data']);
+        update_record('semantic', $_POST['data']['id'], $_POST['data']);
     } else {
-        add_record('sementic', $_POST['data']);
+        add_record('semantic', $_POST['data']);
     }
-    header("Location:add_sementic.php");
+    header("Location:add_semantic.php");
 }
 
 
-$sementic = get_records('sementic');
+$semantic = get_records('semantic');
 ?>
 <!doctype html>
 <html>
@@ -98,13 +98,13 @@ $sementic = get_records('sementic');
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    foreach ($sementic as $key => $value) {
+                                                    foreach ($semantic as $key => $value) {
                                                         ?>
                                                         <tr>
                                                             <td><?php echo $value['name']; ?></td>
                                                             <td>
-                                                                <a class="btn btn-warning" href="add_sementic.php?action=edit&id=<?php echo $value['id']; ?>">Bearbeiten</a>
-                                                                <a class="btn btn-danger" onclick="return confirm('Sind Sie sicher?');" href="add_sementic.php?action=delete&id=<?php echo $value['id']; ?>">Löschen</a>
+                                                                <a class="btn btn-warning" href="add_semantic.php?action=edit&id=<?php echo $value['id']; ?>">Bearbeiten</a>
+                                                                <a class="btn btn-danger" onclick="return confirm('Sind Sie sicher?');" href="add_semantic.php?action=delete&id=<?php echo $value['id']; ?>">Löschen</a>
                                                             </td>
                                                         </tr>
                                                         <?php

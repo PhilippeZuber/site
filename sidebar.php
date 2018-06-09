@@ -27,8 +27,8 @@
 							Wortarten
 						</a>
 					</li>
-					<li class="<?php echo $page=='add_sementic' ? 'active' : ''; ?>">
-						<a href="add_sementic.php">
+					<li class="<?php echo $page=='add_semantic' ? 'active' : ''; ?>">
+						<a href="add_semantic.php">
 							<i class="glyphicon glyphicon-plus"></i>
 							Themen
 						</a>
@@ -67,9 +67,9 @@
             </ul>
         </li>
         <li>
-            <a href="#">
+            <a href="send_words.php">
                 <i class="glyphicon glyphicon-send"></i>
-                Kontakt
+                Wörter einsenden
             </a>
         </li>
         <li>
