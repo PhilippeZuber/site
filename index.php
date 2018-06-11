@@ -26,7 +26,7 @@
         session_start();
         $_SESSION['id'] = $user['user_id'];
         $_SESSION['role'] = $user['role'];
-        header("Location:suche.php");
+        header("Location:search.php");
       }else {
         $error = true;
         $error_msg .= "Leider konnten wir ihre E-Mailadresse oder ihr Passwort nicht finden.<br/>";
