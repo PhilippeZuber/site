@@ -45,7 +45,7 @@
         }
         ?>
         <li class="<?php echo $page=='search' ? 'active' : ''; ?>">
-            <a href="suche.php">
+            <a href="search.php">
                 <i class="glyphicon glyphicon-search"></i>
                 Suche
             </a>
@@ -67,7 +67,7 @@
             </ul>
         </li>
         <li>
-            <a href="send_words.php">
+            <a href="send_word.php">
                 <i class="glyphicon glyphicon-send"></i>
                 Wörter einsenden
             </a>
