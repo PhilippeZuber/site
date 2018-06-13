@@ -27,6 +27,7 @@ $words = get_words();
             <!-- Page Content Holder -->
             <div id="content">
                 <?php include './navigation.php'; ?>
+
                 <div class=container-fluid>
                     <div class="row">
                         <!-- begin col-6 -->
@@ -40,19 +41,19 @@ $words = get_words();
                                 </div>
                                 <div class="panel-body col-md-12">
                                     <div class="col-md-6">
-                                        <form method="POST" action="https://script.google.com/macros/s/AKfycbxoIsicvEjPzWlkuDKTxXaH7oj8BfXPinwJpWtN/exec" id="gform" enctype="multipart/form-data">
+                                        <form method="POST" action="mailto:kontakt@zubermedien.ch?subject=Neues Wort" enctype="text/plain">
                                             <table class="table">
                                                 <tbody>
                                                     <tr>
                                                         <td>Wort</td>
                                                         <td>
-                                                            <input type="text" id="word" name="word" class="form-control" value="<?php echo @$word['name']; ?>">
+                                                            <input type="text" name="name" class="form-control" value="<?php echo @$word['name']; ?>">
                                                         </td>
                                                     </tr> 
                                                     <tr>
                                                         <td>Wortart</td>
                                                         <td>
-                                                            <select id="category" name="category" class="form-control select2">
+                                                            <select class="form-control select2"  name="category"  >
                                                                 <?php
                                                                 foreach ($categories as $key => $value) {
                                                                     ?>
@@ -66,7 +67,7 @@ $words = get_words();
                                                     <tr>
                                                         <td>Themengebiet</td>
                                                         <td>
-                                                            <select id="semantic" name="semantic" class="form-control select2" multiple="multiple">
+                                                            <select class="form-control select2"  name="semantic"  multiple="multiple">
                                                                 <?php
                                                                 foreach ($semantic as $key => $value) {
                                                                     ?>
@@ -80,7 +81,7 @@ $words = get_words();
                                                     <tr>
                                                         <td>Alter</td>
                                                         <td>
-                                                            <select id="alters" name="alters" class="form-control select2">
+                                                            <select class="form-control select2"  name="alters" >
                                                                 <?php
                                                                 foreach ($alters as $key => $value) {
                                                                     ?>
@@ -89,12 +90,6 @@ $words = get_words();
                                                                 }
                                                                 ?>
                                                             </select>
-                                                        </td>
-                                                    </tr>
-													<tr>
-                                                        <td>Ihre E-Mail Adresse</td>
-                                                        <td>
-                                                            <input type="email" id="email" name="email" class="form-control" value="" required placeholder="Gültige Adresse"><span id="email-invalid" style="display:none">Es muss eine gültige Adresse sein.</span>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -107,9 +102,6 @@ $words = get_words();
                                             </table>
                                         </form>
 										<p>Nachdem Sie Senden gewählt haben, wird das Wort mit ihrem Mail-Programm ans uns verschickt. Sie können Bildvorschläge als Anhang hinzufügen.</p>
-										<div style="display:none;" id="thankyou_message">
-											<h2><em>Danke!</em>Wir werden das Wort überprüfen.</h2>
-										</div>
                                     </div>
                                 </div>
                             </div>
@@ -118,6 +110,7 @@ $words = get_words();
                 </div><!--/container-->		
             </div><!--/content-->
         </div><!--/wrapper-->
+
         <!-- jQuery -->
         <script>
             $(document).ready(function (){
