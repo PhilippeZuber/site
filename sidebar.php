@@ -66,12 +66,18 @@
                 <li><a href="#">Seite 2</a></li>
             </ul>
         </li>
+		<?php
+        if ($_SESSION['role'] == 2) {/*visible for non-admin only*/
+            ?>
         <li>
             <a href="send_word.php">
                 <i class="glyphicon glyphicon-send"></i>
                 Wörter einsenden
             </a>
         </li>
+		<?php
+        }
+        ?>
         <li>
             <a href="index.php"aria-hidden="true">
                 <i class="glyphicon glyphicon-log-out"></i>
