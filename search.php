@@ -17,6 +17,7 @@ $page = 'search';
 ?>
 <html !DOCTYPE>
     <?php include './header.php'; ?><!--CSS+JS files/modal window/ sidebar collapse-->
+	<?php include './SearchInfModal.php'; ?><!--Modal window used in search.php only-->
     <body>
         <div class="wrapper">
             <?php include 'sidebar.php'; ?>
@@ -35,7 +36,9 @@ $page = 'search';
                                 </span>
                             </div>
 							<p>Suche mithilfe von <strong>*</strong> z.B. nach *le  um Wörter zu finden die auf le Enden.</p>
-							<a tabindex="0" class="btn btn-lg btn-link bs-docs-popover" role="button" data-toggle="popover" data-trigger="focus" title="Infos zum Suchen" data-content="* (Der Stern) steht für beliebige Buchstaben und kann so kombiniert werden. Um Wörter zu finden, die beispielsweise pf in der Wortmitte haben, suche nach *pf*.">Infos zum Suchen</a>
+							<button type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#SearchInfModal" style="margin-bottom: 20px">
+								Weitere Infos zum Suchen
+							</button>
                         </div>
                     </div>
                     <div class="row">
@@ -157,7 +160,7 @@ $page = 'search';
 						document.getElementById("searchbtn").click();
 					}
 				});
-			
+			/*Initialising data-table*/
             var table;
             $(document).ready(function (){
 				$('#data-table1').DataTable( {
@@ -167,7 +170,7 @@ $page = 'search';
 				} );
             });
 			
-
+			/*Search function*/
             function search() {
                 var category = [];
                 var semantic = [];
@@ -185,7 +188,7 @@ $page = 'search';
                 $('#data-table1').DataTable().clear().destroy();
 
                 table = $('#data-table1').DataTable({
-					"language": {
+					"language": {/*data-table in german*/
 						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
 					},
                     ajax: {

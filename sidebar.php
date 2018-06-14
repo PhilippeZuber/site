@@ -51,7 +51,7 @@
             </a>
         </li>
         <li class="">
-            <a href="#" data-toggle="modal" data-target="#myModal">
+            <a href="#" data-toggle="modal" data-target="#UserModal">
                 <i class="glyphicon glyphicon-user"></i>
                 <?php echo $user['firstname'] . " " . $user['lastname']; ?>
             </a>

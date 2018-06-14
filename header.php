@@ -95,7 +95,7 @@ $update_time = date_parse($user['update_time']);
 $last_update = $update_time['day'] . "." . $update_time['month'] . "." . $update_time['year'];
 ?>
 <!--Modal window for profile-->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="profil-wortlabor">
+<div class="modal fade" id="UserModal" tabindex="-1" role="dialog" aria-labelledby="profil-wortlabor">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
