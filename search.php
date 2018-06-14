@@ -31,11 +31,11 @@ $page = 'search';
                             <div class="input-group">
                                 <input type="text" id="search_text" class="form-control" placeholder="Suche nach...">
                                 <span class="input-group-btn">
-                                    <button id="searchbtn" class="btn btn-default" type="button" onclick="search();">Los!</button>
+                                    <button id="searchbtn" class="btn btn-primary" type="button" onclick="search();">Los!</button>
                                 </span>
                             </div>
 							<p>Suche mithilfe von <strong>*</strong> z.B. nach *le  um Wörter zu finden die auf le Enden.</p>
-							<p><strong title="* (Der Stern) steht für beliebige Buchstaben und kann so kombiniert werden. Um Wörter zu finden, die beispielsweise pf in der Wortmitte haben, suche nach *pf*.">Weitere Informationen zur Suche &#10068;</strong></p>
+							<a tabindex="0" class="btn btn-lg btn-link bs-docs-popover" role="button" data-toggle="popover" data-trigger="focus" title="Infos zum Suchen" data-content="* (Der Stern) steht für beliebige Buchstaben und kann so kombiniert werden. Um Wörter zu finden, die beispielsweise pf in der Wortmitte haben, suche nach *pf*.">Infos zum Suchen</a>
                         </div>
                     </div>
                     <div class="row">
@@ -55,16 +55,15 @@ $page = 'search';
                                                     if ($key % 2 == 0) {
                                                         echo '<tr>';
                                                     }
-                                                    ?>
-                                                <td><label><input type="checkbox" name="category[]" value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
+                                                 ?>
+													<td><label><input type="checkbox" name="category[]" value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
 
-                                                <?php
-                                                if ($key + 1 % 2 == 0) {
-                                                    echo '</tr>';
-                                                }
-                                            }
-                                            ?>
-
+													<?php
+													if ($key + 1 % 2 == 0) {
+														echo '</tr>';
+													}
+												}
+													?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -85,16 +84,15 @@ $page = 'search';
                                                     if ($key % 2 == 0) {
                                                         echo '<tr>';
                                                     }
-                                                    ?>
-                                                <td><label><input type="checkbox" name="alter[]"  value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
+                                                ?>
+                                                	<td><label><input type="checkbox" name="alter[]"  value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
 
-                                                <?php
-                                                if ($key + 1 % 2 == 0) {
-                                                    echo '</tr>';
-                                                }
-                                            }
-                                            ?>
-
+													<?php
+													if ($key + 1 % 2 == 0) {
+														echo '</tr>';
+													}
+												}
+													?>
                                             </tbody>
                                         </table>
                                     </div>
