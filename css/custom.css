@@ -212,13 +212,14 @@ a.btn2, a.btn2:hover {
     transition: all 0.3s;
     width:100%;
     padding-top: 100px;/*BECAUSE OF NAVBAR*/
+	margin-bottom: 20px;
 }
 
 /* ---------------------------------------------------
     MODAL WINDOWS CUSTOM STYLE
 ----------------------------------------------------- */
 .show {
-    opacity: 1;/*Unknown bug in Bootstrap making modal visible*/
+    opacity: 1;/*Unknown bug in Bootstrap, making modal visible*/
 }
 .modal{
     padding-top: 150px;/*BECAUSE OF NAVBAR*/

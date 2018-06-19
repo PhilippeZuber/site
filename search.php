@@ -132,7 +132,7 @@ $page = 'search';
                             </div><!--card-->
                         </div><!--column-->
 
-                        <div class="col-md-8">
+                        <div class="col-md-8" id="datatables">
                             <table  class="table table-responsive table-striped" id="data-table1">
                                 <thead>
                                     <tr>
@@ -141,7 +141,6 @@ $page = 'search';
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                 </tbody>
                             </table>
                         </div>
@@ -166,8 +165,9 @@ $page = 'search';
 				$('#data-table1').DataTable( {
 					"language": {
 						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-					}
-				} );
+					},
+					searching: false,
+				});
             });
 			
 			/*Search function*/
@@ -202,6 +202,49 @@ $page = 'search';
 
                         }
                     },
+					dom: 'Bfrtip',
+					buttons: [
+						/*{
+							extend: 'selectRows',
+							text: 'Zeilen wählen'
+						},*/
+						{
+								extend: 'excel',
+								text: 'Für Excel Speichern',
+								exportOptions: {
+									modifier: {
+										page: 'current'
+									}
+								}
+						},
+						{
+								extend: 'pdf',
+								text: 'Als pdf Speichern',
+								exportOptions: {
+									modifier: {
+										page: 'current'
+									}
+								}
+						},
+						{
+								extend: 'print',
+								text: 'Drucken',
+								exportOptions: {
+									modifier: {
+										page: 'current'
+									}
+								}
+						},
+						{
+								extend: 'copy',
+								text: 'Zwischenablage',
+								exportOptions: {
+									modifier: {
+										page: 'current'
+									}
+								}
+						}
+					],
                     searching: false,
                     "processing": true,
                     "serverSide": true,

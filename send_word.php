@@ -20,6 +20,8 @@ $words = get_words();
 <!doctype html>
 <html>
     <?php include './header.php'; ?>
+	<script data-cfasync="false" type="text/javascript"
+src="https://cdn.rawgit.com/dwyl/learn-to-send-email-via-google-script-html-no-server/master/form-submission-handler.js"></script>
     <body>
         <div class="wrapper">
 
@@ -106,9 +108,8 @@ $words = get_words();
                                                 </tbody>
                                             </table>
                                         </form>
-										<p>Nachdem Sie Senden gewählt haben, wird das Wort mit ihrem Mail-Programm ans uns verschickt. Sie können Bildvorschläge als Anhang hinzufügen.</p>
 										<div style="display:none;" id="thankyou_message">
-											<h2><em>Danke!</em>Wir werden das Wort überprüfen.</h2>
+											<h2><em>Danke!</em> Wir werden das Wort überprüfen.</h2>
 										</div>
                                     </div>
                                 </div>
