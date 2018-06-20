@@ -20,8 +20,7 @@ $words = get_words();
 <!doctype html>
 <html>
     <?php include './header.php'; ?>
-	<script data-cfasync="false" type="text/javascript"
-src="https://cdn.rawgit.com/dwyl/learn-to-send-email-via-google-script-html-no-server/master/form-submission-handler.js"></script>
+	<script data-cfasync="false" type="text/javascript" src="js/form-submission-handler.js"></script><!--Local because Github version may change-->
     <body>
         <div class="wrapper">
 

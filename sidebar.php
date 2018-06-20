@@ -57,14 +57,10 @@
             </a>
         </li>
         <li>
-            <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false">
+            <a href="about.php">
                 <i class="glyphicon glyphicon-info-sign"></i>
                 Über Wortlabor
-            </a>
-            <ul class="collapse list-unstyled" id="pageSubmenu2">
-                <li><a href="#">Seite 1</a></li>
-                <li><a href="#">Seite 2</a></li>
-            </ul>
+			</a>
         </li>
 		<?php
         if ($_SESSION['role'] == 2) {/*visible for non-admin only*/
