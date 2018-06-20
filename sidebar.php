@@ -1,7 +1,7 @@
 <!-- Sidebar Holder -->
 <nav id="sidebar">
     <div class="sidebar-header">
-        <h3>WORTLABOR</h3>
+        <h3>WORTLAB</h3>
         <strong>WL</strong>
     </div>
 
@@ -59,7 +59,7 @@
         <li>
             <a href="about.php">
                 <i class="glyphicon glyphicon-info-sign"></i>
-                Über Wortlabor
+                Über Wortlab
 			</a>
         </li>
 		<?php
