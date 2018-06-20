@@ -87,7 +87,6 @@ $words = get_words();
                                     <div class="col-md-6">
                                         <form method="POST" action="" enctype="multipart/form-data">
                                             <table class="table">
-
                                                 <tbody>
                                                     <tr>
                                                         <td>Wort</td>
@@ -214,15 +213,12 @@ $words = get_words();
                                                     ?>
                                                 </tbody>
                                             </table>
-
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div><!--row-->
                 </div><!--/container-->		
             </div><!--/content-->
         </div><!--/wrapper-->

@@ -67,7 +67,7 @@ $words = get_words();
                                                     <tr>
                                                         <td>Themengebiet</td>
                                                         <td>
-                                                            <select id="semantic" name="semantic" class="form-control select2" multiple="multiple">
+                                                            <select id="semantic" name="semantic[]" class="form-control select2" multiple="multiple">
                                                                 <?php
                                                                 foreach ($semantic as $key => $value) {
                                                                     ?>
