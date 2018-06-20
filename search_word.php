@@ -23,8 +23,7 @@ if ($_REQUEST['search_text'] != '') {
     } else if (substr($_REQUEST['search_text'], 0, 1) == '*') {
         $wh .= " and (  ";
         $wh .= "  name like '%" . str_replace('*', '', $_REQUEST['search_text']) . "' )";
-    }
-    else{
+    } else {
         $wh .= " and (  ";
         $wh .= "  name like '%" . str_replace('*', '', $_REQUEST['search_text']) . "%' )";
     }
@@ -35,11 +34,24 @@ if (!empty($_REQUEST['category'])) {
     $wh .= "  and category in ('" . implode("','", $_REQUEST['category']) . "')";
 }
 if (!empty($_REQUEST['semantic'])) {
-    $wh .= "  and semantic in ('" . implode("','", $_REQUEST['semantic']) . "')";
+    $wh .= "  and ( ";
+    foreach ($_REQUEST['semantic'] as $key_s => $value_s) {
+        if ($key_s != 0) {
+            $wh .= "  or ";
+        }
+        $wh .= "   (
+             semantic like '%," . $value_s . ",%' or
+             semantic like '%," . $value_s . "%' or
+             semantic like '%" . $value_s . ",%' or
+             semantic = '" . $value_s . "' 
+            )";
+    }
+    $wh .= "  ) ";
 }
 if (!empty($_REQUEST['alter'])) {
     $wh .= "  and alters in ('" . implode("','", $_REQUEST['alter']) . "')";
 }
+
 
 
 
