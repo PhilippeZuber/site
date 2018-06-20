@@ -167,6 +167,7 @@ $page = 'search';
 						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
 					},
 					searching: false,
+					paging: false,
 				});
             });
 			
@@ -202,7 +203,7 @@ $page = 'search';
 
                         }
                     },
-					dom: 'Bfrtip',
+					dom: 'Bfrtip',/*Position of Buttons*/
 					buttons: [
 						/*{
 							extend: 'selectRows',
@@ -251,6 +252,10 @@ $page = 'search';
                     "serverSide": true,
                 });
             }
+			/*var table = $('#data-table1').DataTable();
+ 			var data = table.buttons.exportData( {
+				columns: ':visible'
+			} );*/
         </script>
     </body>
 </html>
