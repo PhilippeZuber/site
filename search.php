@@ -223,8 +223,7 @@ $page = 'search';
 								exportOptions: {
 									modifier: {
 										page: 'current'
-									},
-									stripHtml: false
+									}
 								}
 						},
 						{
