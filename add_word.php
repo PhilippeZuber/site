@@ -73,7 +73,7 @@ $words = get_words();
 
                 <div class=container-fluid>
                     <div class="row">
-                        <!-- begin col-6 -->
+
                         <div class="col-md-12">
                             <!-- begin panel -->
                             <div class="panel panel-inverse" >
@@ -84,7 +84,7 @@ $words = get_words();
                                 </div>
                                 <div class="panel-body col-md-12">
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-8">
                                         <form method="POST" action="" enctype="multipart/form-data">
                                             <table class="table">
                                                 <tbody>

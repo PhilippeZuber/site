@@ -30,7 +30,6 @@ $words = get_words();
                 <?php include './navigation.php'; ?>
                 <div class=container-fluid>
                     <div class="row">
-                        <!-- begin col-6 -->
                         <div class="col-md-12">
                             <!-- begin panel -->
                             <div class="panel panel-inverse" >
@@ -40,7 +39,7 @@ $words = get_words();
                                     <h4 class="panel-title">Wort einsenden</h4>
                                 </div>
                                 <div class="panel-body col-md-12">
-                                    <div class="col-md-6">
+                                    <div class="col-md-8">
                                         <form method="POST" action="https://script.google.com/macros/s/AKfycbxoIsicvEjPzWlkuDKTxXaH7oj8BfXPinwJpWtN/exec" id="gform" enctype="multipart/form-data">
                                             <table class="table">
                                                 <tbody>
