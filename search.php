@@ -229,8 +229,11 @@ $page = 'search';
 						},*/
 						{
 								extend: 'print',
-								text: 'Drucken & Als pdf Speichern',
+								text: 'Drucken / Als pdf Speichern',
 								message: "guguseli",
+								action: function ( e, dt, node, config ) {
+									alert( 'Activated!' );
+								},
 								exportOptions: {
 									modifier: {
 										page: 'current'

@@ -83,7 +83,7 @@
 			  <div class="panel-heading">
 				<div class="row">
 				  <div class="col-xs-12">
-					<img src="images/wortlab_logo.svg" alt="Logo Wortlab"/>
+					<img src="img/wortlab_logo.svg" alt="Logo Wortlab"/>
 				  </div>
 				</div>
 				<div class="btn-group btn-group-justified" role="group">

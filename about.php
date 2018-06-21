@@ -30,8 +30,9 @@ $words = get_words();
 
                 <div class=container-fluid>
                     <div class="row">
-						<div class="col-md-12">
-							<img src="images/wortlab_logo.svg" alt="Logo Wortlab">
+						<div class="col-md-8">
+							<img src="img/wortlab_logo.svg" alt="Logo Wortlab" class="img-thumbnail">
+							<p>Wortlab ist Teil der Bacheloarbeit von Philippe Zuber.</p>
 						</div>
                     </div><!--row-->
                 </div><!--/container-->		
