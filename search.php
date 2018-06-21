@@ -249,7 +249,7 @@ $page = 'search';
 						}
 					],
 					select: {
-						style: 'os'
+						style: 'multi'
 					},
                     searching: false,
                     "processing": true,
