@@ -68,7 +68,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-		<title>Wortlabor - Login</title>
+		<title>Wortlab - Login</title>
 
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -83,7 +83,7 @@
 			  <div class="panel-heading">
 				<div class="row">
 				  <div class="col-xs-12">
-					<img src="images/wortlabor_logo.svg" alt="Logo Wortlabor"/>
+					<img src="images/wortlab_logo.svg" alt="Logo Wortlab"/>
 				  </div>
 				</div>
 				<div class="btn-group btn-group-justified" role="group">

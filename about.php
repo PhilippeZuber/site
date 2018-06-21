@@ -30,6 +30,9 @@ $words = get_words();
 
                 <div class=container-fluid>
                     <div class="row">
+						<div class="col-md-12">
+							<img src="images/wortlab_logo.svg" alt="Logo Wortlab">
+						</div>
                     </div><!--row-->
                 </div><!--/container-->		
             </div><!--/content-->

@@ -192,7 +192,7 @@ $page = 'search';
 					"language": {/*data-table in german*/
 						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
 					},
-                    ajax: {
+                    ajax: {/*giving values*/
                         url: 'search_word.php',
                         data: {
                             search_image: $('#search_image').prop('checked'),
@@ -206,7 +206,7 @@ $page = 'search';
 					dom: 'Bfrtip',/*Position of Buttons*/
 					buttons: [
 						/*{
-							extend: 'selectRows',
+							extend: 'selectAll',
 							text: 'Zeilen wählen'
 						},*/
 						{
@@ -218,7 +218,7 @@ $page = 'search';
 									}
 								}
 						},
-						{
+						/*{
 								extend: 'pdf',
 								text: 'Als pdf Speichern',
 								exportOptions: {
@@ -226,10 +226,11 @@ $page = 'search';
 										page: 'current'
 									}
 								}
-						},
+						},*/
 						{
 								extend: 'print',
-								text: 'Drucken',
+								text: 'Drucken & Als pdf Speichern',
+								message: "guguseli",
 								exportOptions: {
 									modifier: {
 										page: 'current'
@@ -247,6 +248,9 @@ $page = 'search';
 								}
 						}
 					],
+					select: {
+						style: 'os'
+					},
                     searching: false,
                     "processing": true,
                     "serverSide": true,

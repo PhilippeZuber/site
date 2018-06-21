@@ -3,7 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<!--Including all additional CSS and JS files / Modal Window for User / Sidebar collapse-->
-    <title>WORTLABOR</title>
+    <title>WORTLAB</title>
 	<!--**CSS**-->
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -99,12 +99,12 @@ $update_time = date_parse($user['update_time']);
 $last_update = $update_time['day'] . "." . $update_time['month'] . "." . $update_time['year'];
 ?>
 <!--Modal window for profile-->
-<div class="modal fade" id="UserModal" tabindex="-1" role="dialog" aria-labelledby="profil-wortlabor">
+<div class="modal fade" id="UserModal" tabindex="-1" role="dialog" aria-labelledby="profil-wortlab">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="profil-wortlabor">persönliche Einstellungen</h4>
+                    <h4 class="modal-title" id="profil-wortlab">persönliche Einstellungen</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
