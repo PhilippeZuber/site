@@ -244,7 +244,7 @@ $page = 'search';
 						{
 								extend: 'copy',
 								text: 'Zwischenablage',
-								exportOptions: {
+								exportOptions: { 
 									modifier: {
 										page: 'current'
 									}
