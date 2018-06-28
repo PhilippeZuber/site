@@ -1,9 +1,20 @@
+/******************************************************************************
+ * This tutorial is based on the work of Martin Hawksey twitter.com/mhawksey  *
+ * But has been simplified and cleaned up to make it more beginner friendly   *
+ * All credit still goes to Martin and any issues/complaints/questions to me. *
+ ******************************************************************************/
+
 // if you want to store your email server-side (hidden), uncomment the next line
 var TO_ADDRESS = "kontakt@zubermedien.ch";
 
 // spit out all the keys/values from the form in HTML for email
+// uses an array of keys if provided or the object to determine field order
 function formatMailBody(obj, order) {
   var result = "";
+  if (!order) {
+    order = Object.keys(obj);
+  }
+  
   // loop over all keys in the ordered form data
   for (var idx in order) {
     var key = order[idx];
@@ -31,21 +42,28 @@ function doPost(e) {
     
     // shorter name for form data
     var mailData = e.parameters;
-    
-    // names and order of form elements
-    var dataOrder = JSON.parse(e.parameters.formDataNameOrder);
+
+    // names and order of form elements (if set)
+    var orderParameter = e.parameters.formDataNameOrder;
+    var dataOrder;
+    if (orderParameter) {
+      dataOrder = JSON.parse(orderParameter);
+    }
     
     // determine recepient of the email
     // if you have your email uncommented above, it uses that `TO_ADDRESS`
     // otherwise, it defaults to the email provided by the form's data attribute
     var sendEmailTo = (typeof TO_ADDRESS !== "undefined") ? TO_ADDRESS : mailData.formGoogleSendEmail;
     
-    MailApp.sendEmail({
-      to: String(sendEmailTo),
-      subject: "Neues Wort",
-      // replyTo: String(mailData.email), // This is optional and reliant on your form actually collecting a field named `email`
-      htmlBody: formatMailBody(mailData, dataOrder)
-    });
+    // send email if to address is set
+    if (sendEmailTo) {
+      MailApp.sendEmail({
+        to: String(sendEmailTo),
+        subject: "Neues Wort",
+        // replyTo: String(mailData.email), // This is optional and reliant on your form actually collecting a field named `email`
+        htmlBody: formatMailBody(mailData, dataOrder)
+      });
+    }
 
     return ContentService    // return json success results
           .createTextOutput(
@@ -55,7 +73,7 @@ function doPost(e) {
   } catch(error) { // if error return this
     Logger.log(error);
     return ContentService
-          .createTextOutput(JSON.stringify({"result":"error", "error": e}))
+          .createTextOutput(JSON.stringify({"result":"error", "error": error}))
           .setMimeType(ContentService.MimeType.JSON);
   }
 }
@@ -69,21 +87,30 @@ function record_data(e) {
   Logger.log(JSON.stringify(e)); // log the POST data in case we need to debug it
   try {
     var doc     = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet   = doc.getSheetByName(e.parameters.formGoogleSheetName); // select the 'responses' sheet by default
+    
+    // select the 'responses' sheet by default
+    var sheetName = e.parameters.formGoogleSheetName || "responses";
+    var sheet   = doc.getSheetByName(sheetName);
+    
     var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
     var nextRow = sheet.getLastRow()+1; // get next row
     var row     = [ new Date() ]; // first element in the row should always be a timestamp
     // loop through the header columns
     for (var i = 1; i < headers.length; i++) { // start at 1 to avoid Timestamp column
       if(headers[i].length > 0) {
-        row.push(e.parameter[headers[i]]); // add data to row
+        var values = e.parameters[headers[i]];
+        var output = values[0];
+        for (var j = 1; j < values.length; j++) {
+          output += ', ' + values[j];
+        }
+        row.push(output); // add data to row
       }
     }
     // more efficient to set values as [][] array than individually
     sheet.getRange(nextRow, 1, 1, row.length).setValues([row]);
   }
   catch(error) {
-    Logger.log(e);
+    Logger.log(error);
   }
   finally {
     return;

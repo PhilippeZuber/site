@@ -107,7 +107,7 @@ $words = get_words();
                                             </table>
                                         </form>
 										<div style="display:none;" id="thankyou_message">
-											<h2><em>Danke!</em> Wir werden das Wort überprüfen.</h2>
+											<h2><em>Danke!</em><br> Wir werden das Wort überprüfen.</h2>
 										</div>
                                     </div>
                                 </div>
