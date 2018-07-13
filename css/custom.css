@@ -212,7 +212,7 @@ a.btn2, a.btn2:hover {
     transition: all 0.3s;
     width:100%;
     padding-top: 100px;/*BECAUSE OF NAVBAR*/
-	padding-bottom: 20px;
+	padding-bottom: 20px;/*Distant to bottom for mobile users*/
 }
 
 /* ---------------------------------------------------
