@@ -122,6 +122,7 @@
 					<!-- /Login-Formular -->
 
 					<form action="index.php" method="post" id="register-form" role="form">
+					  <!--Content register form deactivated--><!--
 					  <div class="form-group">
 						<input type="email" name="email" tabindex="1" class="form-control" placeholder="E-Mail-Adresse">
 					  </div>
@@ -138,6 +139,9 @@
 						  </div>
 						</div>
 					  </div>
+					  -->
+					<p>Zurzeit ist die Funktion des Registrierens deaktiviert. Um sich bei WORTLAB zu registrieren kontaktieren sie:
+<a href="mailto:kontakt@zubermedien.ch">kontakt@zubermedien.ch</a>  </p>
 					</form>
 				  </div>
 				</div>
