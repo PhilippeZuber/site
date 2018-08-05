@@ -230,7 +230,7 @@ $page = 'search';
 						{
 								extend: 'print',
 								text: 'Drucken / Als pdf Speichern',
-								message: "guguseli",
+								/*message: "(C) by ...",*/
 								exportOptions: {
 									modifier: {
 										page: 'current'

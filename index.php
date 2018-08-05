@@ -140,7 +140,7 @@
 						</div>
 					  </div>
 					  -->
-					<p>Zurzeit ist die Funktion des Registrierens deaktiviert. Um sich bei WORTLAB zu registrieren kontaktieren sie:
+					<p>Zurzeit ist die Funktion des Registrierens deaktiviert. Um sich bei WORTLAB zu registrieren kontaktieren Sie:
 <a href="mailto:kontakt@zubermedien.ch">kontakt@zubermedien.ch</a>  </p>
 					</form>
 				  </div>
