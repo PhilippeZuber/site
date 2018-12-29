@@ -27,12 +27,13 @@ $page = 'search';
                 <div class=container-fluid>
                     <div class="row">
                         <div class="col-md-12">
+                            <div class="alert alert-warning" role="alert">Wortlab befindet sich zurzeit in einer Testphase. D.h. die Datenbank von Wortlab ist noch unvollständig, weshalb einige Filterkriterien noch nicht funktionieren. Sollte sich herausstellen, dass eine Nachfrage an Wortlab besteht, wird die Entwicklung weitergeführt.</div>
                             <label><input id="search_image" checked type="checkbox" value="biler">&nbsp Mit Bildern</label>
                             <h2>Suchen</h2>
                             <div class="input-group">
                                 <input type="text" id="search_text" class="form-control" placeholder="Suche nach...">
                                 <span class="input-group-btn">
-                                    <button id="searchbtn" class="btn btn-primary" type="button" onclick="search();">Los!</button>
+                                    <button id="searchbtn" class="btn btn-primary" type="button" onClick="search();">Los!</button>
                                 </span>
                             </div>
 							<p>Suche mithilfe von <strong>*</strong> z.B. nach *le  um Wörter zu finden die auf le Enden.</p>
