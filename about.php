@@ -10,12 +10,6 @@ require_once('system/data.php');
 require_once('system/security.php');
 
 $page = 'about';
-
-
-$categories = get_records('category');
-$semantic = get_records('semantic');
-$alters = get_records('alters');
-$words = get_words();
 ?>
 <!doctype html>
 <html>

@@ -1,8 +1,10 @@
 <!-- Sidebar Holder -->
 <nav id="sidebar">
     <div class="sidebar-header">
-        <h3><img src="wortlab_button.svg" alt="WORTLAB" width="100%"></h3>
-        <strong><img src="wortlab_button.svg" alt="WL" width="100%"></strong>
+    	<a href="search.php">
+        	<h3><img src="wortlab_button.svg" alt="WORTLAB" width="100%"></h3>
+        	<strong><img src="wortlab_button.svg" alt="WL" width="100%"></strong>
+        </a>
     </div>
 
     <ul class="list-unstyled components">
