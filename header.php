@@ -104,7 +104,7 @@ $last_update = $update_time['day'] . "." . $update_time['month'] . "." . $update
         <div class="modal-content">
             <form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="profil-wortlab">persönliche Einstellungen</h4>
+                    <h4 class="modal-title" id="profil-wortlab">Persönliche Einstellungen</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
