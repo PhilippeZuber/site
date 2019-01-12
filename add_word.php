@@ -38,6 +38,9 @@ if (isset($_POST['data'])) {
             $image = $filename;
         }
     }
+
+    $_POST['data']['name'] = strip_tags($_POST['data']['name']);
+    $_POST['data']['image_url'] = strip_tags($_POST['data']['image_url']);
     $_POST['data']['image'] = $image;
     $_POST['data']['category'] = implode(',', $_POST['data']['category']);
     $_POST['data']['semantic'] = implode(',', $_POST['data']['semantic']);
@@ -148,9 +151,15 @@ $words = get_words();
                                                         <td>Bild</td>
                                                         <td>
                                                             <input type="file" class="form-control" name="image" style="padding:0px">
+                                                            <br>oder<br>
+                                                            <input type="text" class="form-control" name="data[image_url]" style="padding:0px" value="<?php echo @$word['image_url']; ?>">
+                                                            
                                                             <?php
                                                             if (isset($word['image']) && $word['image'] != '') {
                                                                 echo '<img src="images/' . $word['image'] . '" style="width:200px;">';
+                                                            }
+                                                            else if (isset($word['image_url']) && $word['image_url'] != '') {
+                                                                echo '<img src="' . $word['image_url'] . '" style="width:200px;">';
                                                             }
                                                             ?>
                                                         </td>
@@ -200,6 +209,9 @@ $words = get_words();
                                                                 <?php
                                                                 if (isset($value['image']) && $value['image'] != '') {
                                                                     echo '<img src="images/' . $value['image'] . '" style="width:70px;">';
+                                                                }
+                                                                elseif (isset($value['image_url']) && $value['image_url'] != '') {
+                                                                    echo '<img src="' . $value['image_url'] . '" style="width:70px;">';
                                                                 }
                                                                 ?> 
                                                             </td>

@@ -57,11 +57,59 @@ $page = 'jobs';
                         </div>
                         <hr />   
                         <div class="form-group row">
-                            <label for="img" class="col-sm-2 form-control-label">Profilbild</label>
+                            <label for="pdf" class="col-sm-2 form-control-label">PDF</label>
                             <div class="col-sm-10">
-                                <input type="file" name="profil_img">
+                                <input type="file" name="pdf_stelle">
                             </div>
                         </div>
+                    </div>
+                    <div class="form-group row">
+                            <label for="Kanton" class="col-sm-2 form-control-label">Kanton</label>
+                            <div class="col-sm-5">
+                                <select class="form-control form-control-sm" id="Kanton" name="kanton">
+                                    <option <?php if ($user['institution'] == "") echo "selected"; ?> value="">--</option>
+                                    <option <?php if ($user['institution'] == "Schule") echo "selected"; ?> value="schule">Schule</option>
+                                    <option <?php if ($user['institution'] == "Klinik") echo "selected"; ?> value="klinik">Klinik</option>
+                                    <option <?php if ($user['institution'] == "Praxis") echo "selected"; ?> value="praxis">Freie Praxis</option>
+                                    <option <?php if ($user['institution'] == "Dienst") echo "selected"; ?> value="dienst">Logopäd. Dienst</option>
+                                    <option <?php if ($user['institution'] == "Sonderschule") echo "selected"; ?> value="sonderschule">Sonderschule</option>
+                                    <option <?php if ($user['institution'] == "SPD") echo "selected"; ?> value="spd">SPD</option>
+                                    <option <?php if ($user['institution'] == "Kompetenzzentrum") echo "selected"; ?> value="zentrum">Kompetenzzentrum</option>
+                                </select>
+                            </div>
+                            <label for="Kanton" class="col-sm-2 form-control-label">Kanton</label>
+                            <div class="col-sm-5">
+                                <select class="form-control form-control-sm" id="Kanton" name="kanton">
+                                    <option <?php if ($user['kanton'] == "") echo "selected"; ?> value="">--</option>
+                                    <option <?php if ($user['kanton'] == "Aargau") echo "selected"; ?> value="ag">Aargau</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ar">Appenzell Ausserrhoden</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ai">Appenzell Innerrhoden</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="bl">Basel-Landschaft</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="bs">Basel-Stadt</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="be">Bern</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="fr">Freiburg</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ge">Genf</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="gl">Glarus</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="gr">Graubünden</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ju">Jura</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="lu">Luzern</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ne">Neuenburg</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="nw">Nidwalden</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ow">Obwalden</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="sh">Schaffhausen</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="sz">Schwyz</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="so">Solothurn</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="sg">St. Gallen</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ti">Tessin</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="so">Solothurn</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="tg">Thurgau</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ur">Uri</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="vd">Waadt</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="vs">Wallis</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="zg">Zug</option>
+                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="zh">Zürich</option>
+                                </select>
+                            </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Abbrechen</button>
@@ -80,7 +128,7 @@ $page = 'jobs';
                 <div class=container-fluid>
                 	<div class="row">
                     	<div class="col-md-12">
-                            <h1>Stellenangebote für Logopädinnen/Logopäden</h1>
+                            <h1>Stellenangebote für Logopädinnen / Logopäden</h1>
                         </div>
                     </div>
                     <div class="row">

@@ -17,8 +17,8 @@
       $email = filter_data($_POST['email']);
       $password = filter_data($_POST['password']);
 
-      $result = login($email, $password);
-
+      $result = login($email, md5($password));
+ 
       $row_count = mysqli_num_rows($result);
 
       if($row_count == 1){
@@ -43,7 +43,7 @@
         $password = filter_data($_POST['password']);
         $password_confirm = filter_data($_POST['confirm-password']);
       if($password == $password_confirm){
-        if(register($email, $password)){
+        if(register($email, md5($password))){
           $success = true;
           $success_msg .= "Sie haben sich erfolgreich registriert.<br/>";
           $success_msg .= "Bitte loggen Sie sich jetzt ein.<br/>";
@@ -53,7 +53,7 @@
         }
       }else{
         $error = true;
-        $error_msg .= "Bitte überprüfen Sie die Passworteingabe.<br/>";
+        $error_msg .= "Bitte Überprüfen Sie die Passworteingabe.<br/>";
       }
     }else {
       $error = true;
@@ -129,7 +129,7 @@
 						<input type="password" name="password" tabindex="2" class="form-control" placeholder="Passwort">
 					  </div>
 					  <div class="form-group">
-						<input type="password" name="confirm-password" tabindex="3" class="form-control" placeholder="Passwort bestätigen">
+						<input type="password" name="confirm-password" tabindex="3" class="form-control" placeholder="Passwort bestÃ¤tigen">
 					  </div>
 					  <div class="form-group">
 						<div class="row">
