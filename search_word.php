@@ -59,14 +59,14 @@ $data3 = get_result("select count(*) as count from words $wh ");
 $data3 = mysqli_fetch_assoc($data3);
 $order_by = " Order by " . ($_REQUEST['order'][0]['column'] + 1) . " " . $_REQUEST['order'][0]['dir'];
 
-$data = get_result("select name,image  from words $wh $order_by limit " . $_REQUEST['start'] . "," . $_REQUEST['length']);
+$data = get_result("select name,image_url  from words $wh $order_by limit " . $_REQUEST['start'] . "," . $_REQUEST['length']);
 $i = 0;
 $data2 = array();
 while ($row = mysqli_fetch_array($data)) {
 
     $data2[$i][0] = $row['name'];
-    if ($_REQUEST['search_image'] != 'false' && $row['image'] != '') {
-        $data2[$i][1] = '<img style="width:150px;" src="images/' . $row['image'] . '">';
+    if ($_REQUEST['search_image'] != 'false' && $row['image_url'] != '') {
+        $data2[$i][1] = '<img style="width:150px;" src="' . $row['image_url'] . '">';
     } else {
         $data2[$i][1] = '';
     }
