@@ -39,11 +39,16 @@
 
   if(isset($_POST['register-submit'])){
     if(!empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['confirm-password'])){
-        $email = filter_data($_POST['email']);
-        $password = filter_data($_POST['password']);
-        $password_confirm = filter_data($_POST['confirm-password']);
+			$gender = filter_data($_POST['gender']);
+			$firstname = filter_data($_POST['firstname']);
+			$lastname = filter_data($_POST['lastname']);
+			$email = filter_data($_POST['email']);
+			$password = filter_data($_POST['password']);
+			$password_confirm = filter_data($_POST['confirm-password']);
+			$image_name= filter_data($_POST['email']);
+			
       if($password == $password_confirm){
-        if(register($email, md5($password))){
+        if(register($email, md5($password), $gender, $firstname, $lastname)){
           $success = true;
           $success_msg .= "Sie haben sich erfolgreich registriert.<br/>";
           $success_msg .= "Bitte loggen Sie sich jetzt ein.<br/>";
@@ -120,27 +125,44 @@
 					  </div>
 					</form>
 					<!-- /Login-Formular -->
-
+					<!-- Registrieren Formular -->
 					<form action="index.php" method="post" id="register-form" role="form">
+                      <div class="form-group row">
+                        <div class="col-xs-6">                     
+                            <select class="form-control form-control-sm" id="gender" name="gender" tabindex="1">
+                                <option selected="selected" value="Frau">Frau</option>
+                                <option value="Herr">Herr</option>
+                            </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-xs-6">
+                            <input  type="text" class="form-control form-control-sm"
+                                    id="firstname" placeholder="Vorname" tabindex="2"
+                                    name="firstname">
+                        </div>
+                        <div class="col-xs-6">
+                            <input  type="text" class="form-control form-control-sm"
+                                    id="lastname" placeholder="Nachname" tabindex="3"
+                                    name="lastname">
+                        </div>
+                      </div>
 					  <div class="form-group">
-						<input type="email" name="email" tabindex="1" class="form-control" placeholder="E-Mail-Adresse">
+							<input type="email" name="email" tabindex="4" class="form-control" placeholder="E-Mail-Adresse">
 					  </div>
 					  <div class="form-group">
-						<input type="password" name="password" tabindex="2" class="form-control" placeholder="Passwort">
+							<input type="password" name="password" tabindex="5" class="form-control" placeholder="Passwort">
 					  </div>
 					  <div class="form-group">
-						<input type="password" name="confirm-password" tabindex="3" class="form-control" placeholder="Passwort bestÃ¤tigen">
+							<input type="password" name="confirm-password" tabindex="6" class="form-control" placeholder="Passwort bestätigen">
 					  </div>
-					  <div class="form-group">
-						<div class="row">
-						  <div class="col-sm-6 col-sm-offset-3">
-							<input type="submit" name="register-submit" tabindex="4" class="btn btn-primary btn-block" value="registrieren">
-						  </div>
-						</div>
+					  <div class="form-group row">
+                          <div class="col-sm-6 col-sm-offset-3">
+                            <input type="submit" name="register-submit" tabindex="8" class="btn btn-primary btn-block" value="registrieren">
+                          </div>
 					  </div>
-					<!--<p>Zurzeit ist die Funktion des Registrierens deaktiviert. Um sich bei WORTLAB zu registrieren kontaktieren Sie:
-<a href="mailto:kontakt@zubermedien.ch">kontakt@zubermedien.ch</a>  </p>-->
 					</form>
+           <!-- /Registrieren Formular -->
 				  </div>
 				</div>
 			  </div>

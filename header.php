@@ -26,6 +26,8 @@
     <!--<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>-->
 	<!-- select2 JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+    <!-- custom JS -->
+    <script src="js/custom.js"></script>
     <style>
         .select2-selection,.select2-container,.select2-container .selection{
             width:100% !important;

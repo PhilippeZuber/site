@@ -1,0 +1,145 @@
+{
+  "ftp://login-25.hoststar.ch@wortlabor.sunnaewirbel.ch": {
+    ".gitattributes": {
+      "type": "-",
+      "size": 395,
+      "lmtime": 0,
+      "modified": false
+    },
+    ".gitignore": {
+      "type": "-",
+      "size": 696,
+      "lmtime": 0,
+      "modified": false
+    },
+    "LICENSE": {
+      "type": "-",
+      "size": 1091,
+      "lmtime": 0,
+      "modified": false
+    },
+    "SearchInfModal.php": {
+      "type": "-",
+      "size": 824,
+      "lmtime": 0,
+      "modified": false
+    },
+    "about.php": {
+      "type": "-",
+      "size": 1523,
+      "lmtime": 0,
+      "modified": false
+    },
+    "add_alters.php": {
+      "type": "-",
+      "size": 5974,
+      "lmtime": 0,
+      "modified": false
+    },
+    "add_cat.php": {
+      "type": "-",
+      "size": 5955,
+      "lmtime": 0,
+      "modified": false
+    },
+    "add_semantic.php": {
+      "type": "-",
+      "size": 5991,
+      "lmtime": 0,
+      "modified": false
+    },
+    "add_word.php": {
+      "type": "-",
+      "size": 13954,
+      "lmtime": 0,
+      "modified": false
+    },
+    "apple-touch-icon.png": {
+      "type": "-",
+      "size": 13979,
+      "lmtime": 0,
+      "modified": false
+    },
+    "css": {},
+    "favicon.ico": {
+      "type": "-",
+      "size": 15086,
+      "lmtime": 0,
+      "modified": false
+    },
+    "fonts": {},
+    "header.php": {
+      "type": "-",
+      "size": 8391,
+      "lmtime": 0,
+      "modified": false
+    },
+    "images": {},
+    "img": {},
+    "index.php": {
+      "type": "-",
+      "size": 7990,
+      "lmtime": 0,
+      "modified": false
+    },
+    "jobs.php": {
+      "type": "-",
+      "size": 15664,
+      "lmtime": 0,
+      "modified": false
+    },
+    "js": {},
+    "navigation.php": {
+      "type": "-",
+      "size": 902,
+      "lmtime": 0,
+      "modified": false
+    },
+    "robots.txt": {
+      "type": "-",
+      "size": 25,
+      "lmtime": 0,
+      "modified": false
+    },
+    "search.php": {
+      "type": "-",
+      "size": 11580,
+      "lmtime": 0,
+      "modified": false
+    },
+    "search_job.php": {
+      "type": "-",
+      "size": 612,
+      "lmtime": 0,
+      "modified": false
+    },
+    "search_word.php": {
+      "type": "-",
+      "size": 2702,
+      "lmtime": 0,
+      "modified": false
+    },
+    "send_word.php": {
+      "type": "-",
+      "size": 7759,
+      "lmtime": 0,
+      "modified": false
+    },
+    "sidebar.php": {
+      "type": "-",
+      "size": 3023,
+      "lmtime": 0,
+      "modified": false
+    },
+    "system": {},
+    "user_img": {},
+    "var": {},
+    "wortlab_button.svg": {
+      "type": "-",
+      "size": 8127,
+      "lmtime": 0,
+      "modified": false
+    }
+  },
+  "$version": 1
+}

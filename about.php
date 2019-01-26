@@ -27,8 +27,9 @@ $page = 'about';
 						<div class="col-md-8">
 							<img src="img/wortlab_logo.svg" alt="Logo Wortlab" class="img-thumbnail">
 							<p>Wortlab ist Teil der Bacheloarbeit von Philippe Zuber.</p><p>Wortlab befindet sich zurzeit in einer Testphase. D.h. die Datenbank von Wortlab ist noch unvollständig, weshalb einige Filterkriterien noch nicht funktionieren. Sollte sich herausstellen, dass eine Nachfrage an Wortlab besteht, wird die Entwicklung weitergeführt.</p>
-                            <div class="alert alert-warning" role="alert">Bitte behalte deine Login Daten für dich. Aus Bildrechtlichen sowie Sicherheitsgründen, sollte der Zugang beschränkt bleiben. Ausserdem solltest du kein Passwort verwenden, dass du auch sonst irgendwo einsetzt.</div>
-						</div>
+                            <div class="alert alert-warning" role="alert">Bitte behalte deine Login Daten für dich. Aus Bildrechtlichen Gründen, sollte der Zugang beschränkt bleiben.</div>
+                            <div class="alert alert-success">Die Passwörter werden neu verschlüsselt abgespeichert.</div>
+                        </div>
                     </div><!--row-->
                 </div><!--/container-->		
             </div><!--/content-->

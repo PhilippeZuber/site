@@ -110,8 +110,9 @@ $page = 'search';
                                 </div>
                                 <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
                                     <div class="card-body">
+                                        <input class="form-control" id="semanticInput" type="text" placeholder="Suchen...">        
                                         <table width="100%" border="0">
-                                            <tbody>
+                                            <tbody id="semanticTable">
                                                 <?php
                                                 foreach ($semantic as $key => $value) {
 //                                                    if ($key % 2 == 0) {
