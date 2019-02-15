@@ -81,8 +81,6 @@ $words = get_words();
                             <!-- begin panel -->
                             <div class="panel panel-inverse" >
                                 <div class="panel-heading">
-                                    <div class="panel-heading-btn">
-                                    </div>
                                     <h4 class="panel-title">Wort hinzufügen</h4>
                                 </div>
                                 <div class="panel-body col-md-12">
@@ -178,54 +176,56 @@ $words = get_words();
                                         </form>
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="table-responsive">
+                                        <table id="data-table1" class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="7">Wörter</th>
+                                                </tr>
+                                                <tr>
 
-                                            <table id="data-table1" class="table table-striped table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th colspan="6">Wörter</th>
-                                                    </tr>
-                                                    <tr>
+                                                    <th>Name</th>
+                                                    <th>Wortart</th>
+                                                    <th>Themengebiet</th>
+                                                    <th>Alter</th>
+                                                    <th>Bild</th>
+                                                    <th>Bild2</th>
+                                                    <th>Bearbeiten / Löschen</th>
 
-                                                        <th>Name</th>
-                                                        <th>Wortart</th>
-                                                        <th>Themengebiet</th>
-                                                        <th>Alter</th>
-                                                        <th>Bild</th>
-                                                        <th>Bearbeiten / Löschen</th>
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    foreach ($words as $key => $value) {
-                                                        ?>
-                                                        <tr>
-                                                            <td><?php echo $value['name']; ?></td>
-                                                            <td><?php echo implode(',', array_unique(explode(',', $value['category']))); ?></td>
-                                                            <td><?php echo implode(',', array_unique(explode(',', $value['semantic']))); ?></td>
-                                                            <td><?php echo implode(',', array_unique(explode(',', $value['alters']))); ?></td>
-                                                            <td>
-                                                                <?php
-                                                                if (isset($value['image']) && $value['image'] != '') {
-                                                                    echo '<img src="images/' . $value['image'] . '" style="width:70px;">';
-                                                                }
-                                                                elseif (isset($value['image_url']) && $value['image_url'] != '') {
-                                                                    echo '<img src="' . $value['image_url'] . '" style="width:70px;">';
-                                                                }
-                                                                ?> 
-                                                            </td>
-                                                            <td>
-                                                                <a class="btn btn-warning" href="add_word.php?action=edit&id=<?php echo $value['id']; ?>">Bearbeiten</a>
-                                                                <a class="btn btn-danger" onclick="return confirm('Sind Sie sicher?');" href="add_word.php?action=delete&id=<?php echo $value['id']; ?>">Löschen</a>
-                                                            </td>
-                                                        </tr>
-                                                        <?php
-                                                    }
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                foreach ($words as $key => $value) {
                                                     ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                    <tr>
+                                                        <td><?php echo $value['name']; ?></td>
+                                                        <td><?php echo implode(',', array_unique(explode(',', $value['category']))); ?></td>
+                                                        <td><?php echo implode(',', array_unique(explode(',', $value['semantic']))); ?></td>
+                                                        <td><?php echo implode(',', array_unique(explode(',', $value['alters']))); ?></td>
+                                                        <td>
+                                                            <?php
+                                                            if (isset($value['image']) && $value['image'] != '') {
+                                                                echo '<img src="images/' . $value['image'] . '" style="width:70px;">';
+                                                            }
+                                                            ?> 
+                                                        </td>
+                                                        <td>
+                                                            <?php
+                                                            if (isset($value['image_url']) && $value['image_url'] != '') {
+                                                                    echo '<img src="' . $value['image_url'] . '" style="width:70px;">';
+                                                            }
+                                                            ?> 
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn btn-warning" href="add_word.php?action=edit&id=<?php echo $value['id']; ?>">Bearbeiten</a>
+                                                            <a class="btn btn-danger" onclick="return confirm('Sind Sie sicher?');" href="add_word.php?action=delete&id=<?php echo $value['id']; ?>">Löschen</a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
