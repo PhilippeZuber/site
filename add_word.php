@@ -195,8 +195,8 @@ $words = get_words();
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                foreach ($words as $key => $value) {
-                                                    ?>
+                                                    foreach ($words as $key => $value) {
+                                                ?>
                                                     <tr>
                                                         <td><?php echo $value['name']; ?></td>
                                                         <td><?php echo implode(',', array_unique(explode(',', $value['category']))); ?></td>
@@ -211,9 +211,9 @@ $words = get_words();
                                                         </td>
                                                         <td>
                                                             <?php
-                                                            if (isset($value['image_url']) && $value['image_url'] != '') {
-                                                                    echo '<img src="' . $value['image_url'] . '" style="width:70px;">';
-                                                            }
+                                                            //if (isset($value['image_url']) && $value['image_url'] != '') {
+                                                                  echo '<img src="' . $value['image_url'] . '" style="width:70px;">';
+                                                            //}
                                                             ?> 
                                                         </td>
                                                         <td>
