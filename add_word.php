@@ -211,9 +211,9 @@ $words = get_words();
                                                         </td>
                                                         <td>
                                                             <?php
-                                                            //if (isset($value['image_url']) && $value['image_url'] != '') {
+                                                            if (isset($value['image_url']) && $value['image_url'] != '') {
                                                                   echo '<img src="' . $value['image_url'] . '" style="width:70px;">';
-                                                            //}
+                                                            }
                                                             ?> 
                                                         </td>
                                                         <td>

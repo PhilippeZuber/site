@@ -140,6 +140,7 @@ $page = 'search';
                                     <tr>
                                         <th>Wort</th>
                                         <th class="search_image_column">Bild</th>
+                                        <th class="search_image_column">Bild2</th>
                                     </tr>
                                 </thead>
                                 <tbody>

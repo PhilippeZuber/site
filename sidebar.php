@@ -58,12 +58,12 @@
                 <?php echo $user['firstname'] . " " . $user['lastname']; ?>
             </a>
         </li>
-        <li class="<?php echo $page=='jobs' ? 'active' : ''; ?>">
+        <!--<li class="<?php echo $page=='jobs' ? 'active' : ''; ?>">
             <a href="jobs.php">
                 <i class="glyphicon glyphicon-briefcase"></i>
                 Stellen
 			</a>
-        </li>
+        </li>-->
         <li class="<?php echo $page=='about' ? 'active' : ''; ?>">
             <a href="about.php">
                 <i class="glyphicon glyphicon-info-sign"></i>
