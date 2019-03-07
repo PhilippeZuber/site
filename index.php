@@ -112,14 +112,14 @@
 					  <div class="form-group">
 						<input type="email" name="email" tabindex="1" class="form-control" placeholder="E-Mail-Adresse">
 					  </div>
-					  <div class="form-group">
+					  <div class="form-group" id="mail">
 						<input type="password" name="password" tabindex="2" class="form-control" placeholder="Passwort">
 					  </div>
-
 					  <div class="form-group">
 						<div class="row">
 						  <div class="col-xs-6 col-xs-offset-3">
-							<input type="submit" name="login-submit" tabindex="3" class="btn btn-primary btn-block" value="einloggen">
+							<input type="submit" name="login-submit" tabindex="3" class="btn btn-primary btn-block" value="einloggen" id="login">
+							<p class="text-center" id="forgotpw"><small>Passwort vergessen?</small></p>
 						  </div>
 						</div>
 					  </div>
@@ -158,7 +158,7 @@
 					  </div>
 					  <div class="form-group row">
                           <div class="col-sm-6 col-sm-offset-3">
-                            <input type="submit" name="register-submit" tabindex="8" class="btn btn-primary btn-block" value="registrieren">
+                            <input type="submit" name="register-submit" tabindex="8" class="btn btn-primary btn-block" value="registrieren" id="register">
                           </div>
 					  </div>
 					</form>
@@ -191,8 +191,14 @@
 	  $(function() {
 
 		$('#login-form-link').click(function(e) {           
-		  $("#register-form").fadeOut(100);                 
-		  $("#login-form").delay(100).fadeIn(100);          
+		  $("#register-form").fadeOut(100);
+			$('#mailsend').attr({
+				'name': 'login-submit',
+				'value': 'einloggen',
+				'id': 'login'
+			});                 
+		  $("#login-form").delay(100).fadeIn(100);
+			$("#mail").delay(100).fadeIn(100);          
 		  $('#register-form-link').removeClass('btn-info'); 
 		  $('#register-form-link').addClass('btn-default'); 
 		  $(this).removeClass('btn-default');               
@@ -207,6 +213,17 @@
 		  $('#login-form-link').addClass('btn-default');
 		  $(this).removeClass('btn-default');
 		  $(this).addClass('btn-info');
+		  e.preventDefault();
+		});
+
+		$('#forgotpw').click(function(e) {
+		  $("#mail").fadeOut(100);
+			$('#login').name = mail;
+			$('#login').attr({
+				'name': 'mailsend',
+				'value': 'Passwort senden',
+				'id': 'mailsend'
+			});
 		  e.preventDefault();
 		});
 
