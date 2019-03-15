@@ -11,7 +11,7 @@
   $success = false;
   $success_msg = "";
 
-
+	/*Login*/
   if(isset($_POST['login-submit'])){
     if(!empty($_POST['email']) && !empty($_POST['password'])){
       $email = filter_data($_POST['email']);
@@ -35,8 +35,28 @@
       $error = true;
       $error_msg .= "Bitte füllen Sie beide Felder aus.<br/>";
     }
-  }
+	}
+	
+	/*ForgotPW*/
+	if(isset($_POST['mailsend'])){
+		if(!empty($_POST['email'])){
+			$email = filter_data($_POST['email']);
+			$result = mailsend($email);
+			$row_count = mysqli_num_rows($result);
+			if($row_count == 1){
+				$error = true;
+        $error_msg .= "Wir haben Ihnen eine E-Mail gesendet. Weiterhin viel Spass mit Wortlab<br/>";
+      }else {
+        $error = true;
+        $error_msg .= "Leider konnten wir ihre E-Mailadresse oder ihr Passwort nicht finden. Sie können uns unter kontakt@zubermedien.ch erreichen<br/>";
+      }
+		}else {
+			$error = true;
+			$error_msg .= "Bitte geben Sie eine E-Mail Adresse ein.<br/>";
+		}
+	}
 
+	/*Register*/
   if(isset($_POST['register-submit'])){
     if(!empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['confirm-password'])){
 			$gender = filter_data($_POST['gender']);
@@ -218,7 +238,6 @@
 
 		$('#forgotpw').click(function(e) {
 		  $("#mail").fadeOut(100);
-			$('#login').name = mail;
 			$('#login').attr({
 				'name': 'mailsend',
 				'value': 'Passwort senden',
