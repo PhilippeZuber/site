@@ -78,7 +78,7 @@
     "img": {},
     "index.php": {
       "type": "-",
-      "size": 7868,
+      "size": 9028,
       "lmtime": 0,
       "modified": true
     },
@@ -127,9 +127,9 @@
     },
     "sidebar.php": {
       "type": "-",
-      "size": 3023,
+      "size": 3126,
       "lmtime": 0,
-      "modified": false
+      "modified": true
     },
     "system": {},
     "user_img": {},
