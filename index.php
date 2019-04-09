@@ -41,6 +41,7 @@
 	if(isset($_POST['mailsend'])){
 		if(!empty($_POST['email'])){
 			$email = filter_data($_POST['email']);
+			//echo $email; //testing
 			$result = mailsend($email);
 			$row_count = mysqli_num_rows($result);
 			if($row_count == 1){
@@ -48,7 +49,7 @@
         $error_msg .= "Wir haben Ihnen eine E-Mail gesendet. Weiterhin viel Spass mit Wortlab<br/>";
       }else {
         $error = true;
-        $error_msg .= "Leider konnten wir ihre E-Mailadresse oder ihr Passwort nicht finden. Sie können uns unter kontakt@zubermedien.ch erreichen<br/>";
+        $error_msg .= "Leider konnten wir ihre E-Mailadresse nicht finden. Sie können uns unter kontakt@zubermedien.ch erreichen<br/>";
       }
 		}else {
 			$error = true;
