@@ -240,6 +240,7 @@ $words = get_words();
 
             $(document).ready(function (){
                 $('#data-table1').DataTable( {
+                    stateSave: true,
 					"language": {
 						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
 					}
