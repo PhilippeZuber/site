@@ -12,6 +12,12 @@
       "lmtime": 0,
       "modified": false
     },
+    ".htaccess": {
+      "type": "-",
+      "size": 110,
+      "lmtime": 0,
+      "modified": false
+    },
     "LICENSE": {
       "type": "-",
       "size": 1091,
@@ -26,7 +32,7 @@
     },
     "about.php": {
       "type": "-",
-      "size": 2417,
+      "size": 3343,
       "lmtime": 0,
       "modified": true
     },
