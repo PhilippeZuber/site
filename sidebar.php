@@ -52,12 +52,18 @@
                 Suche
             </a>
         </li>
+        <?php
+        if ($_SESSION['role'] == 1 OR $_SESSION['role'] == 2) {/*visible for logged-in only*/
+            ?>
         <li class="">
             <a href="#" data-toggle="modal" data-target="#UserModal">
                 <i class="glyphicon glyphicon-user"></i>
                 <?php echo $user['firstname'] . " " . $user['lastname']; ?>
             </a>
         </li>
+        <?php
+        }
+        ?>
         <!--<li class="<?php echo $page=='jobs' ? 'active' : ''; ?>">
             <a href="jobs.php">
                 <i class="glyphicon glyphicon-briefcase"></i>
@@ -82,12 +88,18 @@
 		<?php
         }
         ?>
+        <?php
+        if ($_SESSION['role'] == 1 OR $_SESSION['role'] == 2) {/*visible for logged-in only*/
+            ?>
         <li>
             <a href="index.php"aria-hidden="true">
                 <i class="glyphicon glyphicon-log-out"></i>
                 Logout
             </a>
         </li>
+        <?php
+        }
+        ?>
     </ul>
 	<!-- Only visible when sidebar not collapsed
     <ul class="list-unstyled CTAs">
