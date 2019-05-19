@@ -219,6 +219,10 @@ a.btn2, a.btn2:hover {
     MODAL WINDOWS CUSTOM STYLE
 ----------------------------------------------------- */
 
+.show {
+    opacity: 1;/*Unknown bug in Bootstrap, making modal visible*/
+}
+
 .modal{
     padding-top: 150px;/*BECAUSE OF NAVBAR*/
 }
