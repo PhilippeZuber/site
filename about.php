@@ -1,4 +1,8 @@
 <?php
+session_start();
+if (isset($_SESSION['id'])) {
+    $user_id = $_SESSION['id'];
+}
 
 require_once('system/data.php');
 require_once('system/security.php');
