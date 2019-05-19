@@ -1,11 +1,7 @@
-<div class="modal fade" id="RegisterModal" tabindex="-1" role="dialog" aria-labelledby="Registrieren / Einloggen">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-      	<button type="button" class="close" data-dismiss="modal" aria-label="Schliessen"><span aria-hidden="true">&times;</span></button>
-      	<h4 class="modal-title" id="meinModalLabel">Registrieren / Einloggen</h4>
-      </div>
-      <div class="modal-body"> <!--Begin Modal Box-->
+<!--Modal window for Register Login-->
+<div class="modal fade" id="RegisterModal" tabindex="-1" role="dialog" aria-labelledby="Einloggen / Registrieren">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
         <div class="container">
           <div class="row">
             <div class="col-md-6 col-md-offset-3">
@@ -94,64 +90,64 @@
             </div><!--/panel-->
             </div><!--/column-->
           </div><!--/row-->
-        <?php
-          if($success == true){
-        ?>
-            <div class="alert alert-success" role="alert"><?php echo $success_msg; ?></div>
-        <?php
-          }
-          if($error == true){
-        ?>
-            <div class="alert alert-danger" role="alert"><?php echo $error_msg; ?></div>
-        <?php
-          }
-        ?>
+          <?php
+            if($success == true){
+          ?>
+              <div class="alert alert-success" role="alert"><?php echo $success_msg; ?></div>
+          <?php
+            }
+            if($error == true){
+          ?>
+              <div class="alert alert-danger" role="alert"><?php echo $error_msg; ?></div>
+          <?php
+            }
+          ?>
         </div><!--container-->
-        <script>
-        $(function() {
+          <script>
+          $(function() {
 
-        $('#login-form-link').click(function(e) {           
-          $("#register-form").fadeOut(100);
-          $('#mailsend').attr({
-            'name': 'login-submit',
-            'value': 'einloggen',
-            'id': 'login'
-          });                 
-          $("#login-form").delay(100).fadeIn(100);
-          $("#mail").delay(100).fadeIn(100);          
-          $('#register-form-link').removeClass('btn-info'); 
-          $('#register-form-link').addClass('btn-default'); 
-          $(this).removeClass('btn-default');               
-          $(this).addClass('btn-info');                     
-          e.preventDefault();                               
-        });
-
-        $('#register-form-link').click(function(e) {
-          $("#login-form").fadeOut(100);
-          $("#register-form").delay(100).fadeIn(100);
-          $('#login-form-link').removeClass('btn-info');
-          $('#login-form-link').addClass('btn-default');
-          $(this).removeClass('btn-default');
-          $(this).addClass('btn-info');
-          e.preventDefault();
-        });
-
-        $('#forgotpw').click(function(e) {
-          $("#mail").fadeOut(100);
-          $('#login').attr({
-            'name': 'mailsend',
-            'value': 'Passwort senden',
-            'id': 'mailsend'
+          $('#login-form-link').click(function(e) {           
+            $("#register-form").fadeOut(100);
+            $('#mailsend').attr({
+              'name': 'login-submit',
+              'value': 'einloggen',
+              'id': 'login'
+            });                 
+            $("#login-form").delay(100).fadeIn(100);
+            $("#mail").delay(100).fadeIn(100);          
+            $('#register-form-link').removeClass('btn-info'); 
+            $('#register-form-link').addClass('btn-default'); 
+            $(this).removeClass('btn-default');               
+            $(this).addClass('btn-info');                     
+            e.preventDefault();                               
           });
-          e.preventDefault();
-        });
 
-        });
-        </script>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
-      </div>
-    </div>
-  </div>
-</div>
+          $('#register-form-link').click(function(e) {
+            $("#login-form").fadeOut(100);
+            $("#register-form").delay(100).fadeIn(100);
+            $('#login-form-link').removeClass('btn-info');
+            $('#login-form-link').addClass('btn-default');
+            $(this).removeClass('btn-default');
+            $(this).addClass('btn-info');
+            e.preventDefault();
+          });
+
+          $('#forgotpw').click(function(e) {
+            $("#mail").fadeOut(100);
+            $('#login').attr({
+              'name': 'mailsend',
+              'value': 'Passwort senden',
+              'id': 'mailsend'
+            });
+            e.preventDefault();
+          });
+
+          });
+          </script>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Schliessen</button>
+        </div>
+        </div><!-- /modal content-->
+    </div><!-- /modal dialog-->
+</div><!-- /modal user window-->

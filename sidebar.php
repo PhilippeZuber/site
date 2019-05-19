@@ -64,6 +64,18 @@
         <?php
         }
         ?>
+        <?php
+        if (!($_SESSION['role'] == 1 OR $_SESSION['role'] == 2)) {/*visible for logged-in only*/
+            ?>
+        <li class="">
+            <a href="#" data-toggle="modal" data-target="#RegisterModal">
+                <i class="glyphicon glyphicon-user"></i>
+                Einloggen / Registrieren
+            </a>
+        </li>
+        <?php
+        }
+        ?>
         <!--<li class="<?php echo $page=='jobs' ? 'active' : ''; ?>">
             <a href="jobs.php">
                 <i class="glyphicon glyphicon-briefcase"></i>
