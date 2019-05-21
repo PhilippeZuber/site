@@ -32,7 +32,7 @@
     },
     "about.php": {
       "type": "-",
-      "size": 3676,
+      "size": 3630,
       "lmtime": 0,
       "modified": true
     },
@@ -76,7 +76,7 @@
     "fonts": {},
     "header.php": {
       "type": "-",
-      "size": 8519,
+      "size": 15756,
       "lmtime": 0,
       "modified": true
     },
@@ -90,9 +90,9 @@
     },
     "index2.php": {
       "type": "-",
-      "size": 12085,
+      "size": 12148,
       "lmtime": 0,
-      "modified": false
+      "modified": true
     },
     "jobs.php": {
       "type": "-",
@@ -139,7 +139,7 @@
     },
     "sidebar.php": {
       "type": "-",
-      "size": 3454,
+      "size": 3852,
       "lmtime": 0,
       "modified": true
     },

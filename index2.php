@@ -16,9 +16,8 @@ $alters = get_records('alters');
 $page = 'search';
 ?>
 <html !DOCTYPE>
-    <?php include './header.php'; ?><!--CSS+JS files/modal window/ sidebar collapse-->
+    <?php include './header.php'; ?><!--CSS+JS files/modal window User settings & Register, Login/ sidebar collapse-->
 	<?php include './SearchInfModal.php'; ?><!--Modal window Search Information used in index.php / search.php only-->
-    <?php include './RegisterModal.php'; ?><!--Modal window Register/Login used in index.php / search.php only-->
     <body>
         <div class="wrapper">
             <?php include 'sidebar.php'; ?>

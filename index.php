@@ -97,7 +97,7 @@
 		<title>Wortlab - Login</title>
 
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<!-- Custom CSS -->
 		<link rel="stylesheet" href="css/custom.css">
 	</head>
@@ -207,7 +207,7 @@
 	  <!-- jQuery -->
 	  <script src="js/jquery-3.3.1.min.js"></script>
 	  <!-- Bootstrap Js -->
-	  <script src="js/bootstrap.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	  <script>
 	  $(function() {
 
