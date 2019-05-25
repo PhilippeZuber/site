@@ -30,7 +30,6 @@ $page = 'about';
                         </div>
                         <div class="col-md-4">
                             <div class="alert alert-warning" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Bitte behalte deine Login Daten für dich. Aus Bildrechtlichen Gründen, sollte der Zugang beschränkt bleiben.</div>
-                            <div class="alert alert-success"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Die Passwörter werden neu verschlüsselt abgespeichert.</div>
                             <div class="alert alert-success"><span class="glyphicon glyphicon-gift" aria-hidden="true"></span> In den letzten Monaten sind zahlreiche neue Bilder und Wörter dazugekommen.</div>
                         </div>
                     </div><!--/row-->
