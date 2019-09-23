@@ -44,94 +44,70 @@ $page = 'search';
                     </div>
                     <div class="row">
                         <div class="col-md-4 ">
-                            <div class="card">
-                                <div class="card-header" id="headingOne">
-                                    <h4 data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> Wortarten
-                                    </h4>
-                                </div>
-                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                                    <div class="card-body">
-                                        <table width="100%" border="0">
-                                            <tbody>
-                                                <?php
-                                                foreach ($categories as $key => $value) {
-                                                    if ($key % 2 == 0) {
-                                                        echo '<tr>';
-                                                    }
-                                                 ?>
-													<td><label><input type="checkbox" name="category[]" value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
-
-													<?php
-													if ($key + 1 % 2 == 0) {
-														echo '</tr>';
-													}
-												}
-													?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header" id="headingTwo">
-                                    <h4 data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>Alter
-                                    </h4>
-                                </div>
-                                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
-                                    <div class="card-body">
-                                        <table width="100%" border="0">
-                                            <tbody>
-                                                <?php
-                                                foreach ($alters as $key => $value) {
-                                                    if ($key % 2 == 0) {
-                                                        echo '<tr>';
-                                                    }
-                                                ?>
-                                                	<td><label><input type="checkbox" name="alter[]"  value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
-
-													<?php
-													if ($key + 1 % 2 == 0) {
-														echo '</tr>';
-													}
-												}
-													?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header" id="headingThree">
-                                    <h4 data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                                        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> Themengebiete
-                                    </h4>
-                                </div>
-                                <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
-                                    <div class="card-body">
-                                        <input class="form-control" id="semanticInput" type="text" placeholder="Suchen...">        
-                                        <table width="100%" border="0">
-                                            <tbody id="semanticTable">
-                                                <?php
-                                                foreach ($semantic as $key => $value) {
-//                                                    if ($key % 2 == 0) {
-                                                    echo '<tr>';
-//                                                    }
-                                                    ?>
-                                                <td><label><input type="checkbox" name="semantic[]"  value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
-
-                                                <?php
-//                                                if ($key + 1 % 2 == 0) {
-                                                echo '</tr>';
-//                                                }
+                            <details>
+                                <summary><span class="glyphicon glyphicon-plus-sign"></span> Wortarten</summary>
+                                <table width="100%" border="0">
+                                    <tbody>
+                                        <?php
+                                        foreach ($categories as $key => $value) {
+                                            if ($key % 2 == 0) {
+                                                echo '<tr>';
                                             }
                                             ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div><!--card-->
+                                            <td><label><input type="checkbox" name="category[]" value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
+
+                                            <?php
+                                            if ($key + 1 % 2 == 0) {
+                                                echo '</tr>';
+                                            }
+                                        }
+                                            ?>
+                                    </tbody>
+                                </table>
+                            </details>
+                                <details>
+                                    <summary><span class="glyphicon glyphicon-plus-sign"></span> Alter</summary>
+                                    <table width="100%" border="0">
+                                        <tbody>
+                                            <?php
+                                            foreach ($alters as $key => $value) {
+                                                if ($key % 2 == 0) {
+                                                    echo '<tr>';
+                                                }
+                                            ?>
+                                                <td><label><input type="checkbox" name="alter[]"  value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
+
+                                                <?php
+                                                if ($key + 1 % 2 == 0) {
+                                                    echo '</tr>';
+                                                }
+                                            }
+                                                ?>
+                                        </tbody>
+                                    </table>
+                                </details>
+                                <details>
+                                    <summary><span class="glyphicon glyphicon-plus-sign"></span> Kategorien</summary>
+                                    <input class="form-control" id="semanticInput" type="text" placeholder="Suchen...">        
+                                    <table width="100%" border="0">
+                                        <tbody id="semanticTable">
+                                            <?php
+                                            foreach ($semantic as $key => $value) {
+//                                                    if ($key % 2 == 0) {
+                                                echo '<tr>';
+//                                                    }
+                                                ?>
+                                            <td><label><input type="checkbox" name="semantic[]"  value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
+
+                                            <?php
+//                                                if ($key + 1 % 2 == 0) {
+                                            echo '</tr>';
+//                                                }
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </details>
                         </div><!--column-->
 
                         <div class="col-md-8" id="datatables">
