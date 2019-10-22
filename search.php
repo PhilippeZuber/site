@@ -44,7 +44,7 @@ $page = 'search';
                     </div>
                     <div class="row">
                         <div class="col-md-4 ">
-                            <details>
+                            <details open>
                                 <summary><span class="glyphicon glyphicon-plus-sign"></span> Wortarten</summary>
                                 <table width="100%" border="0">
                                     <tbody>
@@ -65,7 +65,7 @@ $page = 'search';
                                     </tbody>
                                 </table>
                             </details>
-                                <details>
+                                <details open>
                                     <summary><span class="glyphicon glyphicon-plus-sign"></span> Alter</summary>
                                     <table width="100%" border="0">
                                         <tbody>
@@ -86,7 +86,7 @@ $page = 'search';
                                         </tbody>
                                     </table>
                                 </details>
-                                <details>
+                                <details open>
                                     <summary><span class="glyphicon glyphicon-plus-sign"></span> Kategorien</summary>
                                     <input class="form-control" id="semanticInput" type="text" placeholder="Suchen...">        
                                     <table width="100%" border="0">
