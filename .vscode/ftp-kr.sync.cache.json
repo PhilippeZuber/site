@@ -1,5 +1,5 @@
 {
-  "ftp://login-25.hoststar.ch@wortlabor.sunnaewirbel.ch": {
+  "ftp://login-25.hoststar.ch@wortlab.sunnaewirbel.ch": {
     ".gitattributes": {
       "type": "-",
       "size": 395,
@@ -34,7 +34,7 @@
       "type": "-",
       "size": 3437,
       "lmtime": 0,
-      "modified": true
+      "modified": false
     },
     "add_alters.php": {
       "type": "-",
@@ -58,7 +58,7 @@
       "type": "-",
       "size": 14159,
       "lmtime": 0,
-      "modified": true
+      "modified": false
     },
     "apple-touch-icon.png": {
       "type": "-",
@@ -78,7 +78,7 @@
       "type": "-",
       "size": 15841,
       "lmtime": 0,
-      "modified": true
+      "modified": false
     },
     "images": {},
     "img": {},
@@ -86,13 +86,13 @@
       "type": "-",
       "size": 9135,
       "lmtime": 0,
-      "modified": true
+      "modified": false
     },
     "index2.php": {
       "type": "-",
-      "size": 12148,
+      "size": 10635,
       "lmtime": 0,
-      "modified": true
+      "modified": false
     },
     "jobs.php": {
       "type": "-",
@@ -103,7 +103,7 @@
     "js": {},
     "navigation.php": {
       "type": "-",
-      "size": 1110,
+      "size": 1419,
       "lmtime": 0,
       "modified": true
     },
@@ -117,7 +117,7 @@
       "type": "-",
       "size": 10568,
       "lmtime": 0,
-      "modified": true
+      "modified": false
     },
     "search_job.php": {
       "type": "-",
@@ -129,7 +129,7 @@
       "type": "-",
       "size": 3529,
       "lmtime": 0,
-      "modified": true
+      "modified": false
     },
     "send_word.php": {
       "type": "-",
@@ -141,7 +141,7 @@
       "type": "-",
       "size": 3852,
       "lmtime": 0,
-      "modified": true
+      "modified": false
     },
     "system": {},
     "user_img": {},
