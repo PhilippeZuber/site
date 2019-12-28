@@ -32,9 +32,9 @@
     },
     "about.php": {
       "type": "-",
-      "size": 3437,
+      "size": 3581,
       "lmtime": 0,
-      "modified": false
+      "modified": true
     },
     "add_alters.php": {
       "type": "-",
@@ -103,7 +103,7 @@
     "js": {},
     "navigation.php": {
       "type": "-",
-      "size": 1419,
+      "size": 1378,
       "lmtime": 0,
       "modified": true
     },

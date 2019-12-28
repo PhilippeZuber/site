@@ -44,6 +44,9 @@ $page = 'about';
                             <!--<div class="embed-responsive embed-responsive-16by9">
                                 <iframe src="https://player.vimeo.com/video/282533727?title=0&byline=0&portrait=0 fullscreen" allowfullscreen></iframe>
                             </div>-->
+                            <div>
+                                <img src="img/kinder.svg" class="img-responsive" alt="Kinder">
+                            </div>
                         </div>
                     </div><!--/row-->
                 </div><!--/container-->		
