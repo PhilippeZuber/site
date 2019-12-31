@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <!-- dataTables CSS -->
-	  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.16/b-1.5.1/b-html5-1.5.1/b-print-1.5.1/sl-1.2.5/datatables.min.css"/>
+	  <link rel="stylesheet" type="text/css" defer href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.16/b-1.5.1/b-html5-1.5.1/b-print-1.5.1/sl-1.2.5/datatables.min.css"/>
 	  <!-- select2 CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
 	  <!-- Custom CSS -->
@@ -19,9 +19,9 @@
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<!-- dataTables JS -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.16/b-1.5.1/b-html5-1.5.1/b-print-1.5.1/sl-1.2.5/datatables.min.js"></script>
+    <script type="text/javascript" defer src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+    <script type="text/javascript" defer src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+    <script type="text/javascript" defer src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.16/b-1.5.1/b-html5-1.5.1/b-print-1.5.1/sl-1.2.5/datatables.min.js"></script>
     <!--<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>-->
 	<!-- select2 JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
@@ -50,6 +50,8 @@ if (isset($_POST['update-submit'])) {
     $firstname = filter_data($_POST['firstname']);
     $lastname = filter_data($_POST['lastname']);
     $image_name = "";
+    $canton = filter_data($_POST['canton']);
+    $job = filter_data($_POST['job']);
 
     $result = get_user($user_id);
     $user = mysqli_fetch_assoc($result);
@@ -86,12 +88,12 @@ if (isset($_POST['update-submit'])) {
 
         if ($upload_ok) {
             $image_name = time() . "_" . $user['user_id'] . "." . $file_extension;
-			move_uploaded_file($_FILES['profil_img']['tmp_name'], $upload_path . $image_name);
+			      move_uploaded_file($_FILES['profil_img']['tmp_name'], $upload_path . $image_name);
         } else {
             echo "Leider konnte die Datei nicht hochgeladen werden. ";
         }
     }
-    $result = update_user($user_id, $email, $password, $confirm_password, $gender, $firstname, $lastname, $image_name);
+    $result = update_user($user_id, $email, $password, $confirm_password, $gender, $firstname, $lastname, $image_name, $canton, $job);
 }
 $result = get_user($user_id);
 $user = mysqli_fetch_assoc($result);
@@ -237,25 +239,67 @@ $last_update = $update_time['day'] . "." . $update_time['month'] . "." . $update
                                 name="lastname">
                     </div>
                   </div>
+                  <div class="form-group row">
+                    <div class="col-xs-6">
+                      <select class="form-control form-control-sm" id="job" name="job" tabindex="4">
+                        <option selected="selected" value="LogopädIn">LogopädIn B.A.</option>
+                        <option value="LehrerIn">LehrerIn</option>
+                        <option value="Anderes">Anderes</option>
+                      </select>
+                    </div>
+                    <div class="col-xs-6">
+                      <select class="form-control form-control-sm" id="canton" name="canton" tabindex="5">
+                        <option value="ag">Aargau</option>
+                        <option value="ar">Appenzell Ausserrhoden</option>
+                        <option value="ai">Appenzell Innerrhoden</option>
+                        <option value="bl">Basel-Landschaft</option>
+                        <option value="bs">Basel-Stadt</option>
+                        <option value="be">Bern</option>
+                        <option value="fr">Freiburg</option>
+                        <option value="ge">Genf</option>
+                        <option value="gl">Glarus</option>
+                        <option value="gr">Graubünden</option>
+                        <option value="ju">Jura</option>
+                        <option value="lu">Luzern</option>
+                        <option value="ne">Neuenburg</option>
+                        <option value="nw">Nidwalden</option>
+                        <option value="ow">Obwalden</option>
+                        <option value="sh">Schaffhausen</option>
+                        <option value="sz">Schwyz</option>
+                        <option value="so">Solothurn</option>
+                        <option value="sg">St. Gallen</option>
+                        <option value="ti">Tessin</option>
+                        <option value="tg">Thurgau</option>
+                        <option value="ur">Uri</option>
+                        <option value="vd">Waadt</option>
+                        <option value="vs">Wallis</option>
+                        <option value="zg">Zug</option>
+                        <option value="zh">Zürich</option>
+                      </select>
+                    </div>
+                 </div>
                   <div class="form-group">
-                    <input type="email" name="email" tabindex="4" class="form-control" placeholder="E-Mail-Adresse">
+                    <input type="email" name="email" tabindex="6" class="form-control" placeholder="E-Mail-Adresse">
                   </div>
-                  <div class="form-group">
-                    <input type="password" name="password" tabindex="5" class="form-control" placeholder="Passwort">
-                  </div>
-                  <div class="form-group">
-                    <input type="password" name="confirm-password" tabindex="6" class="form-control" placeholder="Passwort bestätigen">
+                  <div class="form-group row">
+                    <div class="col-xs-6">
+                      <input type="password" name="password" tabindex="7" class="form-control" placeholder="Passwort">
+                    </div>
+                    <div class="col-xs-6">
+                      <input type="password" name="confirm-password" tabindex="8" class="form-control" placeholder="Passwort bestätigen">
+                    </div>
                   </div>
                   <div class="form-group row">
                     <div class="col-sm-6 col-sm-offset-3">
-                      <input type="submit" name="register-submit" tabindex="8" class="btn btn-primary btn-block" value="registrieren" id="register">
+                      <input type="submit" name="register-submit" tabindex="9" class="btn btn-primary btn-block" value="registrieren" id="register">
                     </div>
                   </div>
                 </form>
                 <!-- /Registrieren Formular -->
                 </div>
               </div>
-              </div>
+              <p>Es werden keine Daten weitergegeben.</p>
+              </div><!--panel body-->
             </div><!--/panel-->
             </div><!--/column-->
           </div><!--/row-->

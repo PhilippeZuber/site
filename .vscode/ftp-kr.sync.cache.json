@@ -32,7 +32,7 @@
     },
     "about.php": {
       "type": "-",
-      "size": 3581,
+      "size": 3604,
       "lmtime": 0,
       "modified": true
     },
@@ -76,17 +76,17 @@
     "fonts": {},
     "header.php": {
       "type": "-",
-      "size": 15841,
+      "size": 18346,
       "lmtime": 0,
-      "modified": false
+      "modified": true
     },
     "images": {},
     "img": {},
     "index.php": {
       "type": "-",
-      "size": 9135,
+      "size": 12006,
       "lmtime": 0,
-      "modified": false
+      "modified": true
     },
     "index2.php": {
       "type": "-",

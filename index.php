@@ -67,9 +67,11 @@
 			$password = filter_data($_POST['password']);
 			$password_confirm = filter_data($_POST['confirm-password']);
 			$image_name= filter_data($_POST['email']);
+			$job = filter_data($_POST['job']);
+			$canton = filter_data($_POST['canton']);
 			
       if($password == $password_confirm){
-        if(register($email, md5($password), $gender, $firstname, $lastname)){
+        if(register($email, md5($password), $gender, $firstname, $lastname, $job, $canton)){
           $success = true;
           $success_msg .= "Sie haben sich erfolgreich registriert.<br/>";
           $success_msg .= "Bitte loggen Sie sich jetzt ein.<br/>";
@@ -124,7 +126,7 @@
 					</button>
 				  </div>
 				</div>
-			  </div><!--/panel-->
+			  </div><!--/panel heading-->
 			  <div class="panel-body">
 				<div class="row">
 				  <div class="col-lg-12">
@@ -168,25 +170,67 @@
                                     name="lastname">
                         </div>
                       </div>
+					  <div class="form-group row">
+                        <div class="col-xs-6">
+							<select class="form-control form-control-sm" id="job" name="job" tabindex="4">
+                                <option selected="selected" value="LogopädIn">LogopädIn B.A.</option>
+                                <option value="LehrerIn">LehrerIn</option>
+								<option value="Anderes">Anderes</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6">
+							<select class="form-control form-control-sm" id="canton" name="canton" tabindex="5">
+									<option value="ag">Aargau</option>
+                                    <option value="ar">Appenzell Ausserrhoden</option>
+                                    <option value="ai">Appenzell Innerrhoden</option>
+                                    <option value="bl">Basel-Landschaft</option>
+                                    <option value="bs">Basel-Stadt</option>
+                                    <option value="be">Bern</option>
+                                    <option value="fr">Freiburg</option>
+                                    <option value="ge">Genf</option>
+                                    <option value="gl">Glarus</option>
+                                    <option value="gr">Graubünden</option>
+                                    <option value="ju">Jura</option>
+                                    <option value="lu">Luzern</option>
+                                    <option value="ne">Neuenburg</option>
+                                    <option value="nw">Nidwalden</option>
+                                    <option value="ow">Obwalden</option>
+                                    <option value="sh">Schaffhausen</option>
+                                    <option value="sz">Schwyz</option>
+                                    <option value="so">Solothurn</option>
+                                    <option value="sg">St. Gallen</option>
+                                    <option value="ti">Tessin</option>
+                                    <option value="tg">Thurgau</option>
+                                    <option value="ur">Uri</option>
+                                    <option value="vd">Waadt</option>
+                                    <option value="vs">Wallis</option>
+                                    <option value="zg">Zug</option>
+                                    <option value="zh">Zürich</option>
+                            </select>
+                        </div>
+                      </div>
 					  <div class="form-group">
-							<input type="email" name="email" tabindex="4" class="form-control" placeholder="E-Mail-Adresse">
-					  </div>
-					  <div class="form-group">
-							<input type="password" name="password" tabindex="5" class="form-control" placeholder="Passwort">
-					  </div>
-					  <div class="form-group">
-							<input type="password" name="confirm-password" tabindex="6" class="form-control" placeholder="Passwort bestätigen">
+							<input type="email" name="email" tabindex="6" class="form-control" placeholder="E-Mail-Adresse">
 					  </div>
 					  <div class="form-group row">
+                        <div class="col-xs-6">
+							<input type="password" name="password" tabindex="7" class="form-control" placeholder="Passwort">
+					  	</div>
+						<div class="col-xs-6">
+							<input type="password" name="confirm-password" tabindex="8" class="form-control" placeholder="Passwort bestätigen">
+					  	</div>
+  					  </div>
+					  <div class="form-group row">
                           <div class="col-sm-6 col-sm-offset-3">
-                            <input type="submit" name="register-submit" tabindex="8" class="btn btn-primary btn-block" value="registrieren" id="register">
+                            <input type="submit" name="register-submit" tabindex="9" class="btn btn-primary btn-block" value="registrieren" id="register">
                           </div>
 					  </div>
 					</form>
-           <!-- /Registrieren Formular -->
+          			 <!-- /Registrieren Formular -->
 				  </div>
 				</div>
-			  </div>
+				<p>Es werden keine Daten weitergegeben.</p>
+			  </div><!--/panel body-->
 			</div><!--/panel-->
 		  </div><!--/column-->
 		</div><!--/row-->
@@ -205,7 +249,7 @@
 	  </div><!--container-->
 
 	  <!-- jQuery -->
-	  <script src="js/jquery-3.3.1.min.js"></script>
+	  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	  <!-- Bootstrap Js -->
 	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	  <script>
