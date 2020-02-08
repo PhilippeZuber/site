@@ -76,7 +76,7 @@
     "fonts": {},
     "header.php": {
       "type": "-",
-      "size": 18346,
+      "size": 18477,
       "lmtime": 0,
       "modified": true
     },
@@ -84,7 +84,7 @@
     "img": {},
     "index.php": {
       "type": "-",
-      "size": 12006,
+      "size": 12021,
       "lmtime": 0,
       "modified": true
     },
@@ -145,7 +145,6 @@
     },
     "system": {},
     "user_img": {},
-    "var": {},
     "wortlab_button.svg": {
       "type": "-",
       "size": 8127,
