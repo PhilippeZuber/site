@@ -107,12 +107,11 @@ $last_update = $update_time['day'] . "." . $update_time['month'] . "." . $update
         <div class="modal-content">
             <form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="profil-wortlab">Persönliche Einstellungen</h4>
+                    <h4 class="modal-title" id="profil-wortlab">Profil ändern</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label for="Gender" class="col-sm-2 form-control-label">Anrede</label>
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                             <select class="form-control form-control-sm" id="Gender" name="gender">
                                 <option <?php if ($user['gender'] == "") echo "selected"; ?> value="">--</option>
                                 <option <?php if ($user['gender'] == "Frau") echo "selected"; ?> value="Frau">Frau</option>
@@ -121,42 +120,35 @@ $last_update = $update_time['day'] . "." . $update_time['month'] . "." . $update
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="Vorname" class="col-sm-2 col-xs-12 form-control-label">Name</label>
-                        <div class="col-sm-5 col-xs-6">
+                        <div class="col-sm-6">
                             <input  type="text" class="form-control form-control-sm"
                                     id="Vorname" placeholder="Vorname"
                                     name="firstname" value="<?php echo $user['firstname']; ?>">
                         </div>
-                        <div class="col-sm-5 col-xs-6">
+                        <div class="col-sm-6">
                             <input  type="text" class="form-control form-control-sm"
                                     id="Nachname" placeholder="Nachname"
                                     name="lastname" value="<?php echo $user['lastname']; ?>">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="Email" class="col-sm-2 form-control-label">E-Mail</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                             <input  type="email" class="form-control form-control-sm"
                                     id="Email" placeholder="E-Mail" required
                                     name="email" value="<?php echo $user['email']; ?>">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="Passwort" class="col-sm-2 form-control-label">Passwort</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-6">
                             <input type="password" class="form-control form-control-sm" id="Passwort" placeholder="Passwort" name="password">
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="Passwort_Conf" class="col-sm-2 form-control-label">Passwort bestätigen</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-6">
                             <input type="password" class="form-control form-control-sm" id="Passwort_Conf" placeholder="Passwort" name="confirm-password">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="img" class="col-sm-2 form-control-label">Profilbild</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                             <input type="file" name="profil_img">
                         </div>
                     </div>
