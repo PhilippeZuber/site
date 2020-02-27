@@ -50,8 +50,9 @@ if (isset($_POST['update-submit'])) {
     $firstname = filter_data($_POST['firstname']);
     $lastname = filter_data($_POST['lastname']);
     $image_name = "";
-    $canton = filter_data($_POST['canton']);
     $job = filter_data($_POST['job']);
+    $canton = filter_data($_POST['canton']);
+
 
     $result = get_user($user_id);
     $user = mysqli_fetch_assoc($result);
@@ -93,7 +94,7 @@ if (isset($_POST['update-submit'])) {
             echo "Leider konnte die Datei nicht hochgeladen werden. ";
         }
     }
-    $result = update_user($user_id, $email, $password, $confirm_password, $gender, $firstname, $lastname, $image_name, $canton, $job);
+    $result = update_user($user_id, $email, $password, $confirm_password, $gender, $firstname, $lastname, $image_name, $job, $canton);
 }
 $result = get_user($user_id);
 $user = mysqli_fetch_assoc($result);
@@ -112,7 +113,7 @@ $last_update = $update_time['day'] . "." . $update_time['month'] . "." . $update
                 <div class="modal-body">
                     <div class="form-group row">
                         <div class="col-sm-6">
-                            <select class="form-control form-control-sm" id="Gender" name="gender">
+                            <select class="form-control form-control-sm" id="Gender" name="gender" tabindex="1">
                                 <option <?php if ($user['gender'] == "") echo "selected"; ?> value="">--</option>
                                 <option <?php if ($user['gender'] == "Frau") echo "selected"; ?> value="Frau">Frau</option>
                                 <option <?php if ($user['gender'] == "Herr") echo "selected"; ?> value="Herr">Herr</option>
@@ -121,29 +122,68 @@ $last_update = $update_time['day'] . "." . $update_time['month'] . "." . $update
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-6">
-                            <input  type="text" class="form-control form-control-sm"
+                            <input  type="text" class="form-control form-control-sm" tabindex="2"
                                     id="Vorname" placeholder="Vorname"
                                     name="firstname" value="<?php echo $user['firstname']; ?>">
                         </div>
                         <div class="col-sm-6">
-                            <input  type="text" class="form-control form-control-sm"
+                            <input  type="text" class="form-control form-control-sm" tabindex="3"
                                     id="Nachname" placeholder="Nachname"
                                     name="lastname" value="<?php echo $user['lastname']; ?>">
                         </div>
                     </div>
                     <div class="form-group row">
+                      <div class="col-sm-6">
+                        <select class="form-control form-control-sm" id="job" name="job" tabindex="4">
+                          <option <?php if ($user['job'] == "Anderes") echo "selected"; ?> value="Anderes">Anderes</option>
+                          <option <?php if ($user['job'] == "LogopädIn") echo "selected"; ?> value="LogopädIn">LogopädIn B.A.</option>
+                          <option <?php if ($user['job'] == "LehrerIn") echo "selected"; ?> value="LehrerIn">LehrerIn</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-6">
+                        <select class="form-control form-control-sm" id="canton" name="canton" tabindex="5">
+                          <option value="ag">Aargau</option>
+                          <option value="ar">Appenzell Ausserrhoden</option>
+                          <option value="ai">Appenzell Innerrhoden</option>
+                          <option value="bl">Basel-Landschaft</option>
+                          <option value="bs">Basel-Stadt</option>
+                          <option value="be">Bern</option>
+                          <option value="fr">Freiburg</option>
+                          <option value="ge">Genf</option>
+                          <option value="gl">Glarus</option>
+                          <option value="gr">Graubünden</option>
+                          <option value="ju">Jura</option>
+                          <option value="lu">Luzern</option>
+                          <option value="ne">Neuenburg</option>
+                          <option value="nw">Nidwalden</option>
+                          <option value="ow">Obwalden</option>
+                          <option value="sh">Schaffhausen</option>
+                          <option value="sz">Schwyz</option>
+                          <option value="so">Solothurn</option>
+                          <option value="sg">St. Gallen</option>
+                          <option value="ti">Tessin</option>
+                          <option value="tg">Thurgau</option>
+                          <option value="ur">Uri</option>
+                          <option value="vd">Waadt</option>
+                          <option value="vs">Wallis</option>
+                          <option value="zg">Zug</option>
+                          <option value="zh">Zürich</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
                         <div class="col-sm-12">
-                            <input  type="email" class="form-control form-control-sm"
+                            <input  type="email" class="form-control form-control-sm" tabindex="6"
                                     id="Email" placeholder="E-Mail" required
                                     name="email" value="<?php echo $user['email']; ?>">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-6">
-                            <input type="password" class="form-control form-control-sm" id="Passwort" placeholder="Passwort" name="password">
+                            <input type="password" class="form-control form-control-sm" id="Passwort" placeholder="Passwort" name="password" tabindex="7">
                         </div>
                         <div class="col-sm-6">
-                            <input type="password" class="form-control form-control-sm" id="Passwort_Conf" placeholder="Passwort" name="confirm-password">
+                            <input type="password" class="form-control form-control-sm" id="Passwort_Conf" placeholder="Passwort" name="confirm-password" tabindex="8">
                         </div>
                     </div>
 
