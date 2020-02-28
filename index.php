@@ -1,297 +1,245 @@
 <?php
-  session_start();
-  if(isset($_SESSION['id'])) unset($_SESSION['id']);
-  session_destroy();
+session_start();
+/*if (!isset($_SESSION['id'])) {
+    header("Location:index.php");
+} else {
+    $user_id = $_SESSION['id'];
+    
+}*/
 
-  require_once('system/data.php');
-  require_once('system/security.php');
+require_once('system/data.php');
+require_once('system/security.php');
 
-  $error = false;
-  $error_msg = "";
-  $success = false;
-  $success_msg = "";
 
-	/*Login*/
-  if(isset($_POST['login-submit'])){
-    if(!empty($_POST['email']) && !empty($_POST['password'])){
-      $email = filter_data($_POST['email']);
-      $password = filter_data($_POST['password']);
-
-      $result = login($email, md5($password));
- 
-      $row_count = mysqli_num_rows($result);
-
-      if($row_count == 1){
-        $user = mysqli_fetch_assoc($result);
-        session_start();
-        $_SESSION['id'] = $user['user_id'];
-        $_SESSION['role'] = $user['role'];
-        header("Location:search.php");
-      }else {
-        $error = true;
-        $error_msg .= "Leider konnten wir ihre E-Mailadresse oder ihr Passwort nicht finden.<br/>";
-      }
-    }else {
-      $error = true;
-      $error_msg .= "Bitte füllen Sie beide Felder aus.<br/>";
-    }
-	}
-	
-	/*ForgotPW*/
-	if(isset($_POST['mailsend'])){
-		if(!empty($_POST['email'])){
-			$email = filter_data($_POST['email']);
-			//echo $email; //testing
-			$result = mailsend($email);
-			$row_count = mysqli_num_rows($result);
-			if($row_count == 1){
-				$error = true;
-        $error_msg .= "Wir haben Ihnen eine E-Mail gesendet. Weiterhin viel Spass mit Wortlab<br/>";
-      }else {
-        $error = true;
-        $error_msg .= "Leider konnten wir ihre E-Mailadresse nicht finden. Sie können uns unter kontakt@zubermedien.ch erreichen<br/>";
-      }
-		}else {
-			$error = true;
-			$error_msg .= "Bitte geben Sie eine E-Mail Adresse ein.<br/>";
-		}
-	}
-
-	/*Register*/
-  if(isset($_POST['register-submit'])){
-    if(!empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['confirm-password'])){
-			$gender = filter_data($_POST['gender']);
-			$firstname = filter_data($_POST['firstname']);
-			$lastname = filter_data($_POST['lastname']);
-			$email = filter_data($_POST['email']);
-			$password = filter_data($_POST['password']);
-			$password_confirm = filter_data($_POST['confirm-password']);
-			$image_name= filter_data($_POST['email']);
-			$job = filter_data($_POST['job']);
-			$canton = filter_data($_POST['canton']);
-			
-      if($password == $password_confirm){
-        if(register($email, md5($password), $gender, $firstname, $lastname, $job, $canton)){
-          $success = true;
-          $success_msg .= "Sie haben sich erfolgreich registriert.<br/>";
-          $success_msg .= "Bitte loggen Sie sich jetzt ein.<br/>";
-        }else{
-          $error = true;
-          $error_msg .= "Es gibt ein Problem mit der Datenbankverbindung.";
-        }
-      }else{
-        $error = true;
-        $error_msg .= "Bitte Überprüfen Sie die Passworteingabe.<br/>";
-      }
-    }else {
-      $error = true;
-      $error_msg .= "Bitte füllen Sie alle Felder aus.<br/>";
-    }
-  }
-
+$categories = get_records('category');
+$semantic = get_records('semantic');
+$alters = get_records('alters');
+$page = 'index';
 ?>
 <html !DOCTYPE>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-		<title>Wortlab - Login</title>
-
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-		<!-- Custom CSS -->
-		<link rel="stylesheet" href="css/custom.css">
-	</head>
-	<body>
-	  <div class="container">
-		<div class="row">
-		  <div class="col-md-6 col-md-offset-3">
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-				<div class="row">
-				  <div class="col-xs-12">
-					<img src="img/wortlab_logo.svg" alt="Logo Wortlab"/>
-				  </div>
-				</div>
-				<div class="btn-group btn-group-justified" role="group">
-				  <div class="btn-group" role="group">
-					<button type="button" class="btn btn-info" id="login-form-link">
-					  <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login
-					</button>
-				  </div>
-				  <div class="btn-group" role="group">
-					<button type="button" class="btn btn-default" id="register-form-link">
-					  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Registrierung
-					</button>
-				  </div>
-				</div>
-			  </div><!--/panel heading-->
-			  <div class="panel-body">
-				<div class="row">
-				  <div class="col-lg-12">
-					<!-- Login-Formular -->
-					<form action="index.php" method="post" id="login-form" role="form">
-					  <div class="form-group">
-						<input type="email" name="email" tabindex="1" class="form-control" placeholder="E-Mail-Adresse">
-					  </div>
-					  <div class="form-group" id="mail">
-						<input type="password" name="password" tabindex="2" class="form-control" placeholder="Passwort">
-					  </div>
-					  <div class="form-group">
-						<div class="row">
-						  <div class="col-xs-6 col-xs-offset-3">
-							<input type="submit" name="login-submit" tabindex="3" class="btn btn-primary btn-block" value="einloggen" id="login">
-							<p class="text-center" id="forgotpw"><small>Passwort vergessen?</small></p>
-						  </div>
-						</div>
-					  </div>
-					</form>
-					<!-- /Login-Formular -->
-					<!-- Registrieren Formular -->
-					<form action="index.php" method="post" id="register-form" role="form">
-                      <div class="form-group row">
-                        <div class="col-xs-6">                     
-                            <select class="form-control form-control-sm" id="gender" name="gender" tabindex="1">
-                                <option selected="selected" value="Frau">Frau</option>
-                                <option value="Herr">Herr</option>
-                            </select>
+    <?php include './header.php'; ?><!--CSS+JS files/modal window User settings & Register, Login/ sidebar collapse-->
+	<?php include './SearchInfModal.php'; ?><!--Modal window Search Information used in index.php / search.php only-->
+    <body>
+        <div class="wrapper">
+            <?php include 'sidebar.php'; ?>
+            <!-- Page Content Holder -->
+            <div id="content">
+                <?php include './navigation.php'; ?>
+                <div class=container-fluid>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-warning" role="alert">Wortlab befindet sich zurzeit in einer Testphase. D.h. die Datenbank von Wortlab ist noch unvollständig, weshalb einige Filterkriterien noch nicht funktionieren. Sollte sich herausstellen, dass eine Nachfrage an Wortlab besteht, wird die Entwicklung weitergeführt.</div>
+                            <label><input id="search_image" checked type="checkbox" value="biler">&nbsp Mit Bildern</label>
+                            <h1>Suchen</h1>
+                            <div class="input-group">
+                                <input type="text" id="search_text" class="form-control" placeholder="Suche nach...">
+                                <span class="input-group-btn">
+                                    <button id="searchbtn" class="btn btn-primary" type="button" onClick="search();">Los!</button>
+                                </span>
+                            </div>
+							<p>Suche mithilfe von <strong>*</strong> z.B. nach *le  um Wörter zu finden die auf le Enden.</p>
+							<button type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#SearchInfModal" style="margin-bottom: 20px">
+								Weitere Infos zum Suchen
+							</button>
                         </div>
-                      </div>
-                      <div class="form-group row">
-                        <div class="col-xs-6">
-                            <input  type="text" class="form-control form-control-sm"
-                                    id="firstname" placeholder="Vorname" tabindex="2"
-                                    name="firstname">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 ">
+                            <details open>
+                                <summary><span class="glyphicon glyphicon-plus-sign"></span> Wortarten</summary>
+                                <table width="100%" border="0">
+                                    <tbody>
+                                        <?php
+                                        foreach ($categories as $key => $value) {
+                                            if ($key % 2 == 0) {
+                                                echo '<tr>';
+                                            }
+                                            ?>
+                                            <td><label><input type="checkbox" name="category[]" value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
+
+                                            <?php
+                                            if ($key + 1 % 2 == 0) {
+                                                echo '</tr>';
+                                            }
+                                        }
+                                            ?>
+                                    </tbody>
+                                </table>
+                            </details>
+                                <details open>
+                                    <summary><span class="glyphicon glyphicon-plus-sign"></span> Alter</summary>
+                                    <table width="100%" border="0">
+                                        <tbody>
+                                            <?php
+                                            foreach ($alters as $key => $value) {
+                                                if ($key % 2 == 0) {
+                                                    echo '<tr>';
+                                                }
+                                            ?>
+                                                <td><label><input type="checkbox" name="alter[]"  value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
+
+                                                <?php
+                                                if ($key + 1 % 2 == 0) {
+                                                    echo '</tr>';
+                                                }
+                                            }
+                                                ?>
+                                        </tbody>
+                                    </table>
+                                </details>
+                                <details open>
+                                    <summary><span class="glyphicon glyphicon-plus-sign"></span> Kategorien</summary>
+                                    <input class="form-control" id="semanticInput" type="text" placeholder="Suchen...">        
+                                    <table width="100%" border="0">
+                                        <tbody id="semanticTable">
+                                            <?php
+                                            foreach ($semantic as $key => $value) {
+//                                                    if ($key % 2 == 0) {
+                                                echo '<tr>';
+//                                                    }
+                                                ?>
+                                            <td><label><input type="checkbox" name="semantic[]"  value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
+
+                                            <?php
+//                                                if ($key + 1 % 2 == 0) {
+                                            echo '</tr>';
+//                                                }
+                                        }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </details>
+                        </div><!--column-->
+
+                        <div class="col-md-8" id="datatables">
+                            <table  class="table table-responsive table-striped" id="data-table1">
+                                <thead>
+                                    <tr>
+                                        <th>Wort</th>
+                                        <th class="search_image_column">Bild</th>
+                                        <th class="search_image_column">Bild2</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="col-xs-6">
-                            <input  type="text" class="form-control form-control-sm"
-                                    id="lastname" placeholder="Nachname" tabindex="3"
-                                    name="lastname">
-                        </div>
-                      </div>
-					  <div class="form-group row">
-                        <div class="col-xs-6">
-							<select class="form-control form-control-sm" id="job" name="job" tabindex="4">
-                                <option selected="selected" value="LogopädIn">LogopädIn B.A.</option>
-                                <option value="LehrerIn">LehrerIn</option>
-								<option value="Anderes">Anderes</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-6">
-							<select class="form-control form-control-sm" id="canton" name="canton" tabindex="5">
-									<option value="ag">Aargau</option>
-                                    <option value="ar">Appenzell Ausserrhoden</option>
-                                    <option value="ai">Appenzell Innerrhoden</option>
-                                    <option value="bl">Basel-Landschaft</option>
-                                    <option value="bs">Basel-Stadt</option>
-                                    <option value="be">Bern</option>
-                                    <option value="fr">Freiburg</option>
-                                    <option value="ge">Genf</option>
-                                    <option value="gl">Glarus</option>
-                                    <option value="gr">Graubünden</option>
-                                    <option value="ju">Jura</option>
-                                    <option value="lu">Luzern</option>
-                                    <option value="ne">Neuenburg</option>
-                                    <option value="nw">Nidwalden</option>
-                                    <option value="ow">Obwalden</option>
-                                    <option value="sh">Schaffhausen</option>
-                                    <option value="sz">Schwyz</option>
-                                    <option value="so">Solothurn</option>
-                                    <option value="sg">St. Gallen</option>
-                                    <option value="ti">Tessin</option>
-                                    <option value="tg">Thurgau</option>
-                                    <option value="ur">Uri</option>
-                                    <option value="vd">Waadt</option>
-                                    <option value="vs">Wallis</option>
-                                    <option value="zg">Zug</option>
-                                    <option value="zh">Zürich</option>
-                            </select>
-                        </div>
-                      </div>
-					  <div class="form-group">
-							<input type="email" name="email" tabindex="6" class="form-control" placeholder="E-Mail-Adresse">
-					  </div>
-					  <div class="form-group row">
-                        <div class="col-xs-6">
-							<input type="password" name="password" tabindex="7" class="form-control" placeholder="Passwort">
-					  	</div>
-						<div class="col-xs-6">
-							<input type="password" name="confirm-password" tabindex="8" class="form-control" placeholder="Passwort bestätigen">
-					  	</div>
-  					  </div>
-					  <div class="form-group row">
-                          <div class="col-sm-6 col-sm-offset-3">
-                            <input type="submit" name="register-submit" tabindex="9" class="btn btn-primary btn-block" value="registrieren" id="register">
-                          </div>
-					  </div>
-					</form>
-          			 <!-- /Registrieren Formular -->
-				  </div>
-				</div>
-				<p>Es werden keine Daten weitergegeben.</p>
-			  </div><!--/panel body-->
-			</div><!--/panel-->
-		  </div><!--/column-->
-		</div><!--/row-->
-		<?php
-		  if($success == true){
-		?>
-			  <div class="alert alert-success" role="alert"><?php echo $success_msg; ?></div>
-		<?php
-		  }
-		  if($error == true){
-		?>
-			  <div class="alert alert-danger" role="alert"><?php echo $error_msg; ?></div>
-		<?php
-		  }
-		?>
-	  </div><!--container-->
+                    </div><!--row-->
+                </div><!--/container-->		
+            </div><!--/content-->
+        </div><!--/wrapper-->
 
-	  <!-- jQuery -->
-	  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-	  <!-- Bootstrap Js -->
-	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	  <script>
-	  $(function() {
+        <!-- jQuery -->
+        <script>
+			/*Enter key possible for search function trigger onclick*/
+			var input = document.getElementById("search_text");
+				input.addEventListener("keyup", function(event) {
+					event.preventDefault();
+					if (event.keyCode === 13) {
+						document.getElementById("searchbtn").click();
+					}
+				});
+			/*Initialising data-table*/
+            var table;
+            $(document).ready(function (){
+				$('#data-table1').DataTable( {
+					"language": {
+						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+					},
+					searching: false,
+					paging: false,
+				});
+            });
+			
+			/*Search function*/
+            function search() {
+                var category = [];
+                var semantic = [];
+                var alter = [];
+                $.each($("input[name='category[]']:checked"), function () {
+                    category.push($(this).val());
+                });
+                $.each($("input[name='semantic[]']:checked"), function () {
+                    semantic.push($(this).val());
+                });
+                $.each($("input[name='alter[]']:checked"), function () {
+                    alter.push($(this).val());
+                });
+                
+                $('#data-table1').DataTable().clear().destroy();
 
-		$('#login-form-link').click(function(e) {           
-		  $("#register-form").fadeOut(100);
-			$('#mailsend').attr({
-				'name': 'login-submit',
-				'value': 'einloggen',
-				'id': 'login'
-			});                 
-		  $("#login-form").delay(100).fadeIn(100);
-			$("#mail").delay(100).fadeIn(100);          
-		  $('#register-form-link').removeClass('btn-info'); 
-		  $('#register-form-link').addClass('btn-default'); 
-		  $(this).removeClass('btn-default');               
-		  $(this).addClass('btn-info');                     
-		  e.preventDefault();                               
-		});
+                table = $('#data-table1').DataTable({
+					"language": {/*data-table in german*/
+						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+					},
+                    ajax: {/*giving values*/
+                        url: 'search_word.php',
+                        data: {
+                            search_image: $('#search_image').prop('checked'),
+                            search_text: $('#search_text').val(),
+                            category: category,
+                            semantic: semantic,
+                            alter: alter,
 
-		$('#register-form-link').click(function(e) {
-		  $("#login-form").fadeOut(100);
-		  $("#register-form").delay(100).fadeIn(100);
-		  $('#login-form-link').removeClass('btn-info');
-		  $('#login-form-link').addClass('btn-default');
-		  $(this).removeClass('btn-default');
-		  $(this).addClass('btn-info');
-		  e.preventDefault();
-		});
-
-		$('#forgotpw').click(function(e) {
-		  $("#mail").fadeOut(100);
-			$('#login').attr({
-				'name': 'mailsend',
-				'value': 'Passwort senden',
-				'id': 'mailsend'
-			});
-		  e.preventDefault();
-		});
-
-	  });
-	  </script>
-	</body>
+                        }
+                    },
+					dom: 'Bfrtip',/*Position of Buttons*/
+					buttons: [
+						/*{
+							extend: 'selectAll',
+							text: 'Zeilen wählen'
+						},*/
+						{
+								extend: 'excel',
+								text: 'Für Excel Speichern',
+								exportOptions: {
+									modifier: {
+										page: 'current'
+									}
+								}
+						},
+						/*{
+								extend: 'pdf',
+								text: 'Als pdf Speichern',
+								exportOptions: {
+									modifier: {
+										page: 'current'
+									}
+								}
+						},*/
+						{
+								extend: 'print',
+								text: 'Drucken / Als pdf Speichern',
+								/*message: "(C) by ...",*/
+								exportOptions: {
+									modifier: {
+										page: 'current'
+									},
+									stripHtml: false
+								}
+						},
+						{
+								extend: 'copy',
+								text: 'Zwischenablage',
+								exportOptions: {
+									modifier: {
+										page: 'current'
+									}
+								}
+						}
+					],
+					select: {
+						style: 'multi'
+					},
+                    searching: false,
+                    "processing": true,
+                    "serverSide": true,
+                });
+            }
+			/*var table = $('#data-table1').DataTable();
+ 			var data = table.buttons.exportData( {
+				columns: ':visible'
+			} );*/
+        </script>
+    </body>
 </html>

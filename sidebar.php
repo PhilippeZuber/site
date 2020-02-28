@@ -65,10 +65,10 @@
         }
         ?>
         <?php
-        if (!($_SESSION['role'] == 1 OR $_SESSION['role'] == 2)) {/*visible for logged-in only*/
+        if (!($_SESSION['role'] == 1 OR $_SESSION['role'] == 2)) {/*visible for non logged-in only*/
             ?>
         <li class="">
-            <a href="#" data-toggle="modal" data-target="#RegisterModal">
+            <a href="login.php">
                 <i class="glyphicon glyphicon-user"></i>
                 Einloggen / Registrieren
             </a>
