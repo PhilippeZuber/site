@@ -1,11 +1,10 @@
 <?php
 session_start();
-/*if (!isset($_SESSION['id'])) {
-    header("Location:index.php");
+if (isset($_SESSION['id'])) {
+    header("Location:search.php");
 } else {
     $user_id = $_SESSION['id'];
-    
-}*/
+}
 
 require_once('system/data.php');
 require_once('system/security.php');
