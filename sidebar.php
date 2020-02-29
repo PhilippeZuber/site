@@ -104,7 +104,7 @@
         if ($_SESSION['role'] == 1 OR $_SESSION['role'] == 2) {/*visible for logged-in only*/
             ?>
         <li>
-            <a href="index.php"aria-hidden="true">
+            <a href="login.php"aria-hidden="true">
                 <i class="glyphicon glyphicon-log-out"></i>
                 Logout
             </a>

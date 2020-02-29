@@ -76,7 +76,7 @@
     "fonts": {},
     "header.php": {
       "type": "-",
-      "size": 20418,
+      "size": 10692,
       "lmtime": 0,
       "modified": true
     },
@@ -84,15 +84,9 @@
     "img": {},
     "index.php": {
       "type": "-",
-      "size": 12202,
+      "size": 10640,
       "lmtime": 0,
       "modified": true
-    },
-    "index2.php": {
-      "type": "-",
-      "size": 10635,
-      "lmtime": 0,
-      "modified": false
     },
     "jobs.php": {
       "type": "-",
@@ -101,6 +95,12 @@
       "modified": false
     },
     "js": {},
+    "login.php": {
+      "type": "-",
+      "size": 12203,
+      "lmtime": 0,
+      "modified": false
+    },
     "navigation.php": {
       "type": "-",
       "size": 1378,
@@ -139,9 +139,9 @@
     },
     "sidebar.php": {
       "type": "-",
-      "size": 3852,
+      "size": 3815,
       "lmtime": 0,
-      "modified": false
+      "modified": true
     },
     "system": {},
     "user_img": {},
