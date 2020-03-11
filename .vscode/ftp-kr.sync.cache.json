@@ -32,7 +32,7 @@
     },
     "about.php": {
       "type": "-",
-      "size": 4744,
+      "size": 4670,
       "lmtime": 0,
       "modified": true
     },
@@ -74,6 +74,12 @@
       "modified": false
     },
     "fonts": {},
+    "google96095c3bacb9af56.html": {
+      "type": "-",
+      "size": 53,
+      "lmtime": 0,
+      "modified": false
+    },
     "header.php": {
       "type": "-",
       "size": 10692,
@@ -84,7 +90,7 @@
     "img": {},
     "index.php": {
       "type": "-",
-      "size": 10640,
+      "size": 10630,
       "lmtime": 0,
       "modified": true
     },
@@ -109,9 +115,9 @@
     },
     "robots.txt": {
       "type": "-",
-      "size": 25,
+      "size": 0,
       "lmtime": 0,
-      "modified": false
+      "modified": true
     },
     "search.php": {
       "type": "-",

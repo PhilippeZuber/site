@@ -28,7 +28,6 @@ $page = 'index';
                     <div class="row">
                         <div class="col-md-12">
                             <div class="alert alert-warning" role="alert">Wortlab befindet sich zurzeit in einer Testphase. D.h. die Datenbank von Wortlab ist noch unvollständig, weshalb einige Filterkriterien noch nicht funktionieren. Sollte sich herausstellen, dass eine Nachfrage an Wortlab besteht, wird die Entwicklung weitergeführt.</div>
-                            <label><input id="search_image" checked type="checkbox" value="biler">&nbsp Mit Bildern</label>
                             <h1>Suchen</h1>
                             <div class="input-group">
                                 <input type="text" id="search_text" class="form-control" placeholder="Suche nach...">
@@ -37,7 +36,16 @@ $page = 'index';
                                 </span>
                             </div>
 							<p>Suche mithilfe von <strong>*</strong> z.B. nach *le  um Wörter zu finden die auf le Enden.</p>
-							<button type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#SearchInfModal" style="margin-bottom: 20px">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label><input id="search_image" checked type="checkbox" value="biler">&nbsp Mit Bildern</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#SearchInfModal" style="margin-bottom: 20px">
 								Weitere Infos zum Suchen
 							</button>
                         </div>
