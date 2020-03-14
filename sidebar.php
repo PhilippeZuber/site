@@ -1,7 +1,7 @@
 <!-- Sidebar Holder -->
 <nav id="sidebar">
     <div class="sidebar-header">
-    	<a href="search.php">
+    	<a href="index.php">
         	<h3><img src="wortlab_button.svg" alt="WORTLAB" width="100%"></h3>
         	<strong><img src="wortlab_button.svg" alt="WL" width="100%"></strong>
         </a>
@@ -46,12 +46,30 @@
             <?php
         }
         ?>
+        <?php
+        if ($_SESSION['role'] == 1 OR $_SESSION['role'] == 2) {/*visible for logged-in only*/
+            ?>
         <li class="<?php echo $page=='search' ? 'active' : ''; ?>">
             <a href="search.php">
                 <i class="glyphicon glyphicon-search"></i>
                 Suche
             </a>
         </li>
+        <?php
+        }
+        ?>
+        <?php
+        if (!($_SESSION['role'] == 1 OR $_SESSION['role'] == 2)) {/*visible for non logged-in only*/
+            ?>
+        <li class="<?php echo $page=='search' ? 'active' : ''; ?>">
+            <a href="index.php">
+                <i class="glyphicon glyphicon-search"></i>
+                Suche
+            </a>
+        </li>
+        <?php
+        }
+        ?>
         <?php
         if ($_SESSION['role'] == 1 OR $_SESSION['role'] == 2) {/*visible for logged-in only*/
             ?>
