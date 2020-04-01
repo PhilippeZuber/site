@@ -26,13 +26,13 @@
     },
     "SearchInfModal.php": {
       "type": "-",
-      "size": 824,
+      "size": 838,
       "lmtime": 0,
-      "modified": false
+      "modified": true
     },
     "about.php": {
       "type": "-",
-      "size": 4670,
+      "size": 3530,
       "lmtime": 0,
       "modified": true
     },
@@ -103,9 +103,9 @@
     "js": {},
     "login.php": {
       "type": "-",
-      "size": 12203,
+      "size": 12210,
       "lmtime": 0,
-      "modified": false
+      "modified": true
     },
     "navigation.php": {
       "type": "-",
@@ -121,7 +121,7 @@
     },
     "search.php": {
       "type": "-",
-      "size": 11085,
+      "size": 11139,
       "lmtime": 0,
       "modified": true
     },
@@ -133,9 +133,9 @@
     },
     "search_word.php": {
       "type": "-",
-      "size": 3529,
+      "size": 3619,
       "lmtime": 0,
-      "modified": false
+      "modified": true
     },
     "send_word.php": {
       "type": "-",
@@ -145,7 +145,7 @@
     },
     "sidebar.php": {
       "type": "-",
-      "size": 3815,
+      "size": 4368,
       "lmtime": 0,
       "modified": true
     },

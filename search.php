@@ -43,7 +43,7 @@ $page = 'search';
                             <label><input id="search_image" checked type="checkbox" value="biler">&nbsp Mit Bildern</label>
                         </div>
                         <div class="col-md-2">
-                            <label><input id="lauttreu" type="checkbox" value="lauttreu">&nbsp Lauttreu</label>
+                            <label><input id="lauttreu" type="checkbox" value="1">&nbsp Lauttreu</label>
                         </div>
                     </div>
                     <div class="row">
@@ -190,7 +190,7 @@ $page = 'search';
                             category: category,
                             semantic: semantic,
                             alter: alter,
-
+                            lauttreu: $('#lauttreu').prop('checked'),
                         }
                     },
 					dom: 'Bfrtip',/*Position of Buttons*/

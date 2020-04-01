@@ -72,7 +72,7 @@
 			$news = filter_data($_POST['news']);
 			
       if($password == $password_confirm){
-        if(register($email, md5($password), $gender, $firstname, $lastname, $job, $canton)){
+        if(register($email, md5($password), $gender, $firstname, $lastname, $job, $canton, $news)){
           $success = true;
           $success_msg .= "Sie haben sich erfolgreich registriert.<br/>";
           $success_msg .= "Bitte loggen Sie sich jetzt ein.<br/>";

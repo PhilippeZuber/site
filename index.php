@@ -42,6 +42,9 @@ $page = 'index';
                         <div class="col-md-2">
                             <label><input id="search_image" checked type="checkbox" value="biler">&nbsp Mit Bildern</label>
                         </div>
+                        <div class="col-md-2">
+                            <label><input id="lauttreu" type="checkbox" value="1">&nbsp Lauttreu</label>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -187,7 +190,7 @@ $page = 'index';
                             category: category,
                             semantic: semantic,
                             alter: alter,
-
+                            lauttreu: $('#lauttreu').prop('checked'),
                         }
                     },
 					dom: 'Bfrtip',/*Position of Buttons*/
