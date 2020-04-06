@@ -131,9 +131,14 @@
         }
         ?>
     </ul>
-	<!-- Only visible when sidebar not collapsed
+    <?php
+        if (!($_SESSION['role'] == 1 OR $_SESSION['role'] == 2)) {/*visible for non logged-in only*/
+    ?>
+	<!-- Only visible when sidebar not collapsed-->
     <ul class="list-unstyled CTAs">
-        <li><a href="#" class="btn1">Button 1</a></li>
-        <li><a href="#" class="btn2">Button 2</a></li>
-    </ul>-->
+        <li><a href="login.php" class="btn1">Registriere dich kostenlos und erhalte den Filter lauttreu.</a></li>
+    </ul>
+    <?php
+        }
+    ?>
 </nav>

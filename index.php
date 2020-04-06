@@ -27,7 +27,7 @@ $page = 'index';
                 <div class=container-fluid>
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="alert alert-warning" role="alert">Wortlab befindet sich zurzeit in einer Testphase. D.h. die Datenbank von Wortlab ist noch unvollständig, weshalb einige Filterkriterien noch nicht funktionieren. Sollte sich herausstellen, dass eine Nachfrage an Wortlab besteht, wird die Entwicklung weitergeführt.</div>
+                            <div class="alert alert-warning" role="alert">Wortlab befindet sich zurzeit in der Aufbauphase. Die Datenbank wird ständig erweitert und neue Filterkriterien werden hinzugefügt. Rückmeldungen und Ideen nehmen wir gerne unter <a href="mailto:info@wortlab.ch">info@wortlab.ch</a> entgegen.</div>
                             <h1>Suchen</h1>
                             <div class="input-group">
                                 <input type="text" id="search_text" class="form-control" placeholder="Suche nach...">
@@ -43,7 +43,7 @@ $page = 'index';
                             <label><input id="search_image" checked type="checkbox" value="biler">&nbsp Mit Bildern</label>
                         </div>
                         <div class="col-md-2">
-                            <label><input id="lauttreu" type="checkbox" value="1">&nbsp Lauttreu</label>
+                            <label><input id="lauttreu" disabled type="checkbox" value="1">&nbsp Lauttreu</label>
                         </div>
                     </div>
                     <div class="row">

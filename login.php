@@ -105,7 +105,14 @@
 		<link rel="stylesheet" href="css/custom.css">
 	</head>
 	<body>
-	  <div class="container">
+		<nav class="navbar navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a href="index.php"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>Zurück</a>
+				</div>
+			</div>
+		</nav>
+	  <div class="container" style="padding-top: 100px;">
 		<div class="row">
 		  <div class="col-md-6 col-md-offset-3">
 			<div class="panel panel-default">

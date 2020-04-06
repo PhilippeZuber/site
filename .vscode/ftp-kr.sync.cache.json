@@ -90,7 +90,7 @@
     "img": {},
     "index.php": {
       "type": "-",
-      "size": 10946,
+      "size": 11179,
       "lmtime": 0,
       "modified": true
     },
@@ -121,7 +121,7 @@
     },
     "search.php": {
       "type": "-",
-      "size": 11139,
+      "size": 11113,
       "lmtime": 0,
       "modified": true
     },
@@ -139,9 +139,9 @@
     },
     "send_word.php": {
       "type": "-",
-      "size": 7759,
+      "size": 7890,
       "lmtime": 0,
-      "modified": false
+      "modified": true
     },
     "sidebar.php": {
       "type": "-",
