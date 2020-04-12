@@ -45,6 +45,7 @@ if (isset($_POST['data'])) {
     $_POST['data']['category'] = implode(',', $_POST['data']['category']);
     $_POST['data']['semantic'] = implode(',', $_POST['data']['semantic']);
     $_POST['data']['alters'] = implode(',', $_POST['data']['alters']);
+    $_POST['data']['lauttreu'] = isset($_POST['lauttreu']) ? 1 : 0;
     if ($_POST['data']['id'] != '') { /*when no new image is chosen*/
 		if($image=='')
         {
@@ -95,7 +96,6 @@ $words = get_words();
                                                             <input type="text" name="data[name]" class="form-control" value="<?php echo @$word['name']; ?>">
                                                             <input type="hidden" name="data[id]" class="form-control" value="<?php echo @$word['id']; ?>">
                                                         </td>
-
                                                     </tr>
                                                     <tr>
                                                         <td>Wortart</td>
@@ -109,9 +109,7 @@ $words = get_words();
                                                                 }
                                                                 ?>
                                                             </select>
-
                                                         </td>
-
                                                     </tr>
                                                     <tr>
                                                         <td>Themengebiet</td>
@@ -125,9 +123,7 @@ $words = get_words();
                                                                 }
                                                                 ?>
                                                             </select>
-
                                                         </td>
-
                                                     </tr>
                                                     <tr>
                                                         <td>Alter</td>
@@ -141,9 +137,7 @@ $words = get_words();
                                                                 }
                                                                 ?>
                                                             </select>
-
                                                         </td>
-
                                                     </tr>
                                                     <tr>
                                                         <td>Bild</td>
@@ -161,18 +155,28 @@ $words = get_words();
                                                             }
                                                             ?>
                                                         </td>
-
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Meta</td>
+                                                        <td>
+                                                            <?php
+                                                            if ($word['lauttreu'] == 1) {
+                                                                echo '<label><input id="lauttreu" name="lauttreu" type="checkbox" value="1" checked>&nbsp Lauttreu</label>';
+                                                            }
+                                                            else {
+                                                                echo '<label><input id="lauttreu" name="lauttreu" type="checkbox" value="1">&nbsp Lauttreu</label>';
+                                                            }
+                                                            ?>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td></td>
                                                         <td>
                                                             <input type="submit"  class="form-control btn btn-primary" value="Speichern">
                                                         </td>
-
                                                     </tr>
                                                 </tbody>
                                             </table>
-
                                         </form>
                                     </div>
                                     <div class="col-md-12">

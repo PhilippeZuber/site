@@ -51,7 +51,6 @@ if (!empty($_REQUEST['semantic'])) {
 if (!empty($_REQUEST['alter'])) {
     $wh .= "  and alters in ('" . implode("','", $_REQUEST['alter']) . "')";
 }
-/*(Status)*/
 if ($_REQUEST['lauttreu'] != 'false') {
     $wh .= "  and lauttreu = 1";
 }
