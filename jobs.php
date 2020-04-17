@@ -12,8 +12,8 @@ require_once('system/security.php');
 $page = 'jobs';
 
 ?>
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="de">
     <?php include './header.php'; ?>
     <!--Modal window for jobs-->
     <div class="modal fade" id="JobsModal" tabindex="-1" role="dialog" aria-labelledby="jobs-wortlab">

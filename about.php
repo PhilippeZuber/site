@@ -9,8 +9,8 @@ require_once('system/security.php');
 
 $page = 'about';
 ?>
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="de">
     <?php include './header.php'; ?>
     <body>
         <div class="wrapper">

@@ -40,10 +40,10 @@ $page = 'search';
                     </div>
                     <div class="row">
                         <div class="col-md-2">
-                            <label><input id="search_image" checked type="checkbox" value="biler">&nbsp Mit Bildern</label>
+                            <label><input id="search_image" checked type="checkbox" value="biler">&nbsp; Mit Bildern</label>
                         </div>
                         <div class="col-md-2">
-                            <label><input id="lauttreu" type="checkbox" value="1">&nbsp Lauttreu</label>
+                            <label><input id="lauttreu" type="checkbox" value="1">&nbsp; Lauttreu</label>
                         </div>
                     </div>
                     <div class="row">
@@ -65,7 +65,7 @@ $page = 'search';
                                                 echo '<tr>';
                                             }
                                             ?>
-                                            <td><label><input type="checkbox" name="category[]" value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
+                                            <td><label><input type="checkbox" name="category[]" value="<?php echo $value['id']; ?>">&nbsp; <?php echo $value['name']; ?></label></td>
 
                                             <?php
                                             if ($key + 1 % 2 == 0) {
@@ -86,7 +86,7 @@ $page = 'search';
                                                     echo '<tr>';
                                                 }
                                             ?>
-                                                <td><label><input type="checkbox" name="alter[]"  value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
+                                                <td><label><input type="checkbox" name="alter[]"  value="<?php echo $value['id']; ?>">&nbsp; <?php echo $value['name']; ?></label></td>
 
                                                 <?php
                                                 if ($key + 1 % 2 == 0) {
@@ -108,7 +108,7 @@ $page = 'search';
                                                 echo '<tr>';
 //                                                    }
                                                 ?>
-                                            <td><label><input type="checkbox" name="semantic[]"  value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
+                                            <td><label><input type="checkbox" name="semantic[]"  value="<?php echo $value['id']; ?>">&nbsp; <?php echo $value['name']; ?></label></td>
 
                                             <?php
 //                                                if ($key + 1 % 2 == 0) {

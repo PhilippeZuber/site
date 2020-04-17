@@ -15,7 +15,8 @@ $semantic = get_records('semantic');
 $alters = get_records('alters');
 $page = 'index';
 ?>
-<html !DOCTYPE>
+<!DOCTYPE html>
+ <html lang="de">
     <?php include './header.php'; ?><!--CSS+JS files/modal window User settings & Register, Login/ sidebar collapse-->
 	<?php include './SearchInfModal.php'; ?><!--Modal window Search Information used in index.php / search.php only-->
     <body>
@@ -40,10 +41,10 @@ $page = 'index';
                     </div>
                     <div class="row">
                         <div class="col-md-2">
-                            <label><input id="search_image" checked type="checkbox" value="biler">&nbsp Mit Bildern</label>
+                            <label><input id="search_image" checked type="checkbox" value="biler">&nbsp; Mit Bildern</label>
                         </div>
                         <div class="col-md-2">
-                            <label><input id="lauttreu" disabled type="checkbox" value="1">&nbsp Lauttreu</label>
+                            <label><input id="lauttreu" disabled type="checkbox" value="1">&nbsp; Lauttreu</label>
                         </div>
                     </div>
                     <div class="row">
@@ -65,7 +66,7 @@ $page = 'index';
                                                 echo '<tr>';
                                             }
                                             ?>
-                                            <td><label><input type="checkbox" name="category[]" value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
+                                            <td><label><input type="checkbox" name="category[]" value="<?php echo $value['id']; ?>">&nbsp; <?php echo $value['name']; ?></label></td>
 
                                             <?php
                                             if ($key + 1 % 2 == 0) {
@@ -86,7 +87,7 @@ $page = 'index';
                                                     echo '<tr>';
                                                 }
                                             ?>
-                                                <td><label><input type="checkbox" name="alter[]"  value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
+                                                <td><label><input type="checkbox" name="alter[]"  value="<?php echo $value['id']; ?>">&nbsp; <?php echo $value['name']; ?></label></td>
 
                                                 <?php
                                                 if ($key + 1 % 2 == 0) {
@@ -108,7 +109,7 @@ $page = 'index';
                                                 echo '<tr>';
 //                                                    }
                                                 ?>
-                                            <td><label><input type="checkbox" name="semantic[]"  value="<?php echo $value['id']; ?>">&nbsp <?php echo $value['name']; ?></label></td>
+                                            <td><label><input type="checkbox" name="semantic[]"  value="<?php echo $value['id']; ?>">&nbsp; <?php echo $value['name']; ?></label></td>
 
                                             <?php
 //                                                if ($key + 1 % 2 == 0) {

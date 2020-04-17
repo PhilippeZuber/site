@@ -17,13 +17,12 @@ $semantic = get_records('semantic');
 $alters = get_records('alters');
 $words = get_words();
 ?>
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="de">
     <?php include './header.php'; ?>
 	<script data-cfasync="false" type="text/javascript" src="js/form-submission-handler.js"></script><!--Local because Github version may change-->
     <body>
         <div class="wrapper">
-
             <?php include 'sidebar.php'; ?>
             <!-- Page Content Holder -->
             <div id="content">
@@ -36,11 +35,11 @@ $words = get_words();
                                 <div class="panel-heading">
                                     <div class="panel-heading-btn">
                                     </div>
-                                    <h4 class="panel-title">Wort einsenden</h4>
+                                    <h4 class="panel-title">Wort einsenden <strong>Funktioniert noch nicht. (Im Aufbau)</strong></h4>
                                 </div>
                                 <div class="panel-body col-md-12">
                                     <div class="col-md-8">
-                                        <form method="POST" action="https://script.google.com/macros/s/AKfycbxoIsicvEjPzWlkuDKTxXaH7oj8BfXPinwJpWtN/exec" id="gform" enctype="multipart/form-data">
+                                        <form method="POST" action="" enctype="multipart/form-data">
                                             <table class="table">
                                                 <tbody>
                                                     <tr>

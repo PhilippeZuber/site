@@ -64,8 +64,8 @@ $semantic = get_records('semantic');
 $alters = get_records('alters');
 $words = get_words();
 ?>
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="de">
     <?php include './header.php'; ?>
     <body>
         <div class="wrapper">

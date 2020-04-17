@@ -2,8 +2,8 @@
 <nav id="sidebar">
     <div class="sidebar-header">
     	<a href="index.php">
-        	<h3><img src="wortlab_button.svg" alt="WORTLAB" width="100%"></h3>
-        	<strong><img src="wortlab_button.svg" alt="WL" width="100%"></strong>
+        	<h3><img src="wortlab_button.svg" alt="WORTLAB"></h3>
+        	<strong><img src="wortlab_button.svg" alt="WORTLAB"></strong>
         </a>
     </div>
 

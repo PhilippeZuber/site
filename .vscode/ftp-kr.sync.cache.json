@@ -32,7 +32,7 @@
     },
     "about.php": {
       "type": "-",
-      "size": 3530,
+      "size": 3540,
       "lmtime": 0,
       "modified": true
     },
@@ -56,9 +56,9 @@
     },
     "add_word.php": {
       "type": "-",
-      "size": 14159,
+      "size": 15277,
       "lmtime": 0,
-      "modified": false
+      "modified": true
     },
     "apple-touch-icon.png": {
       "type": "-",
@@ -82,7 +82,7 @@
     },
     "header.php": {
       "type": "-",
-      "size": 10692,
+      "size": 10590,
       "lmtime": 0,
       "modified": true
     },
@@ -90,7 +90,7 @@
     "img": {},
     "index.php": {
       "type": "-",
-      "size": 11179,
+      "size": 11212,
       "lmtime": 0,
       "modified": true
     },
@@ -103,7 +103,7 @@
     "js": {},
     "login.php": {
       "type": "-",
-      "size": 12210,
+      "size": 12490,
       "lmtime": 0,
       "modified": true
     },
@@ -121,7 +121,7 @@
     },
     "search.php": {
       "type": "-",
-      "size": 11113,
+      "size": 11118,
       "lmtime": 0,
       "modified": true
     },
@@ -133,19 +133,19 @@
     },
     "search_word.php": {
       "type": "-",
-      "size": 3619,
+      "size": 3605,
       "lmtime": 0,
       "modified": true
     },
     "send_word.php": {
       "type": "-",
-      "size": 7890,
+      "size": 7857,
       "lmtime": 0,
       "modified": true
     },
     "sidebar.php": {
       "type": "-",
-      "size": 4368,
+      "size": 4501,
       "lmtime": 0,
       "modified": true
     },

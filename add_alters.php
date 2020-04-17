@@ -32,8 +32,8 @@ if (isset($_POST['data'])) {
 
 $alters = get_records('alters');
 ?>
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="de">
     <?php include './header.php'; ?>
     <body>
         <div class="wrapper">

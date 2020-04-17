@@ -25,7 +25,10 @@
         $user = mysqli_fetch_assoc($result);
         session_start();
         $_SESSION['id'] = $user['user_id'];
-        $_SESSION['role'] = $user['role'];
+		$_SESSION['role'] = $user['role'];
+		/*Set cookie*/
+		
+
         header("Location:search.php");
       }else {
         $error = true;
@@ -36,7 +39,8 @@
       $error_msg .= "Bitte füllen Sie beide Felder aus.<br/>";
     }
 	}
-	
+
+
 	/*ForgotPW*/
 	if(isset($_POST['mailsend'])){
 		if(!empty($_POST['email'])){

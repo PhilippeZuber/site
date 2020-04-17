@@ -32,8 +32,8 @@ if (isset($_POST['data'])) {
 
 $categories = get_records('category');
 ?>
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="de">
     <?php include './header.php'; ?>
     <body>
         <div class="wrapper">
