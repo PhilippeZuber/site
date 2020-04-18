@@ -1,9 +1,15 @@
 <?php
 session_start();
+$cookie = isset($_COOKIE['wortlab_remember']) ? $_COOKIE['wortlab_remember'] : '';
+$cookie2 = isset($_COOKIE['wortlab_role']) ? $_COOKIE['wortlab_role'] : '';
+if ($cookie) {
+    $_SESSION['id'] = $cookie;
+    $_SESSION['role'] = $cookie2;
+}
 if (isset($_SESSION['id'])) {
     header("Location:search.php");
 } else {
-    $user_id = $_SESSION['id'];
+    $user_id = $_SESSION['id']; 
 }
 
 require_once('system/data.php');
@@ -16,9 +22,9 @@ $alters = get_records('alters');
 $page = 'index';
 ?>
 <!DOCTYPE html>
- <html lang="de">
+<html lang="de">
     <?php include './header.php'; ?><!--CSS+JS files/modal window User settings & Register, Login/ sidebar collapse-->
-	<?php include './SearchInfModal.php'; ?><!--Modal window Search Information used in index.php / search.php only-->
+    <?php include './SearchInfModal.php'; ?><!--Modal window Search Information used in index.php / search.php only-->
     <body>
         <div class="wrapper">
             <?php include 'sidebar.php'; ?>
@@ -36,7 +42,7 @@ $page = 'index';
                                     <button id="searchbtn" class="btn btn-primary" type="button" onClick="search();">Los!</button>
                                 </span>
                             </div>
-							<p>Suche mithilfe von <strong>*</strong> z.B. nach *le  um Wörter zu finden die auf le Enden.</p>
+                            <p>Suche mithilfe von <strong>*</strong> z.B. nach *le  um Wörter zu finden die auf le Enden.</p>
                         </div>
                     </div>
                     <div class="row">
@@ -50,8 +56,8 @@ $page = 'index';
                     <div class="row">
                         <div class="col-md-12">
                             <button type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#SearchInfModal" style="margin-bottom: 20px">
-								Weitere Infos zum Suchen
-							</button>
+                                Weitere Infos zum Suchen
+                            </button>
                         </div>
                     </div>
                     <div class="row">
@@ -66,60 +72,60 @@ $page = 'index';
                                                 echo '<tr>';
                                             }
                                             ?>
-                                            <td><label><input type="checkbox" name="category[]" value="<?php echo $value['id']; ?>">&nbsp; <?php echo $value['name']; ?></label></td>
+                                        <td><label><input type="checkbox" name="category[]" value="<?php echo $value['id']; ?>">&nbsp; <?php echo $value['name']; ?></label></td>
 
-                                            <?php
-                                            if ($key + 1 % 2 == 0) {
-                                                echo '</tr>';
-                                            }
+                                        <?php
+                                        if ($key + 1 % 2 == 0) {
+                                            echo '</tr>';
                                         }
-                                            ?>
+                                    }
+                                    ?>
                                     </tbody>
                                 </table>
                             </details>
-                                <details open>
-                                    <summary><span class="glyphicon glyphicon-plus-sign"></span> Alter</summary>
-                                    <table width="100%" border="0">
-                                        <tbody>
-                                            <?php
-                                            foreach ($alters as $key => $value) {
-                                                if ($key % 2 == 0) {
-                                                    echo '<tr>';
-                                                }
-                                            ?>
-                                                <td><label><input type="checkbox" name="alter[]"  value="<?php echo $value['id']; ?>">&nbsp; <?php echo $value['name']; ?></label></td>
-
-                                                <?php
-                                                if ($key + 1 % 2 == 0) {
-                                                    echo '</tr>';
-                                                }
-                                            }
-                                                ?>
-                                        </tbody>
-                                    </table>
-                                </details>
-                                <details open>
-                                    <summary><span class="glyphicon glyphicon-plus-sign"></span> Kategorien</summary>
-                                    <input class="form-control" id="semanticInput" type="text" placeholder="Suchen...">        
-                                    <table width="100%" border="0">
-                                        <tbody id="semanticTable">
-                                            <?php
-                                            foreach ($semantic as $key => $value) {
-//                                                    if ($key % 2 == 0) {
+                            <details open>
+                                <summary><span class="glyphicon glyphicon-plus-sign"></span> Alter</summary>
+                                <table width="100%" border="0">
+                                    <tbody>
+                                        <?php
+                                        foreach ($alters as $key => $value) {
+                                            if ($key % 2 == 0) {
                                                 echo '<tr>';
-//                                                    }
-                                                ?>
-                                            <td><label><input type="checkbox" name="semantic[]"  value="<?php echo $value['id']; ?>">&nbsp; <?php echo $value['name']; ?></label></td>
+                                            }
+                                            ?>
+                                        <td><label><input type="checkbox" name="alter[]"  value="<?php echo $value['id']; ?>">&nbsp; <?php echo $value['name']; ?></label></td>
 
-                                            <?php
-//                                                if ($key + 1 % 2 == 0) {
+                                        <?php
+                                        if ($key + 1 % 2 == 0) {
                                             echo '</tr>';
-//                                                }
                                         }
-                                        ?>
-                                        </tbody>
-                                    </table>
-                                </details>
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </details>
+                            <details open>
+                                <summary><span class="glyphicon glyphicon-plus-sign"></span> Kategorien</summary>
+                                <input class="form-control" id="semanticInput" type="text" placeholder="Suchen...">        
+                                <table width="100%" border="0">
+                                    <tbody id="semanticTable">
+                                        <?php
+                                        foreach ($semantic as $key => $value) {
+//                                                    if ($key % 2 == 0) {
+                                            echo '<tr>';
+//                                                    }
+                                            ?>
+                                        <td><label><input type="checkbox" name="semantic[]"  value="<?php echo $value['id']; ?>">&nbsp; <?php echo $value['name']; ?></label></td>
+
+                                        <?php
+//                                                if ($key + 1 % 2 == 0) {
+                                        echo '</tr>';
+//                                                }
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </details>
                         </div><!--column-->
 
                         <div class="col-md-8" id="datatables">
@@ -142,27 +148,27 @@ $page = 'index';
 
         <!-- jQuery -->
         <script>
-			/*Enter key possible for search function trigger onclick*/
-			var input = document.getElementById("search_text");
-				input.addEventListener("keyup", function(event) {
-					event.preventDefault();
-					if (event.keyCode === 13) {
-						document.getElementById("searchbtn").click();
-					}
-				});
-			/*Initialising data-table*/
-            var table;
-            $(document).ready(function (){
-				$('#data-table1').DataTable( {
-					"language": {
-						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-					},
-					searching: false,
-					paging: false,
-				});
+            /*Enter key possible for search function trigger onclick*/
+            var input = document.getElementById("search_text");
+            input.addEventListener("keyup", function (event) {
+                event.preventDefault();
+                if (event.keyCode === 13) {
+                    document.getElementById("searchbtn").click();
+                }
             });
-			
-			/*Search function*/
+            /*Initialising data-table*/
+            var table;
+            $(document).ready(function () {
+                $('#data-table1').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+                    },
+                    searching: false,
+                    paging: false,
+                });
+            });
+
+            /*Search function*/
             function search() {
                 var category = [];
                 var semantic = [];
@@ -176,13 +182,13 @@ $page = 'index';
                 $.each($("input[name='alter[]']:checked"), function () {
                     alter.push($(this).val());
                 });
-                
+
                 $('#data-table1').DataTable().clear().destroy();
 
                 table = $('#data-table1').DataTable({
-					"language": {/*data-table in german*/
-						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-					},
+                    "language": {/*data-table in german*/
+                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+                    },
                     ajax: {/*giving values*/
                         url: 'search_word.php',
                         data: {
@@ -194,63 +200,63 @@ $page = 'index';
                             lauttreu: $('#lauttreu').prop('checked'),
                         }
                     },
-					dom: 'Bfrtip',/*Position of Buttons*/
-					buttons: [
-						/*{
-							extend: 'selectAll',
-							text: 'Zeilen wählen'
-						},*/
-						{
-								extend: 'excel',
-								text: 'Für Excel Speichern',
-								exportOptions: {
-									modifier: {
-										page: 'current'
-									}
-								}
-						},
-						/*{
-								extend: 'pdf',
-								text: 'Als pdf Speichern',
-								exportOptions: {
-									modifier: {
-										page: 'current'
-									}
-								}
-						},*/
-						{
-								extend: 'print',
-								text: 'Drucken / Als pdf Speichern',
-								/*message: "(C) by ...",*/
-								exportOptions: {
-									modifier: {
-										page: 'current'
-									},
-									stripHtml: false
-								}
-						},
-						{
-								extend: 'copy',
-								text: 'Zwischenablage',
-								exportOptions: {
-									modifier: {
-										page: 'current'
-									}
-								}
-						}
-					],
-					select: {
-						style: 'multi'
-					},
+                    dom: 'Bfrtip', /*Position of Buttons*/
+                    buttons: [
+                        /*{
+                         extend: 'selectAll',
+                         text: 'Zeilen wählen'
+                         },*/
+                        {
+                            extend: 'excel',
+                            text: 'Für Excel Speichern',
+                            exportOptions: {
+                                modifier: {
+                                    page: 'current'
+                                }
+                            }
+                        },
+                        /*{
+                         extend: 'pdf',
+                         text: 'Als pdf Speichern',
+                         exportOptions: {
+                         modifier: {
+                         page: 'current'
+                         }
+                         }
+                         },*/
+                        {
+                            extend: 'print',
+                            text: 'Drucken / Als pdf Speichern',
+                            /*message: "(C) by ...",*/
+                            exportOptions: {
+                                modifier: {
+                                    page: 'current'
+                                },
+                                stripHtml: false
+                            }
+                        },
+                        {
+                            extend: 'copy',
+                            text: 'Zwischenablage',
+                            exportOptions: {
+                                modifier: {
+                                    page: 'current'
+                                }
+                            }
+                        }
+                    ],
+                    select: {
+                        style: 'multi'
+                    },
                     searching: false,
                     "processing": true,
                     "serverSide": true,
                 });
             }
-			/*var table = $('#data-table1').DataTable();
- 			var data = table.buttons.exportData( {
-				columns: ':visible'
-			} );*/
+            /*var table = $('#data-table1').DataTable();
+             var data = table.buttons.exportData( {
+             columns: ':visible'
+             } );*/
         </script>
     </body>
 </html>
