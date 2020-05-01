@@ -11,17 +11,6 @@ require_once('system/security.php');
 
 $page = 'send_word';
 
-if (isset($_POST['data'])) {
-
-   /* $_POST['data']['name'] = strip_tags($_POST['data']['name']);
-    $_POST['data']['category'] = implode(',', $_POST['data']['category']);
-    $_POST['data']['semantic'] = implode(',', $_POST['data']['semantic']);
-    $_POST['data']['alters'] = implode(',', $_POST['data']['alters']);
-    $_POST['data']['lauttreu'] = isset($_POST['lauttreu']) ? 1 : 0;*/
-
-    add_record('pending', $_POST['data']);
-    /*header("Location:send_word.php");*/
-}
 
 $categories = get_records('category');
 $semantic = get_records('semantic');
@@ -31,6 +20,7 @@ $words = get_words();
 <!DOCTYPE html>
 <html lang="de">
     <?php include './header.php'; ?>
+	<script data-cfasync="false" type="text/javascript" src="js/form-submission-handler.js"></script><!--Local because Github version may change-->
     <body>
         <div class="wrapper">
             <?php include 'sidebar.php'; ?>
@@ -100,10 +90,12 @@ $words = get_words();
                                                             </select>
                                                         </td>
                                                     </tr>
-                                                    <td>Meta</td>
+													<tr>
+                                                        <td>Ihre E-Mail Adresse</td>
                                                         <td>
-                                                            <label><input id="lauttreu" name="lauttreu" type="checkbox" value="1">&nbsp Lauttreu</label>
+                                                            <input type="email" id="email" name="email" class="form-control" value="" required placeholder="Gültige Adresse"><span id="email-invalid" style="display:none">Es muss eine gültige Adresse sein.</span>
                                                         </td>
+                                                    </tr>
                                                     <tr>
                                                         <td></td>
                                                         <td>

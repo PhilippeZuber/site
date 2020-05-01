@@ -103,7 +103,7 @@
     "js": {},
     "login.php": {
       "type": "-",
-      "size": 17440,
+      "size": 17398,
       "lmtime": 0,
       "modified": true
     },
@@ -121,7 +121,7 @@
     },
     "search.php": {
       "type": "-",
-      "size": 11118,
+      "size": 11617,
       "lmtime": 0,
       "modified": true
     },
@@ -133,13 +133,13 @@
     },
     "search_word.php": {
       "type": "-",
-      "size": 3605,
+      "size": 3652,
       "lmtime": 0,
       "modified": true
     },
     "send_word.php": {
       "type": "-",
-      "size": 7857,
+      "size": 8120,
       "lmtime": 0,
       "modified": true
     },

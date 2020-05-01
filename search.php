@@ -45,6 +45,12 @@ $page = 'search';
                         <div class="col-md-2">
                             <label><input id="lauttreu" type="checkbox" value="1">&nbsp; Lauttreu</label>
                         </div>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <span class="input-group-addon">Noch in Entwicklung</span>
+                                <input type="text" class="form-control" id="not_letter" placeholder="Buchstabe ausschliessen" aria-describedby="Buchstabe ausschliessen">
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -187,6 +193,7 @@ $page = 'search';
                         data: {
                             search_image: $('#search_image').prop('checked'),
                             search_text: $('#search_text').val(),
+                            not_letter: $('#not_letter').val(),
                             category: category,
                             semantic: semantic,
                             alter: alter,

@@ -30,6 +30,11 @@ if ($_REQUEST['search_text'] != '') {
 
 //    $wh .= "  name REGEXP  '" . $_REQUEST['search_text'] . "' )";
 }
+
+if ($_REQUEST['not_letter'] != '') {
+
+}
+
 if (!empty($_REQUEST['category'])) {
     $wh .= "  and category in ('" . implode("','", $_REQUEST['category']) . "')";
 }
