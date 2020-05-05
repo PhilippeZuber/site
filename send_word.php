@@ -13,14 +13,14 @@ $page = 'send_word';
 
 if (isset($_POST['data'])) {
 
-   /* $_POST['data']['name'] = strip_tags($_POST['data']['name']);
+    $_POST['data']['name'] = strip_tags($_POST['data']['name']);
     $_POST['data']['category'] = implode(',', $_POST['data']['category']);
     $_POST['data']['semantic'] = implode(',', $_POST['data']['semantic']);
     $_POST['data']['alters'] = implode(',', $_POST['data']['alters']);
-    $_POST['data']['lauttreu'] = isset($_POST['lauttreu']) ? 1 : 0;*/
+    $_POST['data']['lauttreu'] = isset($_POST['lauttreu']) ? 1 : 0;
 
     add_record('pending', $_POST['data']);
-    /*header("Location:send_word.php");*/
+    header("Location:send_word.php");
 }
 
 $categories = get_records('category');
@@ -45,7 +45,7 @@ $words = get_words();
                                 <div class="panel-heading">
                                     <div class="panel-heading-btn">
                                     </div>
-                                    <h4 class="panel-title">Wort einsenden <strong>Funktioniert noch nicht. (Im Aufbau)</strong></h4>
+                                    <h4 class="panel-title">Wort einsenden</h4>
                                 </div>
                                 <div class="panel-body col-md-12">
                                     <div class="col-md-8">
@@ -55,13 +55,13 @@ $words = get_words();
                                                     <tr>
                                                         <td>Wort</td>
                                                         <td>
-                                                            <input type="text" id="word" name="word" class="form-control" value="<?php echo @$word['name']; ?>">
+                                                            <input type="text" id="word" name="data[name]" class="form-control" value="<?php echo @$word['name']; ?>">
                                                         </td>
                                                     </tr> 
                                                     <tr>
                                                         <td>Wortart</td>
                                                         <td>
-                                                            <select id="category" name="category" class="form-control select2">
+                                                            <select id="category" name="data[category][]" class="form-control select2">
                                                                 <?php
                                                                 foreach ($categories as $key => $value) {
                                                                     ?>
@@ -75,7 +75,7 @@ $words = get_words();
                                                     <tr>
                                                         <td>Themengebiet</td>
                                                         <td>
-                                                            <select id="semantic" name="semantic" class="form-control select2" multiple="multiple">
+                                                            <select id="semantic" name="data[semantic][]" class="form-control select2" multiple="multiple">
                                                                 <?php
                                                                 foreach ($semantic as $key => $value) {
                                                                     ?>
@@ -89,7 +89,7 @@ $words = get_words();
                                                     <tr>
                                                         <td>Alter</td>
                                                         <td>
-                                                            <select id="alters" name="alters" class="form-control select2">
+                                                            <select id="alters" name="data[alters][]" class="form-control select2">
                                                                 <?php
                                                                 foreach ($alters as $key => $value) {
                                                                     ?>

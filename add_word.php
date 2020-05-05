@@ -77,7 +77,6 @@ $words = get_words();
 
                 <div class=container-fluid>
                     <div class="row">
-
                         <div class="col-md-12">
                             <!-- begin panel -->
                             <div class="panel panel-inverse" >
@@ -85,7 +84,6 @@ $words = get_words();
                                     <h4 class="panel-title">Wort hinzufügen</h4>
                                 </div>
                                 <div class="panel-body col-md-12">
-
                                     <div class="col-md-8">
                                         <form method="POST" action="" enctype="multipart/form-data">
                                             <table class="table">
