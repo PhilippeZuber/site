@@ -41,6 +41,12 @@
 							Alter
 						</a>
 					</li>
+                    <li class="<?php echo $page=='add_pending_word' ? 'active' : ''; ?>">
+						<a href="add_pending_word.php">
+							<i class="glyphicon glyphicon-plus"></i>
+							Pendente Wörter
+						</a>
+					</li>
 				</ul>
 			</li>
             <?php

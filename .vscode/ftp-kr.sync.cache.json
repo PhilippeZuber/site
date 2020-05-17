@@ -48,6 +48,12 @@
       "lmtime": 0,
       "modified": false
     },
+    "add_pending_word.php": {
+      "type": "-",
+      "size": 15359,
+      "lmtime": 0,
+      "modified": true
+    },
     "add_semantic.php": {
       "type": "-",
       "size": 5991,
@@ -56,7 +62,7 @@
     },
     "add_word.php": {
       "type": "-",
-      "size": 15277,
+      "size": 15286,
       "lmtime": 0,
       "modified": true
     },
@@ -90,7 +96,7 @@
     "img": {},
     "index.php": {
       "type": "-",
-      "size": 12514,
+      "size": 12560,
       "lmtime": 0,
       "modified": true
     },
@@ -139,7 +145,7 @@
     },
     "send_word.php": {
       "type": "-",
-      "size": 8100,
+      "size": 8109,
       "lmtime": 0,
       "modified": true
     },

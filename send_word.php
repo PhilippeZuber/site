@@ -107,7 +107,7 @@ $words = get_words();
                                                     <tr>
                                                         <td></td>
                                                         <td>
-                                                            <input type="submit"  class="form-control btn btn-primary" value="Senden">
+                                                            <input type="submit"  class="form-control btn btn-primary" value="Senden" id="senden">
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -133,6 +133,9 @@ $words = get_words();
 					}
 				});
                 $('.select2').select2();
+                $("#senden").click(function(){
+                    $("#thankyou_message").css("display", "block");
+                });
             });
         </script>
     </body>

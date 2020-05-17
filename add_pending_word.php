@@ -9,15 +9,15 @@ if (!isset($_SESSION['id'])) {
 require_once('system/data.php');
 require_once('system/security.php');
 
-$page = 'add_word';
+$page = 'add_pending_word';
 
 if (isset($_GET['action'])) {
     if ($_GET['action'] == 'edit') {
-        $word = get_single_record('words', $_GET['id']);
+        $word = get_single_record('pending', $_GET['id']);
     }
     if ($_GET['action'] == 'delete') {
-        $word = delete_record('words', $_GET['id']);
-        header("Location:add_word.php");
+        $pending = delete_record('pending', $_GET['id']);
+        header("Location:add_pending_word.php");
     }
 }
 if (isset($_POST['data'])) {
@@ -45,21 +45,21 @@ if (isset($_POST['data'])) {
     $_POST['data']['semantic'] = implode(',', $_POST['data']['semantic']);
     $_POST['data']['alters'] = implode(',', $_POST['data']['alters']);
     $_POST['data']['lauttreu'] = isset($_POST['lauttreu']) ? 1 : 0;
-    if ($_POST['data']['id'] != '') { 
-		if($image=='')/*in case no new image is chosen*/
+    $_POST['data']['id'] = $_POST['data']['id'] + 10000;
+        
+    if($image=='')/*in case no new image is chosen*/
         {
             unset($_POST['data']['image']);
         }
-        update_record('words', $_POST['data']['id'], $_POST['data']);
-    } else {
-        add_record('words', $_POST['data']);
-    }
-    header("Location:add_word.php");
+    add_record('words', $_POST['data']);
+    $pending = delete_record('pending', $_GET['id']);
+    header("Location:add_pending_word.php");
 }
+
 $categories = get_records('category');
 $semantic = get_records('semantic');
 $alters = get_records('alters');
-$words = get_words();
+$pending = get_pending();
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -166,7 +166,7 @@ $words = get_words();
                                                     <tr>
                                                         <td></td>
                                                         <td>
-                                                            <input type="submit"  class="form-control btn btn-primary" value="Speichern">
+                                                            <input type="submit"  class="form-control btn btn-primary" value="Übertragen in Live Datenbank">
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -180,7 +180,6 @@ $words = get_words();
                                                     <th colspan="7">Wörter</th>
                                                 </tr>
                                                 <tr>
-
                                                     <th>Name</th>
                                                     <th>Wortart</th>
                                                     <th>Themengebiet</th>
@@ -188,12 +187,11 @@ $words = get_words();
                                                     <th>Bild</th>
                                                     <th>Bild2</th>
                                                     <th>Bearbeiten / Löschen</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                    foreach ($words as $key => $value) {
+                                                    foreach ($pending as $key => $value) {
                                                 ?>
                                                     <tr>
                                                         <td><?php echo $value['name']; ?></td>
@@ -215,8 +213,8 @@ $words = get_words();
                                                             ?> 
                                                         </td>
                                                         <td>
-                                                            <a class="btn btn-warning" href="add_word.php?action=edit&id=<?php echo $value['id']; ?>">Bearbeiten</a>
-                                                            <a class="btn btn-danger" onclick="return confirm('Sind Sie sicher?');" href="add_word.php?action=delete&id=<?php echo $value['id']; ?>">Löschen</a>
+                                                            <a class="btn btn-warning" href="add_pending_word.php?action=edit&id=<?php echo $value['id']; ?>">Bearbeiten</a>
+                                                            <a class="btn btn-danger" onclick="return confirm('Sind Sie sicher?');" href="add_pending_word.php?action=delete&id=<?php echo $value['id']; ?>">Löschen</a>
                                                         </td>
                                                     </tr>
                                                     <?php
@@ -235,7 +233,6 @@ $words = get_words();
 
         <!-- jQuery -->
         <script>
-
             $(document).ready(function (){
                 $('#data-table1').DataTable( {
                     stateSave: true,
@@ -245,7 +242,6 @@ $words = get_words();
 				});
                 $('.select2').select2();
             });
-
         </script>
     </body>
 </html>
