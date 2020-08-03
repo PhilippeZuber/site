@@ -32,7 +32,7 @@ if ($_REQUEST['search_text'] != '') {
 }
 
 if ($_REQUEST['not_letter'] != '') {
-
+        $wh = "test"
 }
 
 if (!empty($_REQUEST['category'])) {

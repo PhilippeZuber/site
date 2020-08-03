@@ -243,7 +243,7 @@ if (isset($_POST['register-submit'])) {
                                                 <input type="submit" name="register-submit" tabindex="9" class="btn btn-primary btn-block" value="registrieren" id="register">
                                             </div>
                                         </div>
-                                        <label><input type="checkbox" name="news" value="on" tabindex="10"> Ich möchte ca. 1x jährlich einen Newsletter erhalten.</label>
+                                        <label><input type="checkbox" name="news" value="on" tabindex="10"> Ich möchte ca. 2-3x jährlich einen Newsletter erhalten.</label>
                                     </form>
                                     <!-- /Registrieren Formular -->
                                 </div>

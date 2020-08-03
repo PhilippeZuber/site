@@ -101,6 +101,12 @@ $user = mysqli_fetch_assoc($result);
 
 $update_time = date_parse($user['update_time']);
 $last_update = $update_time['day'] . "." . $update_time['month'] . "." . $update_time['year'];
+
+/* Delete User */
+if (isset($_POST['update-delete'])) {
+    console.log("Message here");
+    $result = delete_user($user_id);
+}
 ?>
 <!--Modal window for profile-->
 <div class="modal fade" id="UserModal" tabindex="-1" role="dialog" aria-labelledby="profil-wortlab">
@@ -108,6 +114,7 @@ $last_update = $update_time['day'] . "." . $update_time['month'] . "." . $update
         <div class="modal-content">
             <form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Schliessen"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="profil-wortlab">Profil ändern</h4>
                 </div>
                 <div class="modal-body">
@@ -186,15 +193,15 @@ $last_update = $update_time['day'] . "." . $update_time['month'] . "." . $update
                             <input type="password" class="form-control form-control-sm" id="Passwort_Conf" placeholder="Passwort" name="confirm-password" tabindex="8">
                         </div>
                     </div>
-
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <input type="file" name="profil_img">
+                            <div>Profilbild auswählen <input type="file" name="profil_img"></div>
                         </div>
                     </div>
+                    <!--<button type="submit" class="btn btn-danger btn-sm" data-dismiss="modal" name="update-delete">Mein Profil löschen</button>-->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Abbrechen</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
                     <button type="submit" class="btn btn-success btn-sm" name="update-submit">Änderungen speichern</button>
                 </div>
             </form>
