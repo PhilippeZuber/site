@@ -126,7 +126,6 @@ $page = 'search';
                                     </table>
                                 </details>
                         </div><!--column-->
-
                         <div class="col-md-8" id="datatables">
                             <table  class="table table-responsive table-striped" id="data-table1">
                                 <thead>
@@ -141,7 +140,7 @@ $page = 'search';
                             </table>
                         </div>
                     </div><!--row-->
-                </div><!--/container-->		
+                </div><!--/container-->                        
             </div><!--/content-->
         </div><!--/wrapper-->
 
@@ -200,7 +199,7 @@ $page = 'search';
                             lauttreu: $('#lauttreu').prop('checked'),
                         }
                     },
-					dom: 'Bfrtip',/*Position of Buttons*/
+					dom: 'Blfrtip',/*Position of Buttons*/
 					buttons: [
 						/*{
 							extend: 'selectAll',

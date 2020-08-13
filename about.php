@@ -52,5 +52,6 @@ $page = 'about';
                 </div><!--/container-->		
             </div><!--/content-->
         </div><!--/wrapper-->
+        <?php include 'footer.php'; ?>
     </body>
 </html>

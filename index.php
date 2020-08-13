@@ -200,7 +200,7 @@ $page = 'index';
                             lauttreu: $('#lauttreu').prop('checked'),
                         }
                     },
-                    dom: 'Bfrtip', /*Position of Buttons*/
+                    dom: 'Blfrtip', /*Position of Buttons*/
                     buttons: [
                         /*{
                          extend: 'selectAll',
@@ -249,6 +249,7 @@ $page = 'index';
                         style: 'multi'
                     },
                     searching: false,
+                    paging: true,
                     "processing": true,
                     "serverSide": true,
                 });
