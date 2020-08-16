@@ -47,7 +47,6 @@ $page = 'search';
                         </div>
                         <div class="col-md-4">
                             <div class="input-group">
-                                <span class="input-group-addon">Noch in Entwicklung</span>
                                 <input type="text" class="form-control" id="not_letter" placeholder="Buchstabe ausschliessen" aria-describedby="Buchstabe ausschliessen">
                             </div>
                         </div>

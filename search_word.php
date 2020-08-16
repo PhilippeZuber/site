@@ -32,7 +32,7 @@ if ($_REQUEST['search_text'] != '') {
 }
 
 if ($_REQUEST['not_letter'] != '') {
-        $wh = "test"
+        $wh .= " and ( name not like '%" . $_REQUEST['not_letter'] . "%')";
 }
 
 if (!empty($_REQUEST['category'])) {
