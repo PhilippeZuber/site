@@ -35,7 +35,7 @@ $page = 'index';
                     <div class="row">
                         <div class="col-md-12">
                             <div class="alert alert-warning" role="alert">Wortlab befindet sich zurzeit in der Aufbauphase. Die Datenbank wird ständig erweitert und neue Filterkriterien werden hinzugefügt. Rückmeldungen und Ideen nehmen wir gerne unter <a href="mailto:info@wortlab.ch">info@wortlab.ch</a> entgegen.</div>
-                            <h1>Suchen</h1>
+                            <h1>Suchen <a data-toggle="modal" data-target="#SearchInfModal" class="badge"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></h1>
                             <div class="input-group">
                                 <input type="text" id="search_text" class="form-control" placeholder="Suche nach...">
                                 <span class="input-group-btn">
@@ -54,17 +54,10 @@ $page = 'index';
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <button type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#SearchInfModal" style="margin-bottom: 20px">
-                                Weitere Infos zum Suchen
-                            </button>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-4 ">
-                            <details open>
+                            <details style="margin-bottom: 20px;" open>
                                 <summary><span class="glyphicon glyphicon-plus-sign"></span> Wortarten</summary>
-                                <table width="100%" border="0">
+                                <table style="margin-top: 20px;" width="100%" border="0">
                                     <tbody>
                                         <?php
                                         foreach ($categories as $key => $value) {
@@ -83,9 +76,9 @@ $page = 'index';
                                     </tbody>
                                 </table>
                             </details>
-                            <details open>
+                            <details style="margin-bottom: 20px;" open>
                                 <summary><span class="glyphicon glyphicon-plus-sign"></span> Alter</summary>
-                                <table width="100%" border="0">
+                                <table style="margin-top: 20px;" width="100%" border="0">
                                     <tbody>
                                         <?php
                                         foreach ($alters as $key => $value) {
@@ -106,7 +99,7 @@ $page = 'index';
                             </details>
                             <details open>
                                 <summary><span class="glyphicon glyphicon-plus-sign"></span> Kategorien</summary>
-                                <input class="form-control" id="semanticInput" type="text" placeholder="Suchen...">        
+                                <input style="margin-top: 20px;" class="form-control" id="semanticInput" type="text" placeholder="Suchen...">        
                                 <table width="100%" border="0">
                                     <tbody id="semanticTable">
                                         <?php

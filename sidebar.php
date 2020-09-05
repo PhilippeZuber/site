@@ -142,7 +142,7 @@
     ?>
 	<!-- Only visible when sidebar not collapsed-->
     <ul class="list-unstyled CTAs">
-        <li><a href="login.php" class="btn1">Registriere dich kostenlos und erhalte den Filter lauttreu.</a></li>
+        <li><a href="login.php" class="btn1">Registriere dich kostenlos und erhalte den Filter lauttreu sowie die Funktion Buchstaben auszuschliessen.</a></li>
     </ul>
     <?php
         }
