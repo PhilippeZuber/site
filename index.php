@@ -33,8 +33,26 @@ $page = 'index';
                 <?php include './navigation.php'; ?>
                 <div class=container-fluid>
                     <div class="row">
+                        <!--<div class="col-md-8">
+                            <div class="media">
+                                <div class="media-left media-middle">
+                                    <a href="https://www.wortlab.ch/login.php">
+                                    <img class="media-object" src="img\braendi_picto.jpg" alt="Brändi Picto">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">Spiel Gewinnen</h4>
+                                    <p>Alle registrierten Benutzerinnen von Wortlab nehmen automatisch an der Verlosung der Spiele Brändi Picto™ und Brändi Picto Plus™ teil.</p>
+                                    <p>Die Gewinnerin wird am 28. Februar ausgelost.</p>
+                                    <p>Du bist noch nicht registriert? Dann registriere dich jetzt!</p>
+                                    <p><a href="https://www.wortlab.ch/login.php" class="btn btn-primary" role="button">Registrieren</a></p>
+                                </div>
+                            </div>
+                        </div>-->
                         <div class="col-md-12">
                             <div class="alert alert-warning" role="alert">Wortlab befindet sich zurzeit in der Aufbauphase. Die Datenbank wird ständig erweitert und neue Filterkriterien werden hinzugefügt. Rückmeldungen und Ideen nehmen wir gerne unter <a href="mailto:info@wortlab.ch">info@wortlab.ch</a> entgegen.</div>
+                        </div>
+                        <div class="col-md-12">
                             <h1>Suchen <a data-toggle="modal" data-target="#SearchInfModal" class="badge"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></h1>
                             <div class="input-group">
                                 <input type="text" id="search_text" class="form-control" placeholder="Suche nach...">

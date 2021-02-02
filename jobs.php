@@ -62,11 +62,10 @@ $page = 'jobs';
                                 <input type="file" name="pdf_stelle">
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                            <label for="Kanton" class="col-sm-2 form-control-label">Kanton</label>
-                            <div class="col-sm-5">
-                                <select class="form-control form-control-sm" id="Kanton" name="kanton">
+                        <div class="form-group row">
+                            <div class="col-sm-5 col-sm-offset-2">
+                                <label for="Institution" class="form-control-label">Institution</label>
+                                <select class="form-control form-control-sm" id="Institution" name="institution">
                                     <option <?php if ($user['institution'] == "") echo "selected"; ?> value="">--</option>
                                     <option <?php if ($user['institution'] == "Schule") echo "selected"; ?> value="schule">Schule</option>
                                     <option <?php if ($user['institution'] == "Klinik") echo "selected"; ?> value="klinik">Klinik</option>
@@ -77,8 +76,8 @@ $page = 'jobs';
                                     <option <?php if ($user['institution'] == "Kompetenzzentrum") echo "selected"; ?> value="zentrum">Kompetenzzentrum</option>
                                 </select>
                             </div>
-                            <label for="Kanton" class="col-sm-2 form-control-label">Kanton</label>
                             <div class="col-sm-5">
+                                <label for="Kanton" class="form-control-label">Kanton</label>
                                 <select class="form-control form-control-sm" id="Kanton" name="kanton">
                                     <option <?php if ($user['kanton'] == "") echo "selected"; ?> value="">--</option>
                                     <option <?php if ($user['kanton'] == "Aargau") echo "selected"; ?> value="ag">Aargau</option>
@@ -110,6 +109,7 @@ $page = 'jobs';
                                     <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="zh">Zürich</option>
                                 </select>
                             </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Abbrechen</button>
@@ -193,7 +193,6 @@ $page = 'jobs';
                 </div><!--/container-->		
             </div><!--/content-->
         </div><!--/wrapper-->
-        
         <script>
 		// ajax
 	

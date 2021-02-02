@@ -3,16 +3,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>WORTLAB</title>
-    <!--Google Analytics-->
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-175323925-1"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-175323925-1');
-    </script>
   <!--Including all additional CSS and JS files / Modal Window for User / Sidebar collapse-->
 	<!--**CSS**-->
     <!-- Bootstrap CSS -->

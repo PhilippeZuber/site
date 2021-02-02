@@ -140,11 +140,30 @@
     <?php
         if (!($_SESSION['role'] == 1 OR $_SESSION['role'] == 2)) {/*visible for non logged-in only*/
     ?>
-	<!-- Only visible when sidebar not collapsed-->
-    <ul class="list-unstyled CTAs">
-        <li><a href="login.php" class="btn1">Registriere dich kostenlos und erhalte den Filter lauttreu sowie die Funktion Buchstaben auszuschliessen.</a></li>
-    </ul>
+        <!-- Only visible when sidebar not collapsed-->
+        <ul class="list-unstyled CTAs">
+            <li><a href="login.php" class="btn1">Registriere dich kostenlos und erhalte den Filter lauttreu sowie die Funktion Buchstaben auszuschliessen.</a></li>
+        </ul>
     <?php
+        }
+    ?>
+    <?php
+        if ($_SESSION['role'] == 1 OR $_SESSION['role'] == 2) {/*visible for logged-in only*/
+            ?>
+        <!-- Only visible when sidebar not collapsed-->
+        <!--<ul class="list-unstyled CTAs">
+            <li>
+            <div class="thumbnail">
+                <img src="img/braendi_picto.jpg" alt="Spiel Brändi Picto">
+                <div class="caption">
+                    <h3>Verlosung</h3>
+                    <p>Du nimmst als registrierte Benutzerin automatisch an der Verlosung der Spiele Brändi Picto™ und Brändi Picto Plus™ teil. Die Gewinnerin wird am 28. Februar ausgelost.</p>
+                    <p><a href="https://www.braendi-shop.ch/de/A~SB.A25-03" class="btn btn-primary" role="button">Infos zum Spiel</a></p>
+                </div>
+            </div>
+            </li>
+        </ul>-->
+        <?php
         }
     ?>
 </nav>
