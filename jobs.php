@@ -20,18 +20,11 @@ if (isset($_POST['job-submit'])) {
     $erscheinen_am = filter_data($_POST['erscheinen_am']);
     $pdf_url = filter_data($_POST['pdf_url']);
     
-    // PDF-URL Validierung - nur .pdf erlauben
+    // PDF-URL Validierung - nur sichere .pdf URLs erlauben
     if (!empty($pdf_url)) {
-        // Prüfe ob URL mit https:// oder http:// beginnt
-        if (strpos($pdf_url, 'http://') !== 0 && strpos($pdf_url, 'https://') !== 0) {
-            $_SESSION['error'] = "Die URL muss mit http:// oder https:// beginnen.";
-            header("Location:jobs.php");
-            exit();
-        }
-        
-        // Prüfe ob URL mit .pdf endet (case-insensitive)
-        if (strtolower(substr($pdf_url, -4)) !== '.pdf') {
-            $_SESSION['error'] = "Die URL muss auf .pdf enden.";
+        // Validiere mit strengem Regex: http(s):// + valide URL + .pdf
+        if (!preg_match('/^https?:\/\/[a-zA-Z0-9\-._~:\/\?#\[\]@!$&\'()*+,;=%]+\.pdf$/i', $pdf_url)) {
+            $_SESSION['error'] = "Ungültige PDF-URL. Bitte verwenden Sie eine direkte HTTPS-PDF-URL (z.B. https://example.com/dokument.pdf).";
             header("Location:jobs.php");
             exit();
         }
