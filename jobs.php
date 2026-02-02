@@ -11,6 +11,53 @@ require_once('system/security.php');
 
 $page = 'jobs';
 
+// Stellenanzeige aufgeben
+if (isset($_POST['job-submit'])) {
+    $name = filter_data($_POST['name']);
+    $kanton = filter_data($_POST['kanton']);
+    $institution = filter_data($_POST['institution']);
+    $stellenantritt = filter_data($_POST['stellenantritt']);
+    $erscheinen_am = filter_data($_POST['erscheinen_am']);
+    $pdf_url = filter_data($_POST['pdf_url']);
+    
+    // PDF-URL Validierung - nur .pdf erlauben
+    if (!empty($pdf_url)) {
+        // Prüfe ob URL mit https:// oder http:// beginnt
+        if (strpos($pdf_url, 'http://') !== 0 && strpos($pdf_url, 'https://') !== 0) {
+            $_SESSION['error'] = "Die URL muss mit http:// oder https:// beginnen.";
+            header("Location:jobs.php");
+            exit();
+        }
+        
+        // Prüfe ob URL mit .pdf endet (case-insensitive)
+        if (strtolower(substr($pdf_url, -4)) !== '.pdf') {
+            $_SESSION['error'] = "Die URL muss auf .pdf enden.";
+            header("Location:jobs.php");
+            exit();
+        }
+    }
+    
+    // Daten für die jobs Tabelle vorbereiten
+    $job_data = array(
+        'name' => $name,
+        'kanton' => $kanton,
+        'institution' => $institution,
+        'stellenantritt' => $stellenantritt,
+        'erscheinen_am' => $erscheinen_am,
+        'pdf_url' => $pdf_url
+    );
+    
+    // Stellenanzeige in Datenbank speichern
+    add_record('jobs', $job_data);
+    
+    // Redirect um Formular neu zu laden
+    header("Location:jobs.php?success=1");
+    exit();
+}
+
+// User-Daten für Modal-Vorausfüllung laden
+$user = mysqli_fetch_assoc(get_user($user_id));
+
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -19,101 +66,84 @@ $page = 'jobs';
     <div class="modal fade" id="JobsModal" tabindex="-1" role="dialog" aria-labelledby="jobs-wortlab">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="profil-wortlab">Anzeige aufgeben</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="profil-wortlab">Stellenanzeige aufgeben</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group row">
-                            <label for="Gender" class="col-sm-2 form-control-label">Anrede</label>
-                            <div class="col-sm-5">
-                                <select class="form-control form-control-sm" id="Gender" name="gender">
-                                    <option <?php if ($user['gender'] == "") echo "selected"; ?> value="">--</option>
-                                    <option <?php if ($user['gender'] == "Frau") echo "selected"; ?> value="Frau">Frau</option>
-                                    <option <?php if ($user['gender'] == "Herr") echo "selected"; ?> value="Herr">Herr</option>
-                                </select>
-                            </div>
+                        <div class="form-group">
+                            <label for="name">Stellentitel / Institution <span style="color:red;">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" 
+                                   placeholder="z.B. Logopädin/Logopäde 80% - Sprachheilschule Musterhausen" required>
+                            <small class="form-text text-muted">Bitte geben Sie einen aussagekräftigen Titel ein.</small>
                         </div>
-                        <div class="form-group row">
-                            <label for="Vorname" class="col-sm-2 col-xs-12 form-control-label">Name</label>
-                            <div class="col-sm-5 col-xs-6">
-                                <input  type="text" class="form-control form-control-sm"
-                                        id="Vorname" placeholder="Vorname"
-                                        name="firstname" value="<?php echo $user['firstname']; ?>">
-                            </div>
-                            <div class="col-sm-5 col-xs-6">
-                                <input  type="text" class="form-control form-control-sm"
-                                        id="Nachname" placeholder="Nachname"
-                                        name="lastname" value="<?php echo $user['lastname']; ?>">
-                            </div>
+                        <div class="form-group">
+                            <label for="institution">Institution <span style="color:red;">*</span></label>
+                            <select class="form-control" id="institution" name="institution" required>
+                                <option value="">-- Bitte wählen --</option>
+                                <option value="schule">Schule</option>
+                                <option value="klinik">Klinik</option>
+                                <option value="praxis">Freie Praxis</option>
+                                <option value="dienst">Logopäd. Dienst</option>
+                                <option value="sonderschule">Sonderschule</option>
+                                <option value="spd">SPD</option>
+                                <option value="zentrum">Kompetenzzentrum</option>
+                            </select>
                         </div>
-                        <div class="form-group row">
-                            <label for="Email" class="col-sm-2 form-control-label">E-Mail</label>
-                            <div class="col-sm-10">
-                                <input  type="email" class="form-control form-control-sm"
-                                        id="Email" placeholder="E-Mail" required
-                                        name="email" value="<?php echo $user['email']; ?>">
-                            </div>
+                        <div class="form-group">
+                            <label for="kanton">Kanton <span style="color:red;">*</span></label>
+                            <select class="form-control" id="kanton" name="kanton" required>
+                                <option value="">-- Bitte wählen --</option>
+                                <option value="ag">Aargau</option>
+                                <option value="ar">Appenzell Ausserrhoden</option>
+                                <option value="ai">Appenzell Innerrhoden</option>
+                                <option value="bl">Basel-Landschaft</option>
+                                <option value="bs">Basel-Stadt</option>
+                                <option value="be">Bern</option>
+                                <option value="fr">Freiburg</option>
+                                <option value="ge">Genf</option>
+                                <option value="gl">Glarus</option>
+                                <option value="gr">Graubünden</option>
+                                <option value="ju">Jura</option>
+                                <option value="lu">Luzern</option>
+                                <option value="ne">Neuenburg</option>
+                                <option value="nw">Nidwalden</option>
+                                <option value="ow">Obwalden</option>
+                                <option value="sh">Schaffhausen</option>
+                                <option value="sz">Schwyz</option>
+                                <option value="so">Solothurn</option>
+                                <option value="sg">St. Gallen</option>
+                                <option value="ti">Tessin</option>
+                                <option value="tg">Thurgau</option>
+                                <option value="ur">Uri</option>
+                                <option value="vd">Waadt</option>
+                                <option value="vs">Wallis</option>
+                                <option value="zg">Zug</option>
+                                <option value="zh">Zürich</option>
+                            </select>
                         </div>
-                        <hr />   
-                        <div class="form-group row">
-                            <label for="pdf" class="col-sm-2 form-control-label">PDF</label>
-                            <div class="col-sm-10">
-                                <input type="file" name="pdf_stelle">
-                            </div>
+                        <div class="form-group">
+                            <label for="stellenantritt">Stellenantritt <span style="color:red;">*</span></label>
+                            <input type="text" class="form-control" id="stellenantritt" name="stellenantritt" 
+                                   placeholder="z.B. Ab sofort oder nach Vereinbarung" required>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-sm-5 col-sm-offset-2">
-                                <label for="Institution" class="form-control-label">Institution</label>
-                                <select class="form-control form-control-sm" id="Institution" name="institution">
-                                    <option <?php if ($user['institution'] == "") echo "selected"; ?> value="">--</option>
-                                    <option <?php if ($user['institution'] == "Schule") echo "selected"; ?> value="schule">Schule</option>
-                                    <option <?php if ($user['institution'] == "Klinik") echo "selected"; ?> value="klinik">Klinik</option>
-                                    <option <?php if ($user['institution'] == "Praxis") echo "selected"; ?> value="praxis">Freie Praxis</option>
-                                    <option <?php if ($user['institution'] == "Dienst") echo "selected"; ?> value="dienst">Logopäd. Dienst</option>
-                                    <option <?php if ($user['institution'] == "Sonderschule") echo "selected"; ?> value="sonderschule">Sonderschule</option>
-                                    <option <?php if ($user['institution'] == "SPD") echo "selected"; ?> value="spd">SPD</option>
-                                    <option <?php if ($user['institution'] == "Kompetenzzentrum") echo "selected"; ?> value="zentrum">Kompetenzzentrum</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-5">
-                                <label for="Kanton" class="form-control-label">Kanton</label>
-                                <select class="form-control form-control-sm" id="Kanton" name="kanton">
-                                    <option <?php if ($user['kanton'] == "") echo "selected"; ?> value="">--</option>
-                                    <option <?php if ($user['kanton'] == "Aargau") echo "selected"; ?> value="ag">Aargau</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ar">Appenzell Ausserrhoden</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ai">Appenzell Innerrhoden</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="bl">Basel-Landschaft</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="bs">Basel-Stadt</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="be">Bern</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="fr">Freiburg</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ge">Genf</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="gl">Glarus</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="gr">Graubünden</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ju">Jura</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="lu">Luzern</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ne">Neuenburg</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="nw">Nidwalden</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ow">Obwalden</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="sh">Schaffhausen</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="sz">Schwyz</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="so">Solothurn</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="sg">St. Gallen</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ti">Tessin</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="so">Solothurn</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="tg">Thurgau</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="ur">Uri</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="vd">Waadt</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="vs">Wallis</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="zg">Zug</option>
-                                    <option <?php if ($user['kanton'] == "Appenzell Ausserrhoden") echo "selected"; ?> value="zh">Zürich</option>
-                                </select>
-                            </div>
+                        <div class="form-group">
+                            <label for="erscheinen_am">Erscheinen am</label>
+                            <input type="date" class="form-control" id="erscheinen_am" name="erscheinen_am">
                         </div>
+                        <div class="form-group">
+                            <label for="pdf_url">Stellenanzeige (PDF-Link)</label>
+                            <input type="url" class="form-control" id="pdf_url" name="pdf_url" 
+                                   placeholder="z.B. https://example.com/stelle.pdf">
+                            <small class="form-text text-muted">Bitte geben Sie nur eine URL zu einer PDF-Datei ein (z.B. https://example.com/stelle.pdf)</small>
+                        </div>
+                        <hr>
+                        <p class="text-muted"><small><span style="color:red;">*</span> Pflichtfelder</small></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Abbrechen</button>
-                        <button type="submit" class="btn btn-success btn-sm" name="update-submit">Änderungen speichern</button>
+                        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Abbrechen</button>
+                        <button type="submit" class="btn btn-success btn-sm" name="job-submit">Stellenanzeige aufgeben</button>
                     </div>
                 </form>
             </div><!-- /modal content-->
@@ -129,63 +159,74 @@ $page = 'jobs';
                 	<div class="row">
                     	<div class="col-md-12">
                             <h1>Stellenangebote für Logopädinnen / Logopäden</h1>
+                            <?php if(isset($_GET['success']) && $_GET['success'] == 1): ?>
+                                <div class="alert alert-success alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <strong>Erfolg!</strong> Ihre Stellenanzeige wurde erfolgreich aufgegeben.
+                                </div>
+                            <?php endif; ?>
+                            <?php if(isset($_SESSION['error'])): ?>
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <strong>Fehler:</strong> <?php echo htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="row">
                     	<div class="col-md-12">
-                        	<a href="#" data-toggle="modal" data-target="#JobsModal">
-                                <p>Testlink Stellenanzeige aufgeben</p>
+                        	<a href="#" data-toggle="modal" data-target="#JobsModal" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-plus"></span> Neue Stellenanzeige aufgeben
                             </a>
                         </div>
                     </div>
+                    <br>
                     <div class="row">
 						<div class="col-md-3">    
                             <h2>Kanton</h2>
-                            <form class="form-inline" method="get" action="jobs.php">
-                                <select name="kanton" class="auswahl" id="kanton">
-                                    <option value="" selected>- Alle -</option>
-                                    <option value="ag">Aargau</option>
-                                    <option value="ar">Appenzell Ausserrhoden</option>
-                                    <option value="ai">Appenzell Innerrhoden</option>
-                                    <option value="bl">Basel-Landschaft</option>
-                                    <option value="bs">Basel-Stadt</option>
-                                    <option value="be">Bern</option>
-                                    <option value="fr">Freiburg</option>
-                                    <option value="ge">Genf</option>
-                                    <option value="gl">Glarus</option>
-                                    <option value="gr">Graubünden</option>
-                                    <option value="ju">Jura</option>
-                                    <option value="lu">Luzern</option>
-                                    <option value="ne">Neuenburg</option>
-                                    <option value="nw">Nidwalden</option>
-                                    <option value="ow">Obwalden</option>
-                                    <option value="sh">Schaffhausen</option>
-                                    <option value="sz">Schwyz</option>
-                                    <option value="so">Solothurn</option>
-                                    <option value="sg">St. Gallen</option>
-                                    <option value="ti">Tessin</option>
-                                    <option value="tg">Thurgau</option>
-                                    <option value="ur">Uri</option>
-                                    <option value="vd">Waadt</option>
-                                    <option value="vs">Wallis</option>
-                                    <option value="zg">Zug</option>
-                                    <option value="zh">Zürich</option>
-                                </select>
+                            <select name="kanton" class="auswahl" id="kanton_filter">
+                                <option value="" selected>- Alle -</option>
+                                <option value="ag">Aargau</option>
+                                <option value="ar">Appenzell Ausserrhoden</option>
+                                <option value="ai">Appenzell Innerrhoden</option>
+                                <option value="bl">Basel-Landschaft</option>
+                                <option value="bs">Basel-Stadt</option>
+                                <option value="be">Bern</option>
+                                <option value="fr">Freiburg</option>
+                                <option value="ge">Genf</option>
+                                <option value="gl">Glarus</option>
+                                <option value="gr">Graubünden</option>
+                                <option value="ju">Jura</option>
+                                <option value="lu">Luzern</option>
+                                <option value="ne">Neuenburg</option>
+                                <option value="nw">Nidwalden</option>
+                                <option value="ow">Obwalden</option>
+                                <option value="sh">Schaffhausen</option>
+                                <option value="sz">Schwyz</option>
+                                <option value="so">Solothurn</option>
+                                <option value="sg">St. Gallen</option>
+                                <option value="ti">Tessin</option>
+                                <option value="tg">Thurgau</option>
+                                <option value="ur">Uri</option>
+                                <option value="vd">Waadt</option>
+                                <option value="vs">Wallis</option>
+                                <option value="zg">Zug</option>
+                                <option value="zh">Zürich</option>
+                            </select>
 						</div><!--/col-md-3-->
                         <div class="col-md-3">
                         	<h2>Institution</h2>
-                                <select name="institution" class="auswahl" id="institution">
-                                    <option value="" selected>- Alle -</option>
-                                    <option value="schule">Schule</option>
-                                    <option value="klinik">Klinik</option>
-                                    <option value="praxis">Freie Praxis</option>
-                                    <option value="dienst">Logopäd. Dienst</option>
-                                    <option value="sonderschule">Sonderschule</option>
-                                    <option value="spd">SPD</option>
-                                    <option value="zentrum">Kompetenzzentrum</option>
-                                </select>
+                            <select name="institution" class="auswahl" id="institution_filter">
+                                <option value="" selected>- Alle -</option>
+                                <option value="schule">Schule</option>
+                                <option value="klinik">Klinik</option>
+                                <option value="praxis">Freie Praxis</option>
+                                <option value="dienst">Logopäd. Dienst</option>
+                                <option value="sonderschule">Sonderschule</option>
+                                <option value="spd">SPD</option>
+                                <option value="zentrum">Kompetenzzentrum</option>
+                            </select>
                         </div><!--/col-md-3-->
-                            </form>       
                     </div><!--/row-->
                     <div class="col-md-6"><!--row-->
                     	<p id="output"></p>
@@ -194,28 +235,40 @@ $page = 'jobs';
             </div><!--/content-->
         </div><!--/wrapper-->
         <script>
-		// ajax
-	
-		$(".auswahl").change(function(event) {         // Bei Klick auf den "posten"-Button
-			event.preventDefault();                           // Absenden des Formulars unterbinden
-			var kanton = $('#kanton option:selected').attr( "value");
-			var institution = $('#institution option:selected').attr( "value");
-	
-			$.ajax({                    // Initialisierung eines AJAX-Requests
-				url: "search_job.php",               // Die in Ajax ablaufenden Funktionen müssen zwingend in diesem File stattfinden.
-				type: "POST",                           // Sendemethode der Daten POST
-				data: { kanton: kanton, institution: institution}, // zu sendenden Daten; Die Attribute werden als "Variable" gesendet.
-				dataType: "text",                 //Die Form der Daten. Kann z.B. auch HTML oder JSon sein.
-		
-				success:function( get_data ) {             // Bei erfolgreichem Request: Den zu empfangenden Daten einen "Namen" zuweisen.
-					// console.log(get_data);
-					html = $.parseHTML( get_data );                    // empfangenen Text als HTML parsen
-					$("#output").empty();                           //Das Ausgabefeld mit der ID output wird geleert
-					$(html).hide().prependTo("#output").show(500); // Das Ausgabefeld wird mit dem Inhalt gefüllt.
-					console.log(get_data);	
-				}
+		// Initial alle Jobs laden beim Seitenaufruf
+		$(document).ready(function() {
+			// Alle Jobs initial laden
+			loadJobs('', '');
+			
+			// Change-Event für Filter
+			$(".auswahl").on("change", function() {
+				var kanton = $('#kanton_filter').val();
+				var institution = $('#institution_filter').val();
+				loadJobs(kanton, institution);
 			});
 		});
+		
+		// Funktion zum Laden der Jobs via AJAX
+		function loadJobs(kanton, institution) {
+			$.ajax({
+				url: "search_job.php",
+				type: "POST",
+				data: { 
+					kanton: kanton, 
+					institution: institution
+				},
+				dataType: "text",
+				success: function(get_data) {
+					$("#output").empty();
+					$("#output").html(get_data);
+					console.log("Jobs geladen - Kanton: " + kanton + ", Institution: " + institution);
+				},
+				error: function(xhr, status, error) {
+					console.error("AJAX Error:", error);
+					console.log("Response:", xhr.responseText);
+				}
+			});
+		}
     </script>
     </body>
 </html>
