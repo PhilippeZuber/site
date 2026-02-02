@@ -119,9 +119,34 @@ $page = 'search';
                             </details>
                         </div><!--column-->
                         <div class="col-md-8" id="datatables">
+                            <div class="well well-sm" id="memory-builder">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <strong>Memory</strong> &ndash; <span id="memory-selected-count">0</span> Wörter ausgewählt
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-sm-4">
+                                        <label for="memory_mode">Modus</label>
+                                        <select id="memory_mode" class="form-control">
+                                            <option value="image">Bilder</option>
+                                            <option value="text">Text</option>
+                                            <option value="mixed">Gemischt</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="memory_pairs">Paare (optional)</label>
+                                        <input id="memory_pairs" type="number" min="2" class="form-control" placeholder="z.B. 8">
+                                    </div>
+                                    <div class="col-sm-4" style="margin-top: 24px;">
+                                        <button id="memory_create" class="btn btn-success btn-sm">Memory erstellen</button>
+                                    </div>
+                                </div>
+                            </div>
                             <table  class="table table-responsive table-striped" id="data-table1">
                                 <thead>
                                     <tr>
+                                        <th>Auswahl</th>
                                         <th>Wort</th>
                                         <th class="search_image_column">Bild</th>
                                         <th class="search_image_column">Bild2</th>
@@ -148,6 +173,13 @@ $page = 'search';
 				});
 			/*Initialising data-table*/
             var table;
+            var memorySelectedIds = {};
+
+            function updateMemorySelectedCount() {
+                var count = Object.keys(memorySelectedIds).length;
+                $('#memory-selected-count').text(count);
+            }
+
             $(document).ready(function (){
 				$('#data-table1').DataTable( {
 					"language": {
@@ -155,6 +187,11 @@ $page = 'search';
 					},
 					searching: false,
 					paging: false,
+                    order: [[1, 'asc']],
+                    columnDefs: [
+                        { targets: 0, orderable: false, searchable: false, width: '80px' },
+                        { targets: [2,3], orderable: false }
+                    ]
 				});
             });
 			
@@ -242,8 +279,47 @@ $page = 'search';
                     searching: false,
                     "processing": true,
                     "serverSide": true,
+                    order: [[1, 'asc']],
+                    columnDefs: [
+                        { targets: 0, orderable: false, searchable: false, width: '80px' },
+                        { targets: [2,3], orderable: false }
+                    ],
+                    drawCallback: function () {
+                        $('#data-table1 .memory-select').each(function () {
+                            var id = $(this).val();
+                            if (memorySelectedIds[id]) {
+                                $(this).prop('checked', true);
+                            }
+                        });
+                        updateMemorySelectedCount();
+                    }
                 });
             }
+
+            $(document).on('change', '.memory-select', function () {
+                var id = $(this).val();
+                if ($(this).is(':checked')) {
+                    memorySelectedIds[id] = true;
+                } else {
+                    delete memorySelectedIds[id];
+                }
+                updateMemorySelectedCount();
+            });
+
+            $('#memory_create').on('click', function () {
+                var ids = Object.keys(memorySelectedIds);
+                if (ids.length < 2) {
+                    alert('Bitte mindestens 2 Wörter auswählen.');
+                    return;
+                }
+                var mode = $('#memory_mode').val();
+                var pairs = $('#memory_pairs').val();
+                var url = 'memory.php?ids=' + encodeURIComponent(ids.join(',')) + '&mode=' + encodeURIComponent(mode);
+                if (pairs) {
+                    url += '&pairs=' + encodeURIComponent(pairs);
+                }
+                window.location.href = url;
+            });
 			/*var table = $('#data-table1').DataTable();
  			var data = table.buttons.exportData( {
 				columns: ':visible'
