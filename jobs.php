@@ -1,18 +1,20 @@
 <?php
 session_start();
-if (!isset($_SESSION['id'])) {
-    header("Location:index.php");
-} else {
-    $user_id = $_SESSION['id'];
-}
 
 require_once('system/data.php');
 require_once('system/security.php');
 
 $page = 'jobs';
 
-// Stellenanzeige aufgeben
-if (isset($_POST['job-submit'])) {
+// User-ID laden wenn eingeloggt
+if (isset($_SESSION['id'])) {
+    $user_id = $_SESSION['id'];
+} else {
+    $user_id = null;
+}
+
+// Stellenanzeige aufgeben - nur für eingeloggte User
+if (isset($_POST['job-submit']) && $user_id !== null) {
     $name = filter_data($_POST['name']);
     $kanton = filter_data($_POST['kanton']);
     $institution = filter_data($_POST['institution']);
@@ -48,8 +50,11 @@ if (isset($_POST['job-submit'])) {
     exit();
 }
 
-// User-Daten für Modal-Vorausfüllung laden
-$user = mysqli_fetch_assoc(get_user($user_id));
+// User-Daten für Modal-Vorausfüllung laden (nur wenn eingeloggt)
+$user = null;
+if ($user_id !== null) {
+    $user = mysqli_fetch_assoc(get_user($user_id));
+}
 
 ?>
 <!DOCTYPE html>
@@ -142,6 +147,33 @@ $user = mysqli_fetch_assoc(get_user($user_id));
             </div><!-- /modal content-->
         </div><!-- /modal dialog-->
     </div><!-- /modal window for jobs-->
+    
+    <!-- Info Modal für nicht eingeloggte Benutzer -->
+    <div class="modal fade" id="LoginInfoModal" tabindex="-1" role="dialog" aria-labelledby="login-info">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="login-info">Einloggen erforderlich</h4>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Um eine Stellenanzeige aufzugeben, müssen Sie eingeloggt sein.</strong></p>
+                    <p>Haben Sie bereits ein Konto? Loggen Sie sich jetzt ein:</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Abbrechen</button>
+                    <a href="login.php" class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-log-in"></span> Zur Anmeldung
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div><!-- /modal window for login info-->
+    <?php if($user_id === null): ?>
+    <style>
+        #JobsModal { display: none !important; }
+    </style>
+    <?php endif; ?>
     <body>
         <div class="wrapper">
             <?php include 'sidebar.php'; ?>
@@ -168,9 +200,15 @@ $user = mysqli_fetch_assoc(get_user($user_id));
                     </div>
                     <div class="row">
                     	<div class="col-md-12">
-                        	<a href="#" data-toggle="modal" data-target="#JobsModal" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-plus"></span> Neue Stellenanzeige aufgeben
-                            </a>
+                    		<?php if($user_id !== null): ?>
+                                <a href="#" data-toggle="modal" data-target="#JobsModal" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-plus"></span> Stelle aufgeben
+                                </a>
+                    		<?php else: ?>
+                                <a href="#" data-toggle="modal" data-target="#LoginInfoModal" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-plus"></span> Stelle aufgeben
+                                </a>
+                    		<?php endif; ?>
                         </div>
                     </div>
                     <br>
