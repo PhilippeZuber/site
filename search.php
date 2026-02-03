@@ -119,30 +119,28 @@ $page = 'search';
                             </details>
                         </div><!--column-->
                         <div class="col-md-8" id="datatables">
-                            <div class="well well-sm" id="memory-builder">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <strong>Memory</strong> &ndash; <span id="memory-selected-count">0</span> Wörter ausgewählt
+                            <details style="margin-bottom: 20px;">
+                                <summary><span class="glyphicon glyphicon-plus-sign"></span> Memory erstellen &ndash; <span id="memory-selected-count">0</span> Wörter ausgewählt</summary>
+                                <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label for="memory_mode">Modus</label>
+                                            <select id="memory_mode" class="form-control">
+                                                <option value="image">Bilder</option>
+                                                <option value="text">Text</option>
+                                                <option value="mixed">Gemischt</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="memory_pairs">Max. Paare (optional)</label>
+                                            <input id="memory_pairs" type="number" min="2" class="form-control" placeholder="z.B. 8">
+                                        </div>
+                                        <div class="col-sm-4" style="margin-top: 24px;">
+                                            <button id="memory_create" class="btn btn-success btn-sm">Memory starten</button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row" style="margin-top: 10px;">
-                                    <div class="col-sm-4">
-                                        <label for="memory_mode">Modus</label>
-                                        <select id="memory_mode" class="form-control">
-                                            <option value="image">Bilder</option>
-                                            <option value="text">Text</option>
-                                            <option value="mixed">Gemischt</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label for="memory_pairs">Paare (optional)</label>
-                                        <input id="memory_pairs" type="number" min="2" class="form-control" placeholder="z.B. 8">
-                                    </div>
-                                    <div class="col-sm-4" style="margin-top: 24px;">
-                                        <button id="memory_create" class="btn btn-success btn-sm">Memory erstellen</button>
-                                    </div>
-                                </div>
-                            </div>
+                            </details>
                             <table  class="table table-responsive table-striped" id="data-table1">
                                 <thead>
                                     <tr>
