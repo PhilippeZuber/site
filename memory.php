@@ -63,5 +63,10 @@ $pairs = preg_replace('/[^0-9]/', '', $pairs);
         </div>
         <?php include './footer.php'; ?>
         <script src="js/memory.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#sidebar').addClass('active');
+            });
+        </script>
     </body>
 </html>
