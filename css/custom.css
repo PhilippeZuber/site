@@ -301,9 +301,9 @@ a.btn2, a.btn2:hover {
     MEMORY GAME
 ----------------------------------------------------- */
 .memory-board {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     gap: 10px;
+    justify-content: center;
 }
 
 .memory-card {

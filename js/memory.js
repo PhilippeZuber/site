@@ -56,6 +56,10 @@
 
     function renderCards($board, cards) {
         $board.empty();
+        
+        var columns = calculateOptimalColumns(cards.length);
+        $board.css('grid-template-columns', 'repeat(' + columns + ', 120px)');
+        
         cards.forEach(function (card, index) {
             var backContent = card.type === 'image' && card.imageUrl
                 ? '<img src="' + card.imageUrl + '" alt="' + card.name + '">'
@@ -70,6 +74,15 @@
                 '</div>';
             $board.append(cardHtml);
         });
+    }
+
+    function calculateOptimalColumns(cardCount) {
+        if (cardCount <= 4) return 2;
+        if (cardCount <= 6) return 3;
+        if (cardCount <= 12) return 4;
+        if (cardCount <= 20) return 5;
+        if (cardCount <= 30) return 6;
+        return 8;
     }
 
     $(document).ready(function () {
