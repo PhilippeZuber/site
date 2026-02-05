@@ -104,8 +104,10 @@ $last_update = $update_time['day'] . "." . $update_time['month'] . "." . $update
 
 /* Delete User */
 if (isset($_POST['update-delete'])) {
-    console.log("Message here");
     $result = delete_user($user_id);
+    session_destroy();
+    header('Location: login.php');
+    exit();
 }
 ?>
 <!--Modal window for profile-->
@@ -198,7 +200,11 @@ if (isset($_POST['update-delete'])) {
                             <div>Profilbild auswählen <input type="file" name="profil_img"></div>
                         </div>
                     </div>
-                    <!--<button type="submit" class="btn btn-danger btn-sm" data-dismiss="modal" name="update-delete">Mein Profil löschen</button>-->
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#ConfirmDeleteModal">Profil löschen</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
@@ -208,3 +214,27 @@ if (isset($_POST['update-delete'])) {
         </div><!-- /modal content-->
     </div><!-- /modal dialog-->
 </div><!-- /modal user window-->
+
+<!-- Modal for delete confirmation -->
+<div class="modal fade" id="ConfirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Schliessen"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="deleteModalLabel">Profil löschen</h4>
+            </div>
+            <div class="modal-body">
+                <p><strong>Achtung!</strong> Das Löschen Ihres Profils kann nicht rückgängig gemacht werden.</p>
+                <p>Alle in Ihren Profileinstellungen angegebenen Daten werden dauerhaft gelöscht (mit Ausnahme Ihrer E-Mail-Adresse, sofern Sie Newsletter-Abonnent sind).</p>
+                <p>Sind Sie sicher, dass Sie Ihr Profil löschen möchten?</p>
+            </div>
+            <div class="modal-footer">
+                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+                    <button type="submit" class="btn btn-danger" name="update-delete">Ja, Profil löschen</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /delete confirmation modal -->

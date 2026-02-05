@@ -27,7 +27,6 @@ $page = 'search';
                 <div class=container-fluid>
                     <div class="row">
                         <div class="col-md-12">
-                        <div class="alert alert-warning" role="alert">Wortlab befindet sich zurzeit in der Aufbauphase. Die Datenbank wird ständig erweitert und neue Filterkriterien werden hinzugefügt. Rückmeldungen und Ideen nehmen wir gerne unter <a href="mailto:info@wortlab.ch">info@wortlab.ch</a> entgegen.</div>
                         <h1>Suchen <a data-toggle="modal" data-target="#SearchInfModal" class="badge"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></h1>
                             <div class="input-group">
                                 <input type="text" id="search_text" class="form-control" placeholder="Suche nach...">
@@ -323,5 +322,6 @@ $page = 'search';
 				columns: ':visible'
 			} );*/
         </script>
+        <?php include 'footer.php'; ?>
     </body>
 </html>

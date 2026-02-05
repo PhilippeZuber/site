@@ -49,9 +49,9 @@ $page = 'index';
                                 </div>
                             </div>
                         </div>-->
-                        <div class="col-md-12">
+                        <!--<div class="col-md-12">
                             <div class="alert alert-warning" role="alert">Wortlab befindet sich zurzeit in der Aufbauphase. Die Datenbank wird ständig erweitert und neue Filterkriterien werden hinzugefügt. Rückmeldungen und Ideen nehmen wir gerne unter <a href="mailto:info@wortlab.ch">info@wortlab.ch</a> entgegen.</div>
-                        </div>
+                        </div>-->
                         <div class="col-md-12">
                             <h1>Suchen <a data-toggle="modal" data-target="#SearchInfModal" class="badge"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></h1>
                             <div class="input-group">
