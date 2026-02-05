@@ -49,6 +49,12 @@
 					</li>
 				</ul>
 			</li>
+			<li class="<?php echo $page=='newsletter' ? 'active' : ''; ?>">
+				<a href="send_newsletter.php">
+					<i class="glyphicon glyphicon-envelope"></i>
+					Newsletter
+				</a>
+			</li>
             <?php
         }
         ?>

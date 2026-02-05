@@ -52,6 +52,7 @@ if (isset($_POST['update-submit'])) {
     $image_name = "";
     $job = filter_data($_POST['job']);
     $canton = filter_data($_POST['canton']);
+    $news = isset($_POST['news']) ? 'on' : '';
 
 
     $result = get_user($user_id);
@@ -94,7 +95,7 @@ if (isset($_POST['update-submit'])) {
             echo "Leider konnte die Datei nicht hochgeladen werden. ";
         }
     }
-    $result = update_user($user_id, $email, $password, $confirm_password, $gender, $firstname, $lastname, $image_name, $job, $canton);
+    $result = update_user($user_id, $email, $password, $confirm_password, $gender, $firstname, $lastname, $image_name, $job, $canton, $news);
 }
 $result = get_user($user_id);
 $user = mysqli_fetch_assoc($result);
@@ -188,11 +189,19 @@ if (isset($_POST['update-delete'])) {
                         </div>
                     </div>
                     <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" name="news" value="on" <?php if ($user['news'] == "on") echo "checked"; ?> tabindex="7">
+                                Newsletter abonnieren
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <div class="col-sm-6">
-                            <input type="password" class="form-control form-control-sm" id="Passwort" placeholder="Passwort" name="password" tabindex="7">
+                            <input type="password" class="form-control form-control-sm" id="Passwort" placeholder="Passwort" name="password" tabindex="8">
                         </div>
                         <div class="col-sm-6">
-                            <input type="password" class="form-control form-control-sm" id="Passwort_Conf" placeholder="Passwort" name="confirm-password" tabindex="8">
+                            <input type="password" class="form-control form-control-sm" id="Passwort_Conf" placeholder="Passwort" name="confirm-password" tabindex="9">
                         </div>
                     </div>
                     <div class="form-group row">
