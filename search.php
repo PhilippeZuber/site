@@ -140,6 +140,28 @@ $page = 'search';
                                     </div>
                                 </div>
                             </details>
+                            <details style="margin-bottom: 20px;">
+                                <summary><span class="glyphicon glyphicon-plus-sign"></span> Arbeitsblatt erstellen &ndash; <span id="worksheet-selected-count">0</span> Wörter ausgewählt</summary>
+                                <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label for="worksheet_layout">Layout</label>
+                                            <select id="worksheet_layout" class="form-control">
+                                                <option value="cards">Bildkarten (4 pro Seite)</option>
+                                                <option value="list">Wortliste</option>
+                                                <option value="memory">Memory-Karten</option>
+                                                <option value="bingo">Bingo-Karte (3x3)</option>
+                                                <option value="syllables">Silbenkarten</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6" style="margin-top: 24px;">
+                                            <button id="worksheet_create" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-print"></span> Arbeitsblatt erstellen
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
                             <table  class="table table-responsive table-striped" id="data-table1">
                                 <thead>
                                     <tr>
@@ -175,6 +197,7 @@ $page = 'search';
             function updateMemorySelectedCount() {
                 var count = Object.keys(memorySelectedIds).length;
                 $('#memory-selected-count').text(count);
+                $('#worksheet-selected-count').text(count);
             }
 
             $(document).ready(function (){
@@ -315,6 +338,17 @@ $page = 'search';
                 if (pairs) {
                     url += '&pairs=' + encodeURIComponent(pairs);
                 }
+                window.location.href = url;
+            });
+
+            $('#worksheet_create').on('click', function () {
+                var ids = Object.keys(memorySelectedIds);
+                if (ids.length < 1) {
+                    alert('Bitte mindestens 1 Wort auswählen.');
+                    return;
+                }
+                var layout = $('#worksheet_layout').val();
+                var url = 'worksheet_generator.php?ids=' + encodeURIComponent(ids.join(',')) + '&layout=' + encodeURIComponent(layout);
                 window.location.href = url;
             });
 			/*var table = $('#data-table1').DataTable();
