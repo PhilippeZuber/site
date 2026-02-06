@@ -42,6 +42,7 @@ if (isset($_POST['send_newsletter'])) {
         $headers .= "From: WORTLAB <noreply@wortlab.ch>\r\n";
         
         $sent_count = 0;
+        $send_delay_us = 600000;
         foreach ($recipients as $recipient) {
             $to = $recipient['email'];
             $token = hash('sha256', $recipient['user_id'] . '|' . $recipient['email'] . '|' . $unsubscribe_secret);
@@ -54,6 +55,8 @@ if (isset($_POST['send_newsletter'])) {
             if (mail($to, $subject, $personalized_content, $headers)) {
                 $sent_count++;
             }
+
+            usleep($send_delay_us);
         }
         
         $success_message = "Newsletter erfolgreich an $sent_count Empfänger versendet!";
