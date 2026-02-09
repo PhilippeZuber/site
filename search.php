@@ -118,6 +118,30 @@ $page = 'search';
                             </details>
                         </div><!--column-->
                         <div class="col-md-8" id="datatables">
+                            <details style="margin-bottom: 20px;" open>
+                                <summary><span class="glyphicon glyphicon-plus-sign"></span> Wortsammlungen</summary>
+                                <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label for="collection_select">Sammlung</label>
+                                            <select id="collection_select" class="form-control">
+                                                <option value="">Bitte wählen...</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6" style="margin-top: 24px;">
+                                            <button id="collection_load" class="btn btn-primary btn-sm">Auswahl laden</button>
+                                            <button id="collection_save" class="btn btn-success btn-sm">Auswahl speichern</button>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="col-sm-12">
+                                            <button id="collection_new" class="btn btn-default btn-sm">Neu</button>
+                                            <button id="collection_rename" class="btn btn-default btn-sm">Umbenennen</button>
+                                            <button id="collection_delete" class="btn btn-danger btn-sm">Löschen</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
                             <details style="margin-bottom: 20px;">
                                 <summary><span class="glyphicon glyphicon-plus-sign"></span> Memory erstellen &ndash; <span id="memory-selected-count">0</span> Wörter ausgewählt</summary>
                                 <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
@@ -193,6 +217,7 @@ $page = 'search';
 			/*Initialising data-table*/
             var table;
             var memorySelectedIds = {};
+            var collectionsById = {};
 
             function updateMemorySelectedCount() {
                 var count = Object.keys(memorySelectedIds).length;
@@ -213,7 +238,27 @@ $page = 'search';
                         { targets: [2,3], orderable: false }
                     ]
 				});
+
+                loadCollections();
             });
+
+            function loadCollections(selectedId) {
+                $.post('word_collections.php', { action: 'list' }, function (response) {
+                    var select = $('#collection_select');
+                    collectionsById = {};
+                    select.empty();
+                    select.append('<option value="">Bitte wählen...</option>');
+                    if (response && response.collections) {
+                        $.each(response.collections, function (index, item) {
+                            collectionsById[item.id] = item;
+                            select.append('<option value="' + item.id + '">' + item.name + '</option>');
+                        });
+                    }
+                    if (selectedId) {
+                        select.val(String(selectedId));
+                    }
+                }, 'json');
+            }
 			
 			/*Search function*/
             function search() {
@@ -324,6 +369,88 @@ $page = 'search';
                     delete memorySelectedIds[id];
                 }
                 updateMemorySelectedCount();
+            });
+
+            $('#collection_new').on('click', function () {
+                var name = prompt('Name der neuen Sammlung:');
+                if (!name) {
+                    return;
+                }
+                var ids = Object.keys(memorySelectedIds).join(',');
+                $.post('word_collections.php', { action: 'create', name: name, word_ids: ids }, function (response) {
+                    if (response && response.id) {
+                        loadCollections(response.id);
+                    }
+                }, 'json');
+            });
+
+            $('#collection_save').on('click', function () {
+                var selectedId = $('#collection_select').val();
+                if (!selectedId) {
+                    alert('Bitte zuerst eine Sammlung auswählen.');
+                    return;
+                }
+                var name = $('#collection_select option:selected').text();
+                var ids = Object.keys(memorySelectedIds).join(',');
+                $.post('word_collections.php', { action: 'update', id: selectedId, name: name, word_ids: ids }, function () {
+                    loadCollections(selectedId);
+                }, 'json');
+            });
+
+            $('#collection_load').on('click', function () {
+                var selectedId = $('#collection_select').val();
+                if (!selectedId) {
+                    alert('Bitte zuerst eine Sammlung auswählen.');
+                    return;
+                }
+                $.post('word_collections.php', { action: 'get', id: selectedId }, function (response) {
+                    if (response && response.collection) {
+                        var ids = response.collection.word_ids ? response.collection.word_ids.split(',') : [];
+                        memorySelectedIds = {};
+                        $.each(ids, function (index, value) {
+                            if (value !== '') {
+                                memorySelectedIds[value] = true;
+                            }
+                        });
+                        updateMemorySelectedCount();
+                        if (table) {
+                            table.draw(false);
+                        }
+                    }
+                }, 'json');
+            });
+
+            $('#collection_rename').on('click', function () {
+                var selectedId = $('#collection_select').val();
+                if (!selectedId) {
+                    alert('Bitte zuerst eine Sammlung auswählen.');
+                    return;
+                }
+                var currentName = $('#collection_select option:selected').text();
+                var newName = prompt('Neuer Name der Sammlung:', currentName);
+                if (!newName) {
+                    return;
+                }
+                var currentCollection = collectionsById[selectedId];
+                var wordIds = currentCollection ? currentCollection.word_ids : '';
+                $.post('word_collections.php', { action: 'update', id: selectedId, name: newName, word_ids: wordIds }, function () {
+                    loadCollections(selectedId);
+                }, 'json');
+            });
+
+            $('#collection_delete').on('click', function () {
+                var selectedId = $('#collection_select').val();
+                if (!selectedId) {
+                    alert('Bitte zuerst eine Sammlung auswählen.');
+                    return;
+                }
+                var currentName = $('#collection_select option:selected').text();
+                if (!confirm('Sammlung "' + currentName + '" wirklich löschen?')) {
+                    return;
+                }
+                $.post('word_collections.php', { action: 'delete', id: selectedId }, function () {
+                    loadCollections();
+                }, 'json');
             });
 
             $('#memory_create').on('click', function () {
