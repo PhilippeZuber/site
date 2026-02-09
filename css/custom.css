@@ -30,6 +30,30 @@ summary {
     background-color: #92bdd1;
 }
 
+.search-accordion {
+    border-color: #1798D2;
+}
+
+.search-accordion summary {
+    background-color: #92bdd1;
+}
+
+.action-accordion {
+    border-color: #7a9b39;
+}
+
+.action-accordion summary {
+    background-color: #cfe3a5;
+}
+
+.search-accordion-block {
+    margin-bottom: 16px;
+}
+
+.search-accordion-block:last-of-type {
+    margin-bottom: 0;
+}
+
 a, a:hover, a:focus {
     color: inherit;
     text-decoration: none;

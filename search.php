@@ -52,8 +52,8 @@ $page = 'search';
                     </div>
                     <div class="row">
                         <div class="col-md-4 ">
-                            <details style="margin-bottom: 20px;" open>
-                                <summary><span class="glyphicon glyphicon-plus-sign"></span> Wortarten</summary>
+                            <details class="search-accordion search-accordion-block">
+                                <summary><span class="glyphicon glyphicon-filter"></span> Wortarten</summary>
                                 <table style="margin-top: 20px;" width="100%" border="0">
                                     <tbody>
                                         <?php
@@ -73,8 +73,8 @@ $page = 'search';
                                     </tbody>
                                 </table>
                             </details>
-                            <details style="margin-bottom: 20px;" open>
-                                <summary><span class="glyphicon glyphicon-plus-sign"></span> Alter</summary>
+                            <details class="search-accordion search-accordion-block">
+                                <summary><span class="glyphicon glyphicon-filter"></span> Alter</summary>
                                 <table style="margin-top: 20px;" width="100%" border="0">
                                     <tbody>
                                         <?php
@@ -94,8 +94,8 @@ $page = 'search';
                                     </tbody>
                                 </table>
                             </details>
-                            <details open>
-                                <summary><span class="glyphicon glyphicon-plus-sign"></span> Kategorien</summary>
+                            <details class="search-accordion search-accordion-block">
+                                <summary><span class="glyphicon glyphicon-filter"></span> Kategorien</summary>
                                 <input style="margin-top: 20px;" class="form-control" id="semanticInput" type="text" placeholder="Suchen...">        
                                 <table width="100%" border="0">
                                     <tbody id="semanticTable">
@@ -116,10 +116,8 @@ $page = 'search';
                                     </tbody>
                                 </table>
                             </details>
-                        </div><!--column-->
-                        <div class="col-md-8" id="datatables">
-                            <details style="margin-bottom: 20px;" open>
-                                <summary><span class="glyphicon glyphicon-plus-sign"></span> Wortsammlungen</summary>
+                            <details class="action-accordion search-accordion-block">
+                                <summary><span class="glyphicon glyphicon-folder-open"></span> Wortsammlungen</summary>
                                 <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -142,8 +140,8 @@ $page = 'search';
                                     </div>
                                 </div>
                             </details>
-                            <details style="margin-bottom: 20px;">
-                                <summary><span class="glyphicon glyphicon-plus-sign"></span> Memory erstellen &ndash; <span id="memory-selected-count">0</span> Wörter ausgewählt</summary>
+                            <details class="action-accordion search-accordion-block">
+                                <summary><span class="glyphicon glyphicon-play-circle"></span> Memory erstellen &ndash; <span id="memory-selected-count">0</span> Wörter ausgewählt</summary>
                                 <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
                                     <div class="row">
                                         <div class="col-sm-4">
@@ -164,8 +162,8 @@ $page = 'search';
                                     </div>
                                 </div>
                             </details>
-                            <details style="margin-bottom: 20px;">
-                                <summary><span class="glyphicon glyphicon-plus-sign"></span> Arbeitsblatt erstellen &ndash; <span id="worksheet-selected-count">0</span> Wörter ausgewählt</summary>
+                            <details class="action-accordion search-accordion-block">
+                                <summary><span class="glyphicon glyphicon-print"></span> Arbeitsblatt erstellen &ndash; <span id="worksheet-selected-count">0</span> Wörter ausgewählt</summary>
                                 <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -186,6 +184,8 @@ $page = 'search';
                                     </div>
                                 </div>
                             </details>
+                        </div><!--column-->
+                        <div class="col-md-8" id="datatables">
                             <table  class="table table-responsive table-striped" id="data-table1">
                                 <thead>
                                     <tr>
