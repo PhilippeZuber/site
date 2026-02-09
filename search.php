@@ -219,6 +219,13 @@ $page = 'search';
             var memorySelectedIds = {};
             var collectionsById = {};
 
+            function applySelectionToTable() {
+                $('#data-table1 .memory-select').each(function () {
+                    var id = $(this).val();
+                    $(this).prop('checked', !!memorySelectedIds[id]);
+                });
+            }
+
             function updateMemorySelectedCount() {
                 var count = Object.keys(memorySelectedIds).length;
                 $('#memory-selected-count').text(count);
@@ -350,12 +357,7 @@ $page = 'search';
                         { targets: [2,3], orderable: false }
                     ],
                     drawCallback: function () {
-                        $('#data-table1 .memory-select').each(function () {
-                            var id = $(this).val();
-                            if (memorySelectedIds[id]) {
-                                $(this).prop('checked', true);
-                            }
-                        });
+                        applySelectionToTable();
                         updateMemorySelectedCount();
                     }
                 });
@@ -413,9 +415,8 @@ $page = 'search';
                             }
                         });
                         updateMemorySelectedCount();
-                        if (table) {
-                            table.draw(false);
-                        }
+                        applySelectionToTable();
+                        search();
                     }
                 }, 'json');
             });
