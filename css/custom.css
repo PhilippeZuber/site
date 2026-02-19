@@ -391,3 +391,116 @@ a.btn2, a.btn2:hover {
     cursor: default;
     opacity: 0.85;
 }
+
+/* ---------------------------------------------------
+    STICKY FILTER STYLE
+----------------------------------------------------- */
+.filters-container {
+    position: sticky;
+    top: 120px;
+    z-index: 50;
+    background: #fff;
+    padding: 0;
+    overflow-y: auto;
+    max-height: calc(100vh - 140px);
+    border-right: 1px solid #e0e0e0;
+}
+
+/* Active Checkboxes - darker background */
+input[type="checkbox"]:checked + label,
+input[type="checkbox"]:checked + label input[type="checkbox"] {
+    background-color: #e8f4f8 !important;
+}
+
+.details-content label {
+    padding: 4px 8px;
+    border-radius: 2px;
+    transition: background-color 0.2s ease;
+    display: block;
+    margin: 4px 0;
+}
+
+.details-content label:hover {
+    background-color: #f5f5f5;
+}
+
+.details-content label input[type="checkbox"]:checked + label,
+.details-content input[type="checkbox"]:checked + label {
+    background-color: #e8f4f8;
+    font-weight: 500;
+}
+
+/* Active Filter Tags Container */
+#active-filters-container {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f0f7fa;
+    border: 2px solid #1798D2;
+    border-radius: 4px;
+    display: none;
+}
+
+#active-filters-container.has-filters {
+    display: block;
+}
+
+#active-filters-label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 10px;
+    display: block;
+}
+
+#active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.filter-tag {
+    display: inline-flex;
+    align-items: center;
+    background: #1798D2;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    animation: slideIn 0.2s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.filter-tag-remove {
+    margin-left: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    background: none;
+    color: white;
+    padding: 0 4px;
+    font-size: 16px;
+    line-height: 1;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.filter-tag-remove:hover {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+
+#clear-all-filters {
+    width: 100%;
+    margin-top: 10px;
+}

@@ -55,6 +55,12 @@
 					Newsletter
 				</a>
 			</li>
+			<li class="<?php echo $page=='approve_jobs' ? 'active' : ''; ?>">
+				<a href="approve_jobs.php">
+					<i class="glyphicon glyphicon-check"></i>
+					Stellen freigeben
+				</a>
+			</li>
             <?php
         }
         ?>

@@ -51,7 +51,7 @@ $page = 'search';
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4 ">
+                        <div class="col-md-4 filters-container">
                             <details class="search-accordion search-accordion-block">
                                 <summary><span class="glyphicon glyphicon-filter"></span> Wortarten</summary>
                                 <table style="margin-top: 20px;" width="100%" border="0">
@@ -184,6 +184,12 @@ $page = 'search';
                                     </div>
                                 </div>
                             </details>
+                            <!-- Active Filters Display -->
+                            <div id="active-filters-container">
+                                <label id="active-filters-label">Aktive Filter:</label>
+                                <div id="active-filters"></div>
+                                <button id="clear-all-filters" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-remove"></span> Alle Filter löschen</button>
+                            </div>
                         </div><!--column-->
                         <div class="col-md-8" id="datatables">
                             <table  class="table table-responsive table-striped" id="data-table1">
@@ -232,6 +238,150 @@ $page = 'search';
                 $('#worksheet-selected-count').text(count);
             }
 
+            // ===== STICKY FILTER TRACKING =====
+            var activeFilters = {};
+
+            // Map für Filter-Labels (ID/name => Display-Name)
+            var filterLabels = {
+                'search_image': 'Mit Bildern',
+                'lauttreu': 'Lauttreu'
+            };
+
+            // Populate category/semantic/alter labels on page load
+            function initFilterLabels() {
+                $('input[name="category[]"]').each(function() {
+                    var id = $(this).val();
+                    if (!filterLabels['category_' + id]) {
+                        filterLabels['category_' + id] = $(this).next('label').text() || $(this).parent('label').text();
+                    }
+                });
+                $('input[name="alter[]"]').each(function() {
+                    var id = $(this).val();
+                    if (!filterLabels['alter_' + id]) {
+                        filterLabels['alter_' + id] = $(this).next('label').text() || $(this).parent('label').text();
+                    }
+                });
+                $('input[name="semantic[]"]').each(function() {
+                    var id = $(this).val();
+                    if (!filterLabels['semantic_' + id]) {
+                        filterLabels['semantic_' + id] = $(this).next('label').text() || $(this).parent('label').text();
+                    }
+                });
+            }
+
+            // Update active filters display
+            function updateActiveFilters() {
+                var container = $('#active-filters-container');
+                var tagsList = $('#active-filters');
+                tagsList.empty();
+
+                var hasFilters = false;
+
+                // Add search text filter
+                var searchText = $('#search_text').val();
+                if (searchText) {
+                    hasFilters = true;
+                    tagsList.append(
+                        '<span class="filter-tag">' +
+                        'Suche: &quot;' + escapeHtml(searchText) + '&quot;' +
+                        '<button type="button" class="filter-tag-remove" data-filter-type="search_text" title="Entfernen">×</button>' +
+                        '</span>'
+                    );
+                }
+
+                // Add not_letter filter
+                var notLetter = $('#not_letter').val();
+                if (notLetter) {
+                    hasFilters = true;
+                    tagsList.append(
+                        '<span class="filter-tag">' +
+                        'Ausschluss: &quot;' + escapeHtml(notLetter) + '&quot;' +
+                        '<button type="button" class="filter-tag-remove" data-filter-type="not_letter" title="Entfernen">×</button>' +
+                        '</span>'
+                    );
+                }
+
+                // Add checkbox filters
+                $('input[type="checkbox"]').each(function() {
+                    if ($(this).is(':checked')) {
+                        hasFilters = true;
+                        var value = $(this).val();
+                        var name = $(this).attr('name');
+                        var id = $(this).attr('id');
+
+                        var label = '';
+                        if (id === 'search_image' || id === 'lauttreu') {
+                            label = filterLabels[id];
+                        } else if (name === 'category[]') {
+                            label = filterLabels['category_' + value];
+                        } else if (name === 'alter[]') {
+                            label = filterLabels['alter_' + value];
+                        } else if (name === 'semantic[]') {
+                            label = filterLabels['semantic_' + value];
+                        }
+
+                        if (label) {
+                            tagsList.append(
+                                '<span class="filter-tag">' +
+                                escapeHtml(label) +
+                                '<button type="button" class="filter-tag-remove" data-filter-id="' + $(this).attr('id') + '" data-filter-name="' + name + '" data-filter-value="' + value + '" title="Entfernen">×</button>' +
+                                '</span>'
+                            );
+                        }
+                    }
+                });
+
+                // Show/hide container
+                if (hasFilters) {
+                    container.addClass('has-filters');
+                } else {
+                    container.removeClass('has-filters');
+                }
+            }
+
+            // Helper function to escape HTML
+            function escapeHtml(text) {
+                var map = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                };
+                return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+            }
+
+            // Remove filter on tag click
+            $(document).on('click', '.filter-tag-remove', function(e) {
+                e.preventDefault();
+                var filterType = $(this).data('filter-type');
+                var filterId = $(this).data('filter-id');
+                var filterName = $(this).data('filter-name');
+
+                if (filterType === 'search_text') {
+                    $('#search_text').val('');
+                } else if (filterType === 'not_letter') {
+                    $('#not_letter').val('');
+                } else if (filterId) {
+                    $('#' + filterId).prop('checked', false);
+                } else if (filterName) {
+                    $('input[name="' + filterName + '"][value="' + $(this).data('filter-value') + '"]').prop('checked', false);
+                }
+
+                updateActiveFilters();
+                search();
+            });
+
+            // Clear all filters
+            $('#clear-all-filters').on('click', function(e) {
+                e.preventDefault();
+                $('#search_text').val('');
+                $('#not_letter').val('');
+                $('input[type="checkbox"]').prop('checked', false);
+                updateActiveFilters();
+                search();
+            });
+
             $(document).ready(function (){
 				$('#data-table1').DataTable( {
 					"language": {
@@ -245,6 +395,24 @@ $page = 'search';
                         { targets: [2,3], orderable: false }
                     ]
 				});
+
+                // Initialize filter labels and display
+                initFilterLabels();
+                updateActiveFilters();
+
+                // Event listeners for filter changes
+                $('input[type="checkbox"]').on('change', function() {
+                    updateActiveFilters();
+                    search();
+                });
+
+                $('#search_text').on('change', function() {
+                    updateActiveFilters();
+                });
+
+                $('#not_letter').on('change', function() {
+                    updateActiveFilters();
+                });
 
                 loadCollections();
             });

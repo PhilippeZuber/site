@@ -21,6 +21,12 @@ if (isset($_POST['job-submit']) && $user_id !== null) {
     $stellenantritt = filter_data($_POST['stellenantritt']);
     $erscheinen_am = filter_data($_POST['erscheinen_am']);
     $pdf_url = filter_data($_POST['pdf_url']);
+    $validity_days = intval($_POST['validity_days']);
+    
+    // Validierung: Ablaufdatum maximal 365 Tage
+    if ($validity_days > 365) {
+        $validity_days = 365;
+    }
     
     // PDF-URL Validierung - nur sichere .pdf URLs erlauben
     if (!empty($pdf_url)) {
@@ -32,6 +38,27 @@ if (isset($_POST['job-submit']) && $user_id !== null) {
         }
     }
     
+    // Altersgruppe berechnen
+    $valid_until = date('Y-m-d', strtotime("+$validity_days days"));
+    
+    // Trust-Level prüfen: hat User bereits eine freigegebene Stelle?
+    $has_approved = user_has_approved_jobs($user_id);
+    
+    if ($has_approved) {
+        // User hat bereits freigegebene Stelle → direkt approved
+        $status = 'approved';
+        $approval_token = null;
+        $success_message = "Ihre Stellenanzeige ist jetzt online!";
+    } else {
+        // Neuer User → pending (Moderation erforderlich)
+        $status = 'pending';
+        $approval_token = generate_job_token();
+        $success_message = "Ihre Stellenanzeige wurde eingereicht. Sie wird in Kürze überprüft.";
+    }
+    
+    // Erneuerungs-Token generieren
+    $renewal_token = generate_job_token();
+    
     // Daten für die jobs Tabelle vorbereiten
     $job_data = array(
         'name' => $name,
@@ -39,13 +66,90 @@ if (isset($_POST['job-submit']) && $user_id !== null) {
         'institution' => $institution,
         'stellenantritt' => $stellenantritt,
         'erscheinen_am' => $erscheinen_am,
-        'pdf_url' => $pdf_url
+        'pdf_url' => $pdf_url,
+        'valid_until' => $valid_until,
+        'renewal_token' => $renewal_token,
+        'status' => $status,
+        'approval_token' => $approval_token,
+        'creator_id' => $user_id,
+        'created_at' => date('Y-m-d H:i:s')
     );
     
     // Stellenanzeige in Datenbank speichern
-    add_record('jobs', $job_data);
+    $job_id = add_record('jobs', $job_data);
     
-    // Redirect um Formular neu zu laden
+    // E-Mails versenden
+    $user_data = mysqli_fetch_assoc(get_user($user_id));
+    
+    if ($status === 'pending') {
+        // E-Mail an Admin zur Moderation
+        $to_admin = 'info@wortlab.ch';
+        $subject_admin = "Neue Stellenanzeige zur Genehmigung: " . $name;
+        
+        $approve_url = "https://wortlab.ch/approve_job.php?job_id=" . $job_id . "&token=" . $approval_token . "&action=approve";
+        $reject_url = "https://wortlab.ch/approve_job.php?job_id=" . $job_id . "&token=" . $approval_token . "&action=reject";
+        
+        $message_admin = "Neue Stellenanzeige zur Überprüfung:\n\n";
+        $message_admin .= "Titel: " . $name . "\n";
+        $message_admin .= "Institution: " . $institution . "\n";
+        $message_admin .= "Kanton: " . $kanton . "\n";
+        $message_admin .= "Stellenantritt: " . $stellenantritt . "\n";
+        $message_admin .= "Gültig bis: " . date('d.m.Y', strtotime($valid_until)) . "\n";
+        $message_admin .= "Einsender: " . $user_data['firstname'] . " " . $user_data['lastname'] . " (" . $user_data['email'] . ")\n\n";
+        
+        if (!empty($pdf_url)) {
+            $message_admin .= "PDF-Link: " . $pdf_url . "\n\n";
+        }
+        
+        $message_admin .= "--- FREIGABE ---\n";
+        $message_admin .= "Genehmigen: " . $approve_url . "\n\n";
+        $message_admin .= "Ablehnen: " . $reject_url . "\n";
+        
+        $headers_admin = "MIME-Version: 1.0\r\n";
+        $headers_admin .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        $headers_admin .= "From: WORTLAB <noreply@wortlab.ch>\r\n";
+        
+        mail($to_admin, $subject_admin, $message_admin, $headers_admin);
+        
+        // E-Mail an User
+        $to_user = $user_data['email'];
+        $subject_user = "Stellenanzeige eingereicht";
+        
+        $message_user = "Liebe/r " . $user_data['firstname'] . " " . $user_data['lastname'] . ",\n\n";
+        $message_user .= "Ihre Stellenanzeige wurde eingereicht und wird in Kürze überprüft.\n\n";
+        $message_user .= "Stelle: " . $name . "\n";
+        $message_user .= "Gültig bis: " . date('d.m.Y', strtotime($valid_until)) . "\n\n";
+        $message_user .= "Sie erhalten eine Benachrichtigung, sobald Ihre Anzeige genehmigt wurde.\n\n";
+        $message_user .= "Viele Grüsse,\nWortlab Team";
+        
+        $headers_user = "MIME-Version: 1.0\r\n";
+        $headers_user .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        $headers_user .= "From: WORTLAB <noreply@wortlab.ch>\r\n";
+        
+        mail($to_user, $subject_user, $message_user, $headers_user);
+        
+    } elseif ($status === 'approved') {
+        // E-Mail an User - direkt online
+        $to_user = $user_data['email'];
+        $subject_user = "Ihre Stellenanzeige ist online";
+        
+        $message_user = "Liebe/r " . $user_data['firstname'] . " " . $user_data['lastname'] . ",\n\n";
+        $message_user .= "Ihre Stellenanzeige ist jetzt online!\n\n";
+        $message_user .= "Stelle: " . $name . "\n";
+        $message_user .= "Gültig bis: " . date('d.m.Y', strtotime($valid_until)) . "\n\n";
+        $message_user .= "Betrachten Sie die Anzeige auf unserer Plattform:\n";
+        $message_user .= "https://wortlab.ch/jobs.php\n\n";
+        $message_user .= "Die Anzeige läuft bis zum angegebenen Datum. Etwa eine Woche vorher erhalten Sie eine Erinnerung zur Verlängerung.\n\n";
+        $message_user .= "Viele Grüsse,\nWortlab Team";
+        
+        $headers_user = "MIME-Version: 1.0\r\n";
+        $headers_user .= "Content-Type: text/plain; charset=UTF-8\r\n";
+        $headers_user .= "From: WORTLAB <noreply@wortlab.ch>\r\n";
+        
+        mail($to_user, $subject_user, $message_user, $headers_user);
+    }
+    
+    $_SESSION['success'] = $success_message;
     header("Location:jobs.php?success=1");
     exit();
 }
@@ -135,6 +239,18 @@ if ($user_id !== null) {
                             <input type="url" class="form-control" id="pdf_url" name="pdf_url" 
                                    placeholder="z.B. https://example.com/stelle.pdf">
                             <small class="form-text text-muted">Bitte geben Sie nur eine URL zu einer PDF-Datei ein (z.B. https://example.com/stelle.pdf)</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="validity_days">Gültigkeitsdauer <span style="color:red;">*</span></label>
+                            <select class="form-control" id="validity_days" name="validity_days" required>
+                                <option value="">-- Bitte wählen --</option>
+                                <option value="30">30 Tage</option>
+                                <option value="60">60 Tage</option>
+                                <option value="90">90 Tage (emp.</option>
+                                <option value="180">6 Monate</option>
+                                <option value="365">12 Monate (max.)</option>
+                            </select>
+                            <small class="form-text text-muted">Wie lange soll Ihre Anzeige online sein? Sie erhalten eine Erinnerung eine Woche vor Ablauf.</small>
                         </div>
                         <hr>
                         <p class="text-muted"><small><span style="color:red;">*</span> Pflichtfelder</small></p>
