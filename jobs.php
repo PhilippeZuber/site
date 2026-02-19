@@ -59,24 +59,28 @@ if (isset($_POST['job-submit']) && $user_id !== null) {
     // Erneuerungs-Token generieren
     $renewal_token = generate_job_token();
     
-    // Daten für die jobs Tabelle vorbereiten
-    $job_data = array(
-        'name' => $name,
-        'kanton' => $kanton,
-        'institution' => $institution,
-        'stellenantritt' => $stellenantritt,
-        'erscheinen_am' => $erscheinen_am,
-        'pdf_url' => $pdf_url,
-        'valid_until' => $valid_until,
-        'renewal_token' => $renewal_token,
-        'status' => $status,
-        'approval_token' => $approval_token,
-        'creator_id' => $user_id,
-        'created_at' => date('Y-m-d H:i:s')
-    );
-    
-    // Stellenanzeige in Datenbank speichern
-    $job_id = add_record('jobs', $job_data);
+    // Stellenanzeige in Datenbank speichern (echte Insert-ID benötigt)
+    $sql = "INSERT INTO jobs (name, kanton, institution, stellenantritt, erscheinen_am, pdf_url, valid_until, renewal_token, status, approval_token, creator_id, created_at) VALUES (";
+    $sql .= "'" . $name . "',";
+    $sql .= "'" . $kanton . "',";
+    $sql .= "'" . $institution . "',";
+    $sql .= "'" . $stellenantritt . "',";
+    $sql .= "'" . $erscheinen_am . "',";
+    $sql .= "'" . $pdf_url . "',";
+    $sql .= "'" . $valid_until . "',";
+    $sql .= "'" . $renewal_token . "',";
+    $sql .= "'" . $status . "',";
+    $sql .= ($approval_token === null) ? "NULL," : "'" . $approval_token . "',";
+    $sql .= "'" . intval($user_id) . "',";
+    $sql .= "'" . date('Y-m-d H:i:s') . "')";
+
+    $job_id = get_id_result($sql);
+
+    if (!$job_id) {
+        $_SESSION['error'] = "Die Stellenanzeige konnte nicht gespeichert werden. Bitte erneut versuchen.";
+        header("Location:jobs.php");
+        exit();
+    }
     
     // E-Mails versenden
     $user_data = mysqli_fetch_assoc(get_user($user_id));
@@ -246,7 +250,7 @@ if ($user_id !== null) {
                                 <option value="">-- Bitte wählen --</option>
                                 <option value="30">30 Tage</option>
                                 <option value="60">60 Tage</option>
-                                <option value="90">90 Tage (emp.</option>
+                                <option value="90">90 Tage</option>
                                 <option value="180">6 Monate</option>
                                 <option value="365">12 Monate (max.)</option>
                             </select>

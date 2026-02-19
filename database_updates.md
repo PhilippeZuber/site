@@ -11,7 +11,8 @@ ADD COLUMN `last_reminder_sent` DATE DEFAULT NULL,
 ADD COLUMN `renewal_token` VARCHAR(255) DEFAULT NULL,
 ADD COLUMN `status` ENUM('pending', 'approved') DEFAULT 'pending',
 ADD COLUMN `approval_token` VARCHAR(255) DEFAULT NULL,
-ADD COLUMN `creator_id` INT UNSIGNED DEFAULT NULL;
+ADD COLUMN `creator_id` INT UNSIGNED DEFAULT NULL,
+ADD COLUMN `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
 ```
 
 ## 2. User-Tabelle erweitern
