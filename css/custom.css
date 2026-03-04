@@ -406,6 +406,17 @@ a.btn2, a.btn2:hover {
     border-right: 1px solid #e0e0e0;
 }
 
+@media (max-width: 991px) {
+    .filters-container {
+        position: static;
+        top: auto;
+        z-index: auto;
+        overflow-y: visible;
+        max-height: none;
+        border-right: none;
+    }
+}
+
 /* Active Checkboxes - darker background */
 input[type="checkbox"]:checked + label,
 input[type="checkbox"]:checked + label input[type="checkbox"] {

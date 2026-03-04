@@ -116,6 +116,30 @@ $page = 'search';
                                     </tbody>
                                 </table>
                             </details>
+                            <details class="action-accordion search-accordion-block" open>
+                                <summary><span class="glyphicon glyphicon-random"></span> Minimalpaar-Finder</summary>
+                                <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label><input id="minimalpair_enabled" type="checkbox" value="1">&nbsp; Minimalpaar-Finder aktivieren</label>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="col-sm-8">
+                                            <label for="minimalpair_base">Ausgangswort</label>
+                                            <input id="minimalpair_base" type="text" class="form-control" placeholder="z.B. Kanne">
+                                        </div>
+                                        <div class="col-sm-4" style="margin-top: 24px;">
+                                            <button id="minimalpair_find" class="btn btn-primary btn-sm">Paare finden</button>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 8px;">
+                                        <div class="col-sm-12 text-muted" style="font-size: 12px;">
+                                            Strenger Modus: gleiche Wortlänge und genau ein Buchstabenwechsel.
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
                             <details class="action-accordion search-accordion-block">
                                 <summary><span class="glyphicon glyphicon-folder-open"></span> Wortsammlungen</summary>
                                 <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
@@ -197,6 +221,8 @@ $page = 'search';
                                     <tr>
                                         <th>Auswahl</th>
                                         <th>Wort</th>
+                                        <th class="minimalpair-column">Minimalpaar</th>
+                                        <th class="minimalpair-column">Unterschied</th>
                                         <th class="search_image_column">Bild</th>
                                         <th class="search_image_column">Bild2</th>
                                     </tr>
@@ -220,6 +246,14 @@ $page = 'search';
 						document.getElementById("searchbtn").click();
 					}
 				});
+
+            var minimalPairInput = document.getElementById("minimalpair_base");
+            minimalPairInput.addEventListener("keyup", function(event) {
+                event.preventDefault();
+                if (event.keyCode === 13) {
+                    document.getElementById("minimalpair_find").click();
+                }
+            });
 			/*Initialising data-table*/
             var table;
             var memorySelectedIds = {};
@@ -244,7 +278,8 @@ $page = 'search';
             // Map für Filter-Labels (ID/name => Display-Name)
             var filterLabels = {
                 'search_image': 'Mit Bildern',
-                'lauttreu': 'Lauttreu'
+                'lauttreu': 'Lauttreu',
+                'minimalpair_enabled': 'Minimalpaar-Finder aktiv'
             };
 
             // Populate category/semantic/alter labels on page load
@@ -297,6 +332,18 @@ $page = 'search';
                         '<span class="filter-tag">' +
                         'Ausschluss: &quot;' + escapeHtml(notLetter) + '&quot;' +
                         '<button type="button" class="filter-tag-remove" data-filter-type="not_letter" title="Entfernen">×</button>' +
+                        '</span>'
+                    );
+                }
+
+                var minimalPairEnabled = $('#minimalpair_enabled').is(':checked');
+                var minimalPairBase = $('#minimalpair_base').val();
+                if (minimalPairEnabled && minimalPairBase) {
+                    hasFilters = true;
+                    tagsList.append(
+                        '<span class="filter-tag">' +
+                        'Minimalpaar: &quot;' + escapeHtml(minimalPairBase) + '&quot;' +
+                        '<button type="button" class="filter-tag-remove" data-filter-type="minimalpair_base" title="Entfernen">×</button>' +
                         '</span>'
                     );
                 }
@@ -362,6 +409,8 @@ $page = 'search';
                     $('#search_text').val('');
                 } else if (filterType === 'not_letter') {
                     $('#not_letter').val('');
+                } else if (filterType === 'minimalpair_base') {
+                    $('#minimalpair_base').val('');
                 } else if (filterId) {
                     $('#' + filterId).prop('checked', false);
                 } else if (filterName) {
@@ -377,22 +426,29 @@ $page = 'search';
                 e.preventDefault();
                 $('#search_text').val('');
                 $('#not_letter').val('');
+                $('#minimalpair_base').val('');
                 $('input[type="checkbox"]').prop('checked', false);
                 updateActiveFilters();
                 search();
             });
 
+            function shouldShowMinimalPairColumns() {
+                return $('#minimalpair_enabled').prop('checked') && $.trim($('#minimalpair_base').val()) !== '';
+            }
+
             $(document).ready(function (){
+				var showMinimalPairColumns = shouldShowMinimalPairColumns();
 				$('#data-table1').DataTable( {
 					"language": {
 						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
 					},
 					searching: false,
 					paging: false,
-                    order: [[1, 'asc']],
+                    order: showMinimalPairColumns ? [[2, 'asc']] : [[1, 'asc']],
                     columnDefs: [
                         { targets: 0, orderable: false, searchable: false, width: '80px' },
-                        { targets: [2,3], orderable: false }
+                        { targets: [4,5], orderable: false },
+                        { targets: [2,3], visible: showMinimalPairColumns }
                     ]
 				});
 
@@ -412,6 +468,16 @@ $page = 'search';
 
                 $('#not_letter').on('change', function() {
                     updateActiveFilters();
+                });
+
+                $('#minimalpair_base').on('change', function() {
+                    updateActiveFilters();
+                });
+
+                $('#minimalpair_find').on('click', function(e) {
+                    e.preventDefault();
+                    updateActiveFilters();
+                    search();
                 });
 
                 loadCollections();
@@ -449,6 +515,9 @@ $page = 'search';
                 $.each($("input[name='alter[]']:checked"), function () {
                     alter.push($(this).val());
                 });
+
+                var minimalpairBase = $.trim($('#minimalpair_base').val());
+                var minimalpairEnabled = $('#minimalpair_enabled').prop('checked') && minimalpairBase !== '';
                 
                 $('#data-table1').DataTable().clear().destroy();
 
@@ -459,6 +528,7 @@ $page = 'search';
                     ajax: {/*giving values*/
                         url: 'search_word.php',
                         data: {
+                            include_selection: true,
                             search_image: $('#search_image').prop('checked'),
                             search_text: $('#search_text').val(),
                             not_letter: $('#not_letter').val(),
@@ -466,6 +536,8 @@ $page = 'search';
                             semantic: semantic,
                             alter: alter,
                             lauttreu: $('#lauttreu').prop('checked'),
+                            minimalpair_enabled: minimalpairEnabled,
+                            minimalpair_base: minimalpairBase,
                         }
                     },
 					dom: 'Blfrtip',/*Position of Buttons*/
@@ -519,10 +591,11 @@ $page = 'search';
                     searching: false,
                     "processing": true,
                     "serverSide": true,
-                    order: [[1, 'asc']],
+                    order: minimalpairEnabled ? [[2, 'asc']] : [[1, 'asc']],
                     columnDefs: [
                         { targets: 0, orderable: false, searchable: false, width: '80px' },
-                        { targets: [2,3], orderable: false }
+                        { targets: [4,5], orderable: false },
+                        { targets: [2,3], visible: minimalpairEnabled }
                     ],
                     drawCallback: function () {
                         applySelectionToTable();
