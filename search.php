@@ -116,7 +116,7 @@ $page = 'search';
                                     </tbody>
                                 </table>
                             </details>
-                            <details class="action-accordion search-accordion-block" open>
+                            <details class="action-accordion search-accordion-block">
                                 <summary><span class="glyphicon glyphicon-random"></span> Minimalpaar-Finder</summary>
                                 <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
                                     <div class="row">
@@ -125,9 +125,13 @@ $page = 'search';
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 10px;">
-                                        <div class="col-sm-8">
-                                            <label for="minimalpair_base">Ausgangswort</label>
-                                            <input id="minimalpair_base" type="text" class="form-control" placeholder="z.B. Kanne">
+                                        <div class="col-sm-4">
+                                            <label for="minimalpair_from">Von</label>
+                                            <input id="minimalpair_from" type="text" class="form-control" maxlength="1" placeholder="z.B. G">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label for="minimalpair_to">Nach</label>
+                                            <input id="minimalpair_to" type="text" class="form-control" maxlength="1" placeholder="z.B. D">
                                         </div>
                                         <div class="col-sm-4" style="margin-top: 24px;">
                                             <button id="minimalpair_find" class="btn btn-primary btn-sm">Paare finden</button>
@@ -135,7 +139,7 @@ $page = 'search';
                                     </div>
                                     <div class="row" style="margin-top: 8px;">
                                         <div class="col-sm-12 text-muted" style="font-size: 12px;">
-                                            Strenger Modus: gleiche Wortlänge und genau ein Buchstabenwechsel.
+                                            Strenger Modus: gleiche Wortlänge, genau ein Buchstabenwechsel von → nach.
                                         </div>
                                     </div>
                                 </div>
@@ -247,12 +251,14 @@ $page = 'search';
 					}
 				});
 
-            var minimalPairInput = document.getElementById("minimalpair_base");
-            minimalPairInput.addEventListener("keyup", function(event) {
-                event.preventDefault();
-                if (event.keyCode === 13) {
-                    document.getElementById("minimalpair_find").click();
-                }
+            ['minimalpair_from', 'minimalpair_to'].forEach(function(id) {
+                var element = document.getElementById(id);
+                element.addEventListener("keyup", function(event) {
+                    event.preventDefault();
+                    if (event.keyCode === 13) {
+                        document.getElementById("minimalpair_find").click();
+                    }
+                });
             });
 			/*Initialising data-table*/
             var table;
@@ -337,13 +343,14 @@ $page = 'search';
                 }
 
                 var minimalPairEnabled = $('#minimalpair_enabled').is(':checked');
-                var minimalPairBase = $('#minimalpair_base').val();
-                if (minimalPairEnabled && minimalPairBase) {
+                var minimalPairFrom = $.trim($('#minimalpair_from').val());
+                var minimalPairTo = $.trim($('#minimalpair_to').val());
+                if (minimalPairEnabled && minimalPairFrom && minimalPairTo && minimalPairFrom !== minimalPairTo) {
                     hasFilters = true;
                     tagsList.append(
                         '<span class="filter-tag">' +
-                        'Minimalpaar: &quot;' + escapeHtml(minimalPairBase) + '&quot;' +
-                        '<button type="button" class="filter-tag-remove" data-filter-type="minimalpair_base" title="Entfernen">×</button>' +
+                        'Unterschied: &quot;' + escapeHtml(minimalPairFrom) + '→' + escapeHtml(minimalPairTo) + '&quot;' +
+                        '<button type="button" class="filter-tag-remove" data-filter-type="minimalpair_diff" title="Entfernen">×</button>' +
                         '</span>'
                     );
                 }
@@ -357,7 +364,7 @@ $page = 'search';
                         var id = $(this).attr('id');
 
                         var label = '';
-                        if (id === 'search_image' || id === 'lauttreu') {
+                        if (id === 'search_image' || id === 'lauttreu' || id === 'minimalpair_enabled') {
                             label = filterLabels[id];
                         } else if (name === 'category[]') {
                             label = filterLabels['category_' + value];
@@ -409,8 +416,9 @@ $page = 'search';
                     $('#search_text').val('');
                 } else if (filterType === 'not_letter') {
                     $('#not_letter').val('');
-                } else if (filterType === 'minimalpair_base') {
-                    $('#minimalpair_base').val('');
+                } else if (filterType === 'minimalpair_diff') {
+                    $('#minimalpair_from').val('');
+                    $('#minimalpair_to').val('');
                 } else if (filterId) {
                     $('#' + filterId).prop('checked', false);
                 } else if (filterName) {
@@ -426,14 +434,17 @@ $page = 'search';
                 e.preventDefault();
                 $('#search_text').val('');
                 $('#not_letter').val('');
-                $('#minimalpair_base').val('');
+                $('#minimalpair_from').val('');
+                $('#minimalpair_to').val('');
                 $('input[type="checkbox"]').prop('checked', false);
                 updateActiveFilters();
                 search();
             });
 
             function shouldShowMinimalPairColumns() {
-                return $('#minimalpair_enabled').prop('checked') && $.trim($('#minimalpair_base').val()) !== '';
+                var from = $.trim($('#minimalpair_from').val());
+                var to = $.trim($('#minimalpair_to').val());
+                return $('#minimalpair_enabled').prop('checked') && from !== '' && to !== '' && from !== to;
             }
 
             $(document).ready(function (){
@@ -444,7 +455,7 @@ $page = 'search';
 					},
 					searching: false,
 					paging: false,
-                    order: showMinimalPairColumns ? [[2, 'asc']] : [[1, 'asc']],
+                    order: [[1, 'asc']],
                     columnDefs: [
                         { targets: 0, orderable: false, searchable: false, width: '80px' },
                         { targets: [4,5], orderable: false },
@@ -470,7 +481,7 @@ $page = 'search';
                     updateActiveFilters();
                 });
 
-                $('#minimalpair_base').on('change', function() {
+                $('#minimalpair_from, #minimalpair_to').on('change', function() {
                     updateActiveFilters();
                 });
 
@@ -516,8 +527,9 @@ $page = 'search';
                     alter.push($(this).val());
                 });
 
-                var minimalpairBase = $.trim($('#minimalpair_base').val());
-                var minimalpairEnabled = $('#minimalpair_enabled').prop('checked') && minimalpairBase !== '';
+                var minimalpairFrom = $.trim($('#minimalpair_from').val());
+                var minimalpairTo = $.trim($('#minimalpair_to').val());
+                var minimalpairEnabled = $('#minimalpair_enabled').prop('checked') && minimalpairFrom !== '' && minimalpairTo !== '' && minimalpairFrom !== minimalpairTo;
                 
                 $('#data-table1').DataTable().clear().destroy();
 
@@ -537,7 +549,8 @@ $page = 'search';
                             alter: alter,
                             lauttreu: $('#lauttreu').prop('checked'),
                             minimalpair_enabled: minimalpairEnabled,
-                            minimalpair_base: minimalpairBase,
+                            minimalpair_from: minimalpairFrom,
+                            minimalpair_to: minimalpairTo,
                         }
                     },
 					dom: 'Blfrtip',/*Position of Buttons*/
@@ -591,7 +604,7 @@ $page = 'search';
                     searching: false,
                     "processing": true,
                     "serverSide": true,
-                    order: minimalpairEnabled ? [[2, 'asc']] : [[1, 'asc']],
+                    order: [[1, 'asc']],
                     columnDefs: [
                         { targets: 0, orderable: false, searchable: false, width: '80px' },
                         { targets: [4,5], orderable: false },

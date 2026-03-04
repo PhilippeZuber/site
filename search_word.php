@@ -7,7 +7,8 @@ require_once('system/security.php');
 
 $include_selection = isset($_REQUEST['include_selection']) ? filter_var($_REQUEST['include_selection'], FILTER_VALIDATE_BOOLEAN) : false;
 $minimalpair_enabled = isset($_REQUEST['minimalpair_enabled']) ? filter_var($_REQUEST['minimalpair_enabled'], FILTER_VALIDATE_BOOLEAN) : false;
-$minimalpair_base = isset($_REQUEST['minimalpair_base']) ? trim($_REQUEST['minimalpair_base']) : '';
+$minimalpair_from_input = isset($_REQUEST['minimalpair_from']) ? trim($_REQUEST['minimalpair_from']) : '';
+$minimalpair_to_input = isset($_REQUEST['minimalpair_to']) ? trim($_REQUEST['minimalpair_to']) : '';
 
 function split_word_chars($word)
 {
@@ -27,12 +28,31 @@ function normalize_word_for_compare($word)
     return strtolower($word);
 }
 
-function get_strict_minimalpair_difference($base_word, $candidate_word)
+function uppercase_word_for_display($word)
 {
-    $base_chars = split_word_chars($base_word);
-    $candidate_chars = split_word_chars($candidate_word);
+    if (function_exists('mb_strtoupper')) {
+        return mb_strtoupper($word, 'UTF-8');
+    }
 
-    if (count($base_chars) !== count($candidate_chars)) {
+    return strtoupper($word);
+}
+
+function get_single_char($value)
+{
+    $chars = split_word_chars($value);
+    if (empty($chars)) {
+        return '';
+    }
+
+    return $chars[0];
+}
+
+function get_strict_minimalpair_difference($left_word, $right_word)
+{
+    $left_chars = split_word_chars(normalize_word_for_compare($left_word));
+    $right_chars = split_word_chars(normalize_word_for_compare($right_word));
+
+    if (count($left_chars) !== count($right_chars)) {
         return false;
     }
 
@@ -41,11 +61,11 @@ function get_strict_minimalpair_difference($base_word, $candidate_word)
     $diff_to = '';
     $diff_position = 0;
 
-    foreach ($base_chars as $index => $char) {
-        if ($char !== $candidate_chars[$index]) {
+    foreach ($left_chars as $index => $char) {
+        if ($char !== $right_chars[$index]) {
             $diff_count++;
             $diff_from = $char;
-            $diff_to = $candidate_chars[$index];
+            $diff_to = $right_chars[$index];
             $diff_position = $index + 1;
 
             if ($diff_count > 1) {
@@ -70,15 +90,18 @@ function compare_minimalpair_rows($left, $right, $order_column, $order_dir)
     $left_value = '';
     $right_value = '';
 
-    if ($order_column === 2) {
+    if ($order_column === 1) {
+        $left_value = $left['word'];
+        $right_value = $right['word'];
+    } elseif ($order_column === 2) {
         $left_value = $left['pair_word'];
         $right_value = $right['pair_word'];
     } elseif ($order_column === 3) {
         $left_value = $left['difference'];
         $right_value = $right['difference'];
     } else {
-        $left_value = $left['pair_word'];
-        $right_value = $right['pair_word'];
+        $left_value = $left['word'];
+        $right_value = $right['word'];
     }
 
     $compare = strcasecmp($left_value, $right_value);
@@ -92,6 +115,12 @@ function compare_minimalpair_rows($left, $right, $order_column, $order_dir)
 
     return $compare;
 }
+
+$minimalpair_from = get_single_char($minimalpair_from_input);
+$minimalpair_to = get_single_char($minimalpair_to_input);
+$minimalpair_from_normalized = normalize_word_for_compare($minimalpair_from);
+$minimalpair_to_normalized = normalize_word_for_compare($minimalpair_to);
+$has_minimalpair_diff = $minimalpair_enabled && $minimalpair_from !== '' && $minimalpair_to !== '' && $minimalpair_from_normalized !== $minimalpair_to_normalized;
 
 $totaldata = get_result("select count(*) count from words ");
 $totaldata = mysqli_fetch_assoc($totaldata);
@@ -184,30 +213,71 @@ $data = false;
 $minimalpair_rows = array();
 $records_filtered = intval($data3['count']);
 
-if ($minimalpair_enabled && $minimalpair_base !== '') {
-    $base_word_normalized = normalize_word_for_compare($minimalpair_base);
+if ($has_minimalpair_diff) {
     $all_filtered_words = get_result("select id, name, image, image_url from words $wh");
+    $filtered_words = array();
+    $words_by_normalized_name = array();
 
     while ($row = mysqli_fetch_array($all_filtered_words)) {
-        $candidate_name = $row['name'];
-        $candidate_normalized = normalize_word_for_compare($candidate_name);
-
-        if ($candidate_normalized === $base_word_normalized) {
-            continue;
-        }
-
-        $difference = get_strict_minimalpair_difference($minimalpair_base, $candidate_name);
-        if ($difference === false) {
-            continue;
-        }
-
-        $minimalpair_rows[] = array(
+        $normalized_name = normalize_word_for_compare($row['name']);
+        $entry = array(
             'id' => $row['id'],
-            'pair_word' => $candidate_name,
-            'difference' => $difference['from'] . '→' . $difference['to'] . ' (Pos. ' . $difference['position'] . ')',
+            'name' => $row['name'],
+            'normalized_name' => $normalized_name,
             'image' => $row['image'],
             'image_url' => $row['image_url']
         );
+
+        $filtered_words[] = $entry;
+        if (!isset($words_by_normalized_name[$normalized_name])) {
+            $words_by_normalized_name[$normalized_name] = array();
+        }
+        $words_by_normalized_name[$normalized_name][] = $entry;
+    }
+
+    $seen_pairs = array();
+    foreach ($filtered_words as $source_word) {
+        $source_chars = split_word_chars($source_word['normalized_name']);
+
+        foreach ($source_chars as $index => $char) {
+            if ($char !== $minimalpair_from_normalized) {
+                continue;
+            }
+
+            $target_chars = $source_chars;
+            $target_chars[$index] = $minimalpair_to_normalized;
+            $target_name = implode('', $target_chars);
+
+            if (!isset($words_by_normalized_name[$target_name])) {
+                continue;
+            }
+
+            foreach ($words_by_normalized_name[$target_name] as $target_word) {
+                if ($target_word['id'] == $source_word['id']) {
+                    continue;
+                }
+
+                $difference = get_strict_minimalpair_difference($source_word['name'], $target_word['name']);
+                if ($difference === false || $difference['position'] !== ($index + 1)) {
+                    continue;
+                }
+
+                $pair_key = min($source_word['id'], $target_word['id']) . '_' . max($source_word['id'], $target_word['id']);
+                if (isset($seen_pairs[$pair_key])) {
+                    continue;
+                }
+
+                $seen_pairs[$pair_key] = true;
+                $minimalpair_rows[] = array(
+                    'id' => $target_word['id'],
+                    'word' => $target_word['name'],
+                    'pair_word' => $source_word['name'],
+                    'difference' => uppercase_word_for_display($minimalpair_from) . '→' . uppercase_word_for_display($minimalpair_to) . ' (Pos. ' . ($index + 1) . ')',
+                    'image' => $target_word['image'],
+                    'image_url' => $target_word['image_url']
+                );
+            }
+        }
     }
 
     usort($minimalpair_rows, function ($left, $right) use ($order_column, $order_dir) {
@@ -222,7 +292,7 @@ if ($minimalpair_enabled && $minimalpair_base !== '') {
 
 $i = 0;
 $data2 = array();
-if ($minimalpair_enabled && $minimalpair_base !== '') {
+if ($has_minimalpair_diff) {
     foreach ($data as $row) {
         $column_index = 0;
 
@@ -230,7 +300,7 @@ if ($minimalpair_enabled && $minimalpair_base !== '') {
             $data2[$i][$column_index++] = '<input type="checkbox" class="memory-select" value="' . $row['id'] . '">';
         }
 
-        $data2[$i][$column_index++] = $minimalpair_base;
+        $data2[$i][$column_index++] = $row['word'];
         $data2[$i][$column_index++] = $row['pair_word'];
         $data2[$i][$column_index++] = $row['difference'];
 
