@@ -203,6 +203,7 @@ $page = 'index';
                     ajax: {/*giving values*/
                         url: 'search_word.php',
                         data: {
+                            include_selection: false,
                             search_image: $('#search_image').prop('checked'),
                             search_text: $('#search_text').val(),
                             category: category,

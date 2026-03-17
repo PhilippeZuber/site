@@ -197,10 +197,8 @@ if ($include_selection) {
 } else {
     $order_columns = array(
         0 => 'name',
-        1 => 'name',
-        2 => 'name',
-        3 => 'image',
-        4 => 'image_url'
+        1 => 'image',
+        2 => 'image_url'
     );
 }
 
@@ -301,8 +299,10 @@ if ($has_minimalpair_diff) {
         }
 
         $data2[$i][$column_index++] = $row['word'];
-        $data2[$i][$column_index++] = $row['pair_word'];
-        $data2[$i][$column_index++] = $row['difference'];
+        if ($include_selection) {
+            $data2[$i][$column_index++] = $row['pair_word'];
+            $data2[$i][$column_index++] = $row['difference'];
+        }
 
         if ($_REQUEST['search_image'] != 'false' && $row['image'] != '' && $row['image_url'] != '') {
             $data2[$i][$column_index++] = '<img style="width:150px;" src="images/' . $row['image'] . '">';
@@ -330,8 +330,10 @@ while ($row = mysqli_fetch_array($data)) {
     }
 
     $data2[$i][$column_index++] = $row['name'];
-    $data2[$i][$column_index++] = '';
-    $data2[$i][$column_index++] = '';
+    if ($include_selection) {
+        $data2[$i][$column_index++] = '';
+        $data2[$i][$column_index++] = '';
+    }
 
     if ($_REQUEST['search_image'] != 'false' && $row['image'] != '' && $row['image_url'] != '') {
         $data2[$i][$column_index++] = '<img style="width:150px;" src="images/' . $row['image'] . '">';
