@@ -35,3 +35,13 @@ UPDATE `user` u SET approved_jobs_count = (SELECT COUNT(*) FROM jobs j WHERE j.c
 ---
 
 **Status:** ⏳ Warte auf manuelle Ausführung in phpMyAdmin
+
+---
+
+## 4. Words-Tabelle: Ausmalbild-Spalte
+
+```sql
+ALTER TABLE `words` ADD COLUMN `image_ausmalbild` VARCHAR(255) NOT NULL DEFAULT '';
+```
+
+**Status:** ⏳ Warte auf manuelle Ausführung in phpMyAdmin

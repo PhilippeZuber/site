@@ -7,6 +7,7 @@ require_once('system/security.php');
 
 $include_selection = isset($_REQUEST['include_selection']) ? filter_var($_REQUEST['include_selection'], FILTER_VALIDATE_BOOLEAN) : false;
 $minimalpair_enabled = isset($_REQUEST['minimalpair_enabled']) ? filter_var($_REQUEST['minimalpair_enabled'], FILTER_VALIDATE_BOOLEAN) : false;
+$image_mode = (isset($_REQUEST['image_mode']) && $_REQUEST['image_mode'] === 'ausmalbild') ? 'ausmalbild' : 'standard';
 $minimalpair_from_input = isset($_REQUEST['minimalpair_from']) ? trim($_REQUEST['minimalpair_from']) : '';
 $minimalpair_to_input = isset($_REQUEST['minimalpair_to']) ? trim($_REQUEST['minimalpair_to']) : '';
 $minimalpair_bidirectional = isset($_REQUEST['minimalpair_bidirectional']) ? filter_var($_REQUEST['minimalpair_bidirectional'], FILTER_VALIDATE_BOOLEAN) : true;
@@ -193,7 +194,7 @@ $minimalpair_rows = array();
 $records_filtered = intval($data3['count']);
 
 if ($has_minimalpair_diff) {
-    $all_filtered_words = get_result("select id, name, image, image_url from words $wh");
+    $all_filtered_words = get_result("select id, name, image, image_ausmalbild, image_url from words $wh");
     $filtered_words = array();
     $words_by_normalized_name = array();
 
@@ -204,6 +205,7 @@ if ($has_minimalpair_diff) {
             'name' => $row['name'],
             'normalized_name' => $normalized_name,
             'image' => $row['image'],
+            'image_ausmalbild' => $row['image_ausmalbild'],
             'image_url' => $row['image_url']
         );
 
@@ -245,6 +247,7 @@ if ($has_minimalpair_diff) {
                         'pair_word' => $source_word['name'],
                         'difference' => $rule['label'],
                         'image' => $target_word['image'],
+                        'image_ausmalbild' => $target_word['image_ausmalbild'],
                         'image_url' => $target_word['image_url']
                     );
                 }
@@ -259,7 +262,7 @@ if ($has_minimalpair_diff) {
     $records_filtered = count($minimalpair_rows);
     $data = array_slice($minimalpair_rows, intval($_REQUEST['start']), intval($_REQUEST['length']));
 } else {
-    $data = get_result("select id, name, image, image_url  from words $wh $order_by limit " . $_REQUEST['start'] . "," . $_REQUEST['length']);
+    $data = get_result("select id, name, image, image_ausmalbild, image_url  from words $wh $order_by limit " . $_REQUEST['start'] . "," . $_REQUEST['length']);
 }
 
 $i = 0;
@@ -279,10 +282,12 @@ if ($has_minimalpair_diff) {
         }
 
         if ($_REQUEST['search_image'] != 'false' && $row['image'] != '' && $row['image_url'] != '') {
-            $data2[$i][$column_index++] = '<img style="width:150px;" src="images/' . $row['image'] . '">';
+            $img_src = ($image_mode === 'ausmalbild' && $row['image_ausmalbild'] != '') ? $row['image_ausmalbild'] : $row['image'];
+            $data2[$i][$column_index++] = '<img style="width:150px;" src="images/' . $img_src . '">';
             $data2[$i][$column_index++] = '<img style="width:150px;" src="' . $row['image_url'] . '">';
         } elseif ($_REQUEST['search_image'] != 'false' && $row['image'] != '' && $row['image_url'] == '') {
-            $data2[$i][$column_index++] = '<img style="width:150px;" src="images/' . $row['image'] . '">';
+            $img_src = ($image_mode === 'ausmalbild' && $row['image_ausmalbild'] != '') ? $row['image_ausmalbild'] : $row['image'];
+            $data2[$i][$column_index++] = '<img style="width:150px;" src="images/' . $img_src . '">';
             $data2[$i][$column_index++] = '';
         } elseif ($_REQUEST['search_image'] != 'false' && $row['image'] == '' && $row['image_url'] != '') {
             $data2[$i][$column_index++] = '';
@@ -310,10 +315,12 @@ while ($row = mysqli_fetch_array($data)) {
     }
 
     if ($_REQUEST['search_image'] != 'false' && $row['image'] != '' && $row['image_url'] != '') {
-        $data2[$i][$column_index++] = '<img style="width:150px;" src="images/' . $row['image'] . '">';
+        $img_src = ($image_mode === 'ausmalbild' && $row['image_ausmalbild'] != '') ? $row['image_ausmalbild'] : $row['image'];
+        $data2[$i][$column_index++] = '<img style="width:150px;" src="images/' . $img_src . '">';
         $data2[$i][$column_index++] = '<img style="width:150px;" src="' . $row['image_url'] . '">';
     } elseif ($_REQUEST['search_image'] != 'false' && $row['image'] != '' && $row['image_url'] == '') { 
-        $data2[$i][$column_index++] = '<img style="width:150px;" src="images/' . $row['image'] . '">';
+        $img_src = ($image_mode === 'ausmalbild' && $row['image_ausmalbild'] != '') ? $row['image_ausmalbild'] : $row['image'];
+        $data2[$i][$column_index++] = '<img style="width:150px;" src="images/' . $img_src . '">';
         $data2[$i][$column_index++] = '';
     } elseif ($_REQUEST['search_image'] != 'false' && $row['image'] == '' && $row['image_url'] != '') { 
         $data2[$i][$column_index++] = '';

@@ -41,6 +41,9 @@ $page = 'search';
                         <div class="col-md-2">
                             <label><input id="lauttreu" type="checkbox" value="1">&nbsp; Lauttreu</label>
                         </div>
+                        <div class="col-md-2">
+                            <label><input id="image_mode_ausmalbild" type="checkbox" value="1">&nbsp; Ausmalbild</label>
+                        </div>
                         <div class="col-md-6">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="not_letter" placeholder="Buchstabe ausschliessen" aria-describedby="Buchstabe ausschliessen">
@@ -298,6 +301,8 @@ $page = 'search';
             // Map für Filter-Labels (ID/name => Display-Name)
             var filterLabels = {
                 'lauttreu': 'Lauttreu',
+                'image_mode_ausmalbild': 'Ausmalbild',
+                'minimalpair_enabled': 'Minimalpaar',
                 'minimalpair_enabled': 'Minimalpaar-Finder aktiv'
             };
 
@@ -378,7 +383,7 @@ $page = 'search';
                         var id = $(this).attr('id');
 
                         var label = '';
-                        if (id === 'lauttreu' || id === 'minimalpair_enabled') {
+                        if (id === 'lauttreu' || id === 'minimalpair_enabled' || id === 'image_mode_ausmalbild') {
                             label = filterLabels[id];
                         } else if (name === 'category[]') {
                             label = filterLabels['category_' + value];
@@ -578,6 +583,7 @@ $page = 'search';
                         data: {
                             include_selection: true,
                             search_image: true,
+                            image_mode: $('#image_mode_ausmalbild').prop('checked') ? 'ausmalbild' : 'standard',
                             search_text: $('#search_text').val(),
                             not_letter: $('#not_letter').val(),
                             category: category,

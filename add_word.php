@@ -38,9 +38,23 @@ if (isset($_POST['data'])) {
             $image = $filename;
         }
     }
+
+    $image_ausmalbild = '';
+    $file_ausmalbild = $_FILES['image_ausmalbild'];
+    if (isset($file_ausmalbild) && !empty($file_ausmalbild) && $file_ausmalbild['error'] === UPLOAD_ERR_OK) {
+        $destinationPath = getcwd() . '/images/';
+        $ext_ab = pathinfo($file_ausmalbild['name'], PATHINFO_EXTENSION);
+        $filename_ab = generateRandomString(25) . '.' . $ext_ab;
+        $allowed_ab = array('gif', 'png', 'jpg', 'jpeg', 'Jpeg', 'JPG', 'PNG', 'GIF');
+        if (in_array($ext_ab, $allowed_ab)) {
+            move_uploaded_file($file_ausmalbild['tmp_name'], $destinationPath . $filename_ab);
+            $image_ausmalbild = $filename_ab;
+        }
+    }
     $_POST['data']['name'] = strip_tags($_POST['data']['name']);
     $_POST['data']['image_url'] = strip_tags($_POST['data']['image_url']);
     $_POST['data']['image'] = $image;
+    $_POST['data']['image_ausmalbild'] = $image_ausmalbild;
     $_POST['data']['category'] = implode(',', $_POST['data']['category']);
     $_POST['data']['semantic'] = implode(',', $_POST['data']['semantic']);
     $_POST['data']['alters'] = implode(',', $_POST['data']['alters']);
@@ -49,6 +63,10 @@ if (isset($_POST['data'])) {
 		if($image=='')/*in case no new image is chosen*/
         {
             unset($_POST['data']['image']);
+        }
+        if ($image_ausmalbild == '')/*in case no new ausmalbild is chosen*/
+        {
+            unset($_POST['data']['image_ausmalbild']);
         }
         update_record('words', $_POST['data']['id'], $_POST['data']);
     } else {
@@ -146,6 +164,17 @@ $words = get_words();
                                                             }
                                                             else if (isset($word['image_url']) && $word['image_url'] != '') {
                                                                 echo '<img src="' . $word['image_url'] . '" style="width:200px;">';
+                                                            }
+                                                            ?>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Ausmalbild</td>
+                                                        <td>
+                                                            <input type="file" class="form-control" name="image_ausmalbild" style="padding:0px">
+                                                            <?php
+                                                            if (isset($word['image_ausmalbild']) && $word['image_ausmalbild'] != '') {
+                                                                echo '<img src="images/' . $word['image_ausmalbild'] . '" style="width:200px; margin-top:8px;">';
                                                             }
                                                             ?>
                                                         </td>
