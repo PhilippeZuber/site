@@ -119,6 +119,18 @@ $page = 'search';
                             <details class="action-accordion search-accordion-block">
                                 <summary><span class="glyphicon glyphicon-random"></span> Minimalpaar-Finder</summary>
                                 <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
+                                    <div class="row" style="margin-bottom: 10px;">
+                                        <div class="col-sm-12">
+                                            <label for="minimalpair_preset">Typische Paare</label>
+                                            <select id="minimalpair_preset" class="form-control">
+                                                <option value="">Bitte wählen...</option>
+                                                <option value="k|t">K / T</option>
+                                                <option value="sch|s">Sch / S</option>
+                                                <option value="g|d">G / D</option>
+                                                <option value="r|l">R / L</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <label><input id="minimalpair_enabled" type="checkbox" value="1">&nbsp; Minimalpaar-Finder aktivieren</label>
@@ -127,19 +139,24 @@ $page = 'search';
                                     <div class="row" style="margin-top: 10px;">
                                         <div class="col-sm-4">
                                             <label for="minimalpair_from">Von</label>
-                                            <input id="minimalpair_from" type="text" class="form-control" maxlength="1" placeholder="z.B. G">
+                                            <input id="minimalpair_from" type="text" class="form-control" placeholder="z.B. sch">
                                         </div>
                                         <div class="col-sm-4">
                                             <label for="minimalpair_to">Nach</label>
-                                            <input id="minimalpair_to" type="text" class="form-control" maxlength="1" placeholder="z.B. D">
+                                            <input id="minimalpair_to" type="text" class="form-control" placeholder="z.B. s">
                                         </div>
                                         <div class="col-sm-4" style="margin-top: 24px;">
                                             <button id="minimalpair_find" class="btn btn-primary btn-sm">Paare finden</button>
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 8px;">
+                                        <div class="col-sm-12">
+                                            <label><input id="minimalpair_bidirectional" type="checkbox" checked value="1">&nbsp; Beide Richtungen suchen (↔)</label>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 8px;">
                                         <div class="col-sm-12 text-muted" style="font-size: 12px;">
-                                            Strenger Modus: gleiche Wortlänge, genau ein Buchstabenwechsel von → nach.
+                                            Strenger Modus: genau ein Austauschsegment von → nach (z.B. sch ↔ s).
                                         </div>
                                     </div>
                                 </div>
@@ -345,11 +362,12 @@ $page = 'search';
                 var minimalPairEnabled = $('#minimalpair_enabled').is(':checked');
                 var minimalPairFrom = $.trim($('#minimalpair_from').val());
                 var minimalPairTo = $.trim($('#minimalpair_to').val());
+                var minimalPairBidirectional = $('#minimalpair_bidirectional').is(':checked');
                 if (minimalPairEnabled && minimalPairFrom && minimalPairTo && minimalPairFrom !== minimalPairTo) {
                     hasFilters = true;
                     tagsList.append(
                         '<span class="filter-tag">' +
-                        'Unterschied: &quot;' + escapeHtml(minimalPairFrom) + '→' + escapeHtml(minimalPairTo) + '&quot;' +
+                        'Unterschied: &quot;' + escapeHtml(minimalPairFrom) + (minimalPairBidirectional ? '↔' : '→') + escapeHtml(minimalPairTo) + '&quot;' +
                         '<button type="button" class="filter-tag-remove" data-filter-type="minimalpair_diff" title="Entfernen">×</button>' +
                         '</span>'
                     );
@@ -419,6 +437,7 @@ $page = 'search';
                 } else if (filterType === 'minimalpair_diff') {
                     $('#minimalpair_from').val('');
                     $('#minimalpair_to').val('');
+                    $('#minimalpair_preset').val('');
                 } else if (filterId) {
                     $('#' + filterId).prop('checked', false);
                 } else if (filterName) {
@@ -436,6 +455,7 @@ $page = 'search';
                 $('#not_letter').val('');
                 $('#minimalpair_from').val('');
                 $('#minimalpair_to').val('');
+                $('#minimalpair_preset').val('');
                 $('input[type="checkbox"]').prop('checked', false);
                 updateActiveFilters();
                 search();
@@ -485,6 +505,25 @@ $page = 'search';
                     updateActiveFilters();
                 });
 
+                $('#minimalpair_bidirectional').on('change', function() {
+                    updateActiveFilters();
+                    search();
+                });
+
+                $('#minimalpair_preset').on('change', function() {
+                    var selected = $(this).val();
+                    if (!selected) {
+                        return;
+                    }
+
+                    var values = selected.split('|');
+                    $('#minimalpair_from').val(values[0] || '');
+                    $('#minimalpair_to').val(values[1] || '');
+                    $('#minimalpair_enabled').prop('checked', true);
+                    updateActiveFilters();
+                    search();
+                });
+
                 $('#minimalpair_find').on('click', function(e) {
                     e.preventDefault();
                     updateActiveFilters();
@@ -530,6 +569,7 @@ $page = 'search';
                 var minimalpairFrom = $.trim($('#minimalpair_from').val());
                 var minimalpairTo = $.trim($('#minimalpair_to').val());
                 var minimalpairEnabled = $('#minimalpair_enabled').prop('checked') && minimalpairFrom !== '' && minimalpairTo !== '' && minimalpairFrom !== minimalpairTo;
+                var minimalpairBidirectional = $('#minimalpair_bidirectional').prop('checked');
                 
                 $('#data-table1').DataTable().clear().destroy();
 
@@ -551,6 +591,7 @@ $page = 'search';
                             minimalpair_enabled: minimalpairEnabled,
                             minimalpair_from: minimalpairFrom,
                             minimalpair_to: minimalpairTo,
+                            minimalpair_bidirectional: minimalpairBidirectional,
                         }
                     },
 					dom: 'Blfrtip',/*Position of Buttons*/

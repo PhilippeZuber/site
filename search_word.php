@@ -9,15 +9,7 @@ $include_selection = isset($_REQUEST['include_selection']) ? filter_var($_REQUES
 $minimalpair_enabled = isset($_REQUEST['minimalpair_enabled']) ? filter_var($_REQUEST['minimalpair_enabled'], FILTER_VALIDATE_BOOLEAN) : false;
 $minimalpair_from_input = isset($_REQUEST['minimalpair_from']) ? trim($_REQUEST['minimalpair_from']) : '';
 $minimalpair_to_input = isset($_REQUEST['minimalpair_to']) ? trim($_REQUEST['minimalpair_to']) : '';
-
-function split_word_chars($word)
-{
-    $chars = preg_split('//u', $word, -1, PREG_SPLIT_NO_EMPTY);
-    if ($chars === false) {
-        $chars = str_split($word);
-    }
-    return $chars;
-}
+$minimalpair_bidirectional = isset($_REQUEST['minimalpair_bidirectional']) ? filter_var($_REQUEST['minimalpair_bidirectional'], FILTER_VALIDATE_BOOLEAN) : true;
 
 function normalize_word_for_compare($word)
 {
@@ -37,52 +29,22 @@ function uppercase_word_for_display($word)
     return strtoupper($word);
 }
 
-function get_single_char($value)
+function find_all_occurrences($haystack, $needle)
 {
-    $chars = split_word_chars($value);
-    if (empty($chars)) {
-        return '';
+    $positions = array();
+    $needle_length = strlen($needle);
+
+    if ($needle === '' || $needle_length === 0) {
+        return $positions;
     }
 
-    return $chars[0];
-}
-
-function get_strict_minimalpair_difference($left_word, $right_word)
-{
-    $left_chars = split_word_chars(normalize_word_for_compare($left_word));
-    $right_chars = split_word_chars(normalize_word_for_compare($right_word));
-
-    if (count($left_chars) !== count($right_chars)) {
-        return false;
+    $offset = 0;
+    while (($position = strpos($haystack, $needle, $offset)) !== false) {
+        $positions[] = $position;
+        $offset = $position + 1;
     }
 
-    $diff_count = 0;
-    $diff_from = '';
-    $diff_to = '';
-    $diff_position = 0;
-
-    foreach ($left_chars as $index => $char) {
-        if ($char !== $right_chars[$index]) {
-            $diff_count++;
-            $diff_from = $char;
-            $diff_to = $right_chars[$index];
-            $diff_position = $index + 1;
-
-            if ($diff_count > 1) {
-                return false;
-            }
-        }
-    }
-
-    if ($diff_count !== 1) {
-        return false;
-    }
-
-    return array(
-        'from' => $diff_from,
-        'to' => $diff_to,
-        'position' => $diff_position
-    );
+    return $positions;
 }
 
 function compare_minimalpair_rows($left, $right, $order_column, $order_dir)
@@ -116,11 +78,28 @@ function compare_minimalpair_rows($left, $right, $order_column, $order_dir)
     return $compare;
 }
 
-$minimalpair_from = get_single_char($minimalpair_from_input);
-$minimalpair_to = get_single_char($minimalpair_to_input);
+$minimalpair_from = $minimalpair_from_input;
+$minimalpair_to = $minimalpair_to_input;
 $minimalpair_from_normalized = normalize_word_for_compare($minimalpair_from);
 $minimalpair_to_normalized = normalize_word_for_compare($minimalpair_to);
 $has_minimalpair_diff = $minimalpair_enabled && $minimalpair_from !== '' && $minimalpair_to !== '' && $minimalpair_from_normalized !== $minimalpair_to_normalized;
+
+$minimalpair_rules = array();
+if ($has_minimalpair_diff) {
+    $minimalpair_rules[] = array(
+        'from' => $minimalpair_from_normalized,
+        'to' => $minimalpair_to_normalized,
+        'label' => uppercase_word_for_display($minimalpair_from) . '→' . uppercase_word_for_display($minimalpair_to)
+    );
+
+    if ($minimalpair_bidirectional) {
+        $minimalpair_rules[] = array(
+            'from' => $minimalpair_to_normalized,
+            'to' => $minimalpair_from_normalized,
+            'label' => uppercase_word_for_display($minimalpair_to) . '→' . uppercase_word_for_display($minimalpair_from)
+        );
+    }
+}
 
 $totaldata = get_result("select count(*) count from words ");
 $totaldata = mysqli_fetch_assoc($totaldata);
@@ -197,8 +176,10 @@ if ($include_selection) {
 } else {
     $order_columns = array(
         0 => 'name',
-        1 => 'image',
-        2 => 'image_url'
+        1 => 'name',
+        2 => 'name',
+        3 => 'image',
+        4 => 'image_url'
     );
 }
 
@@ -235,45 +216,38 @@ if ($has_minimalpair_diff) {
 
     $seen_pairs = array();
     foreach ($filtered_words as $source_word) {
-        $source_chars = split_word_chars($source_word['normalized_name']);
+        foreach ($minimalpair_rules as $rule) {
+            $from_token = $rule['from'];
+            $to_token = $rule['to'];
+            $positions = find_all_occurrences($source_word['normalized_name'], $from_token);
 
-        foreach ($source_chars as $index => $char) {
-            if ($char !== $minimalpair_from_normalized) {
-                continue;
-            }
+            foreach ($positions as $position) {
+                $target_name = substr_replace($source_word['normalized_name'], $to_token, $position, strlen($from_token));
 
-            $target_chars = $source_chars;
-            $target_chars[$index] = $minimalpair_to_normalized;
-            $target_name = implode('', $target_chars);
-
-            if (!isset($words_by_normalized_name[$target_name])) {
-                continue;
-            }
-
-            foreach ($words_by_normalized_name[$target_name] as $target_word) {
-                if ($target_word['id'] == $source_word['id']) {
+                if (!isset($words_by_normalized_name[$target_name])) {
                     continue;
                 }
 
-                $difference = get_strict_minimalpair_difference($source_word['name'], $target_word['name']);
-                if ($difference === false || $difference['position'] !== ($index + 1)) {
-                    continue;
-                }
+                foreach ($words_by_normalized_name[$target_name] as $target_word) {
+                    if ($target_word['id'] == $source_word['id']) {
+                        continue;
+                    }
 
-                $pair_key = min($source_word['id'], $target_word['id']) . '_' . max($source_word['id'], $target_word['id']);
-                if (isset($seen_pairs[$pair_key])) {
-                    continue;
-                }
+                    $pair_key = min($source_word['id'], $target_word['id']) . '_' . max($source_word['id'], $target_word['id']);
+                    if (isset($seen_pairs[$pair_key])) {
+                        continue;
+                    }
 
-                $seen_pairs[$pair_key] = true;
-                $minimalpair_rows[] = array(
-                    'id' => $target_word['id'],
-                    'word' => $target_word['name'],
-                    'pair_word' => $source_word['name'],
-                    'difference' => uppercase_word_for_display($minimalpair_from) . '→' . uppercase_word_for_display($minimalpair_to) . ' (Pos. ' . ($index + 1) . ')',
-                    'image' => $target_word['image'],
-                    'image_url' => $target_word['image_url']
-                );
+                    $seen_pairs[$pair_key] = true;
+                    $minimalpair_rows[] = array(
+                        'id' => $target_word['id'],
+                        'word' => $target_word['name'],
+                        'pair_word' => $source_word['name'],
+                        'difference' => $rule['label'],
+                        'image' => $target_word['image'],
+                        'image_url' => $target_word['image_url']
+                    );
+                }
             }
         }
     }
