@@ -39,12 +39,9 @@ $page = 'search';
                     </div>
                     <div class="row">
                         <div class="col-md-2">
-                            <label><input id="search_image" checked type="checkbox" value="biler">&nbsp; Mit Bildern</label>
-                        </div>
-                        <div class="col-md-2">
                             <label><input id="lauttreu" type="checkbox" value="1">&nbsp; Lauttreu</label>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="not_letter" placeholder="Buchstabe ausschliessen" aria-describedby="Buchstabe ausschliessen">
                             </div>
@@ -300,7 +297,6 @@ $page = 'search';
 
             // Map für Filter-Labels (ID/name => Display-Name)
             var filterLabels = {
-                'search_image': 'Mit Bildern',
                 'lauttreu': 'Lauttreu',
                 'minimalpair_enabled': 'Minimalpaar-Finder aktiv'
             };
@@ -382,7 +378,7 @@ $page = 'search';
                         var id = $(this).attr('id');
 
                         var label = '';
-                        if (id === 'search_image' || id === 'lauttreu' || id === 'minimalpair_enabled') {
+                        if (id === 'lauttreu' || id === 'minimalpair_enabled') {
                             label = filterLabels[id];
                         } else if (name === 'category[]') {
                             label = filterLabels['category_' + value];
@@ -581,7 +577,7 @@ $page = 'search';
                         url: 'search_word.php',
                         data: {
                             include_selection: true,
-                            search_image: $('#search_image').prop('checked'),
+                            search_image: true,
                             search_text: $('#search_text').val(),
                             not_letter: $('#not_letter').val(),
                             category: category,
