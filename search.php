@@ -117,51 +117,6 @@ $page = 'search';
                                 </table>
                             </details>
                             <details class="action-accordion search-accordion-block">
-                                <summary><span class="glyphicon glyphicon-random"></span> Minimalpaar-Finder</summary>
-                                <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
-                                    <div class="row" style="margin-bottom: 10px;">
-                                        <div class="col-sm-12">
-                                            <label for="minimalpair_preset">Typische Paare</label>
-                                            <select id="minimalpair_preset" class="form-control">
-                                                <option value="">Bitte wählen...</option>
-                                                <option value="k|t">K / T</option>
-                                                <option value="sch|s">Sch / S</option>
-                                                <option value="g|d">G / D</option>
-                                                <option value="r|l">R / L</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <label><input id="minimalpair_enabled" type="checkbox" value="1">&nbsp; Minimalpaar-Finder aktivieren</label>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 10px;">
-                                        <div class="col-sm-4">
-                                            <label for="minimalpair_from">Von</label>
-                                            <input id="minimalpair_from" type="text" class="form-control" placeholder="z.B. sch">
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <label for="minimalpair_to">Nach</label>
-                                            <input id="minimalpair_to" type="text" class="form-control" placeholder="z.B. s">
-                                        </div>
-                                        <div class="col-sm-4" style="margin-top: 24px;">
-                                            <button id="minimalpair_find" class="btn btn-primary btn-sm">Paare finden</button>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 8px;">
-                                        <div class="col-sm-12">
-                                            <label><input id="minimalpair_bidirectional" type="checkbox" checked value="1">&nbsp; Beide Richtungen suchen (↔)</label>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 8px;">
-                                        <div class="col-sm-12 text-muted" style="font-size: 12px;">
-                                            Strenger Modus: genau ein Austauschsegment von → nach (z.B. sch ↔ s).
-                                        </div>
-                                    </div>
-                                </div>
-                            </details>
-                            <details class="action-accordion search-accordion-block">
                                 <summary><span class="glyphicon glyphicon-folder-open"></span> Wortsammlungen</summary>
                                 <div style="margin-top: 15px; padding: 10px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 4px;">
                                     <div class="row">
@@ -242,8 +197,6 @@ $page = 'search';
                                     <tr>
                                         <th>Auswahl</th>
                                         <th>Wort</th>
-                                        <th class="minimalpair-column">Minimalpaar</th>
-                                        <th class="minimalpair-column">Unterschied</th>
                                         <th class="search_image_column">Bild</th>
                                         <th class="search_image_column">Bild2</th>
                                     </tr>
@@ -267,16 +220,6 @@ $page = 'search';
 						document.getElementById("searchbtn").click();
 					}
 				});
-
-            ['minimalpair_from', 'minimalpair_to'].forEach(function(id) {
-                var element = document.getElementById(id);
-                element.addEventListener("keyup", function(event) {
-                    event.preventDefault();
-                    if (event.keyCode === 13) {
-                        document.getElementById("minimalpair_find").click();
-                    }
-                });
-            });
 			/*Initialising data-table*/
             var table;
             var memorySelectedIds = {};
@@ -301,9 +244,7 @@ $page = 'search';
             // Map für Filter-Labels (ID/name => Display-Name)
             var filterLabels = {
                 'lauttreu': 'Lauttreu',
-                'image_mode_ausmalbild': 'Ausmalbild',
-                'minimalpair_enabled': 'Minimalpaar',
-                'minimalpair_enabled': 'Minimalpaar-Finder aktiv'
+                'image_mode_ausmalbild': 'Ausmalbild'
             };
 
             // Populate category/semantic/alter labels on page load
@@ -360,20 +301,6 @@ $page = 'search';
                     );
                 }
 
-                var minimalPairEnabled = $('#minimalpair_enabled').is(':checked');
-                var minimalPairFrom = $.trim($('#minimalpair_from').val());
-                var minimalPairTo = $.trim($('#minimalpair_to').val());
-                var minimalPairBidirectional = $('#minimalpair_bidirectional').is(':checked');
-                if (minimalPairEnabled && minimalPairFrom && minimalPairTo && minimalPairFrom !== minimalPairTo) {
-                    hasFilters = true;
-                    tagsList.append(
-                        '<span class="filter-tag">' +
-                        'Unterschied: &quot;' + escapeHtml(minimalPairFrom) + (minimalPairBidirectional ? '↔' : '→') + escapeHtml(minimalPairTo) + '&quot;' +
-                        '<button type="button" class="filter-tag-remove" data-filter-type="minimalpair_diff" title="Entfernen">×</button>' +
-                        '</span>'
-                    );
-                }
-
                 // Add checkbox filters
                 $('input[type="checkbox"]').each(function() {
                     if ($(this).is(':checked')) {
@@ -383,7 +310,7 @@ $page = 'search';
                         var id = $(this).attr('id');
 
                         var label = '';
-                        if (id === 'lauttreu' || id === 'minimalpair_enabled' || id === 'image_mode_ausmalbild') {
+                        if (id === 'lauttreu' || id === 'image_mode_ausmalbild') {
                             label = filterLabels[id];
                         } else if (name === 'category[]') {
                             label = filterLabels['category_' + value];
@@ -435,10 +362,6 @@ $page = 'search';
                     $('#search_text').val('');
                 } else if (filterType === 'not_letter') {
                     $('#not_letter').val('');
-                } else if (filterType === 'minimalpair_diff') {
-                    $('#minimalpair_from').val('');
-                    $('#minimalpair_to').val('');
-                    $('#minimalpair_preset').val('');
                 } else if (filterId) {
                     $('#' + filterId).prop('checked', false);
                 } else if (filterName) {
@@ -454,22 +377,12 @@ $page = 'search';
                 e.preventDefault();
                 $('#search_text').val('');
                 $('#not_letter').val('');
-                $('#minimalpair_from').val('');
-                $('#minimalpair_to').val('');
-                $('#minimalpair_preset').val('');
                 $('input[type="checkbox"]').prop('checked', false);
                 updateActiveFilters();
                 search();
             });
 
-            function shouldShowMinimalPairColumns() {
-                var from = $.trim($('#minimalpair_from').val());
-                var to = $.trim($('#minimalpair_to').val());
-                return $('#minimalpair_enabled').prop('checked') && from !== '' && to !== '' && from !== to;
-            }
-
             $(document).ready(function (){
-				var showMinimalPairColumns = shouldShowMinimalPairColumns();
 				$('#data-table1').DataTable( {
 					"language": {
 						"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
@@ -479,8 +392,7 @@ $page = 'search';
                     order: [[1, 'asc']],
                     columnDefs: [
                         { targets: 0, orderable: false, searchable: false, width: '80px' },
-                        { targets: [4,5], orderable: false },
-                        { targets: [2,3], visible: showMinimalPairColumns }
+                        { targets: [2,3], orderable: false }
                     ]
 				});
 
@@ -500,35 +412,6 @@ $page = 'search';
 
                 $('#not_letter').on('change', function() {
                     updateActiveFilters();
-                });
-
-                $('#minimalpair_from, #minimalpair_to').on('change', function() {
-                    updateActiveFilters();
-                });
-
-                $('#minimalpair_bidirectional').on('change', function() {
-                    updateActiveFilters();
-                    search();
-                });
-
-                $('#minimalpair_preset').on('change', function() {
-                    var selected = $(this).val();
-                    if (!selected) {
-                        return;
-                    }
-
-                    var values = selected.split('|');
-                    $('#minimalpair_from').val(values[0] || '');
-                    $('#minimalpair_to').val(values[1] || '');
-                    $('#minimalpair_enabled').prop('checked', true);
-                    updateActiveFilters();
-                    search();
-                });
-
-                $('#minimalpair_find').on('click', function(e) {
-                    e.preventDefault();
-                    updateActiveFilters();
-                    search();
                 });
 
                 loadCollections();
@@ -566,11 +449,6 @@ $page = 'search';
                 $.each($("input[name='alter[]']:checked"), function () {
                     alter.push($(this).val());
                 });
-
-                var minimalpairFrom = $.trim($('#minimalpair_from').val());
-                var minimalpairTo = $.trim($('#minimalpair_to').val());
-                var minimalpairEnabled = $('#minimalpair_enabled').prop('checked') && minimalpairFrom !== '' && minimalpairTo !== '' && minimalpairFrom !== minimalpairTo;
-                var minimalpairBidirectional = $('#minimalpair_bidirectional').prop('checked');
                 
                 $('#data-table1').DataTable().clear().destroy();
 
@@ -590,10 +468,6 @@ $page = 'search';
                             semantic: semantic,
                             alter: alter,
                             lauttreu: $('#lauttreu').prop('checked'),
-                            minimalpair_enabled: minimalpairEnabled,
-                            minimalpair_from: minimalpairFrom,
-                            minimalpair_to: minimalpairTo,
-                            minimalpair_bidirectional: minimalpairBidirectional,
                         }
                     },
 					dom: 'Blfrtip',/*Position of Buttons*/
@@ -650,8 +524,7 @@ $page = 'search';
                     order: [[1, 'asc']],
                     columnDefs: [
                         { targets: 0, orderable: false, searchable: false, width: '80px' },
-                        { targets: [4,5], orderable: false },
-                        { targets: [2,3], visible: minimalpairEnabled }
+                        { targets: [2,3], orderable: false }
                     ],
                     drawCallback: function () {
                         applySelectionToTable();
