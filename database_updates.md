@@ -32,11 +32,7 @@ UPDATE `jobs` SET status = 'approved', valid_until = DATE_ADD(NOW(), INTERVAL 90
 UPDATE `user` u SET approved_jobs_count = (SELECT COUNT(*) FROM jobs j WHERE j.creator_id = u.user_id AND j.status = 'approved');
 ```
 
----
 
-**Status:** ⏳ Warte auf manuelle Ausführung in phpMyAdmin
-
----
 
 ## 4. Words-Tabelle: Ausmalbild-Spalte
 
@@ -44,7 +40,7 @@ UPDATE `user` u SET approved_jobs_count = (SELECT COUNT(*) FROM jobs j WHERE j.c
 ALTER TABLE `words` ADD COLUMN `image_ausmalbild` VARCHAR(255) NOT NULL DEFAULT '';
 ```
 
-**Status:** ⏳ Warte auf manuelle Ausführung in phpMyAdmin
+
 
 ---
 
@@ -67,4 +63,29 @@ CREATE TABLE `job_pdf_contacts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 ```
 
-**Status:** ✅ In Produktion (ausgeführt am 11.04.2026)
+
+
+---
+
+## 6. Tabelle fuer Newsletter-Versand-Log
+
+```sql
+CREATE TABLE `newsletter_send_log` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`sent_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`sent_by` INT UNSIGNED DEFAULT NULL,
+	`recipient_email` VARCHAR(255) NOT NULL,
+	`recipient_type` ENUM('user','job_contact','test') NOT NULL,
+	`recipient_ref_id` INT DEFAULT NULL,
+	`recipient_mode` ENUM('users','jobs','both','test') NOT NULL,
+	`subject` VARCHAR(255) NOT NULL,
+	`template_file` VARCHAR(255) NOT NULL,
+	`success` TINYINT(1) NOT NULL DEFAULT 0,
+	`error_message` VARCHAR(500) DEFAULT NULL,
+	PRIMARY KEY (`id`),
+	KEY `idx_sent_at` (`sent_at`),
+	KEY `idx_recipient_email` (`recipient_email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+```
+
+**Status:** ✅ In Produktion (ausgeführt am 13.04.2026)

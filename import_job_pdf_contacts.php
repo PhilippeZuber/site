@@ -22,11 +22,48 @@ $import_result = null;
 
 ensure_job_pdf_contacts_table();
 
+$manual_result = null;
+
+if (isset($_POST['add_manual_emails'])) {
+    $raw_input = isset($_POST['manual_emails']) ? $_POST['manual_emails'] : '';
+    $lines = preg_split('/[\r\n,;]+/', $raw_input);
+    $manual_inserted = 0;
+    $manual_duplicates = 0;
+    $manual_invalid = 0;
+    $db = get_db_connection();
+    foreach ($lines as $line) {
+        $email = strtolower(trim($line, " \t\n\r\0\x0B.,;:()[]{}<>\"'"));
+        if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            if ($email !== '') {
+                $manual_invalid++;
+            }
+            continue;
+        }
+        $email_sql = mysqli_real_escape_string($db, $email);
+        $created_by_sql = intval($user_id);
+        $check = mysqli_query($db, "SELECT id FROM job_pdf_contacts WHERE email = '" . $email_sql . "' LIMIT 1");
+        if ($check && mysqli_num_rows($check) > 0) {
+            $manual_duplicates++;
+        } else {
+            $insert = mysqli_query($db, "INSERT INTO job_pdf_contacts (email, source_page_url, source_pdf_url, context_snippet, created_by, first_seen_at, last_seen_at) VALUES ('" . $email_sql . "','manuell','manuell','Manuell hinzugefügt'," . $created_by_sql . ",NOW(),NOW())");
+            if ($insert) {
+                $manual_inserted++;
+            }
+        }
+    }
+    mysqli_close($db);
+    $manual_result = array(
+        'inserted' => $manual_inserted,
+        'duplicates' => $manual_duplicates,
+        'invalid' => $manual_invalid
+    );
+}
+
 if (isset($_POST['run_import'])) {
     $source_url = filter_data($_POST['source_url']);
 
     if (!preg_match('/^https?:\/\//i', $source_url)) {
-        $_SESSION['error'] = 'Bitte eine gueltige URL mit http:// oder https:// eingeben.';
+        $_SESSION['error'] = 'Bitte eine gültige URL mit http:// oder https:// eingeben.';
         header("Location:import_job_pdf_contacts.php");
         exit();
     }
@@ -63,6 +100,32 @@ if ($contacts_result) {
                                 </div>
                             <?php endif; ?>
 
+                            <div class="panel panel-success">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">E-Mail-Adressen manuell hinzufügen</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <?php if (is_array($manual_result)): ?>
+                                        <div class="alert alert-info">
+                                            <strong>Ergebnis:</strong>
+                                            Neu hinzugefügt: <strong><?php echo $manual_result['inserted']; ?></strong> &nbsp;|
+                                            Duplikate: <strong><?php echo $manual_result['duplicates']; ?></strong> &nbsp;|
+                                            Ungültig: <strong><?php echo $manual_result['invalid']; ?></strong>
+                                        </div>
+                                    <?php endif; ?>
+                                    <form method="post" action="">
+                                        <div class="form-group">
+                                            <label for="manual_emails">E-Mail-Adressen</label>
+                                            <textarea class="form-control" id="manual_emails" name="manual_emails" rows="5" placeholder="eine Adresse pro Zeile, oder kommagetrennt z.B.&#10;info@praxis-a.ch&#10;kontakt@logopaedie-b.ch"></textarea>
+                                            <span class="help-block">Mehrere Adressen koennen per Zeilenumbruch, Komma oder Semikolon getrennt eingegeben werden. Duplikate werden automatisch erkannt.</span>
+                                        </div>
+                                        <button type="submit" name="add_manual_emails" class="btn btn-success">
+                                            <span class="glyphicon glyphicon-plus"></span> Hinzufügen
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Import starten</h3>
@@ -74,7 +137,7 @@ if ($contacts_result) {
                                             <input type="url" class="form-control" id="source_url" name="source_url" value="<?php echo htmlspecialchars($source_url); ?>" required>
                                         </div>
                                         <button type="submit" name="run_import" class="btn btn-primary">
-                                            <span class="glyphicon glyphicon-play"></span> Import jetzt ausfuehren
+                                            <span class="glyphicon glyphicon-play"></span> Import jetzt ausführen
                                         </button>
                                     </form>
                                 </div>
