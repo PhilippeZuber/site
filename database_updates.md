@@ -45,3 +45,26 @@ ALTER TABLE `words` ADD COLUMN `image_ausmalbild` VARCHAR(255) NOT NULL DEFAULT 
 ```
 
 **Status:** ⏳ Warte auf manuelle Ausführung in phpMyAdmin
+
+---
+
+## 5. Tabelle fuer importierte PDF-Kontakte
+
+```sql
+CREATE TABLE `job_pdf_contacts` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`email` VARCHAR(255) NOT NULL,
+	`source_page_url` VARCHAR(500) NOT NULL,
+	`source_pdf_url` VARCHAR(500) NOT NULL,
+	`context_snippet` VARCHAR(500) DEFAULT NULL,
+	`status` ENUM('new','contacted','unsubscribed','invalid') DEFAULT 'new',
+	`first_seen_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`last_seen_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`created_by` INT UNSIGNED DEFAULT NULL,
+	`notes` TEXT,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `uniq_email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+```
+
+**Status:** ✅ In Produktion (ausgeführt am 11.04.2026)

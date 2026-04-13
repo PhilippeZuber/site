@@ -61,6 +61,12 @@
 					Stellen freigeben
 				</a>
 			</li>
+            <li class="<?php echo $page=='import_job_pdf_contacts' ? 'active' : ''; ?>">
+                <a href="import_job_pdf_contacts.php">
+                    <i class="glyphicon glyphicon-download-alt"></i>
+                    PDF-Kontakte importieren
+                </a>
+            </li>
             <?php
         }
         ?>
