@@ -1,5 +1,21 @@
 <?php
 
+function api_v1_get_request_id() {
+    static $request_id = null;
+
+    if ($request_id !== null) {
+        return $request_id;
+    }
+
+    try {
+        $request_id = bin2hex(random_bytes(8));
+    } catch (Exception $e) {
+        $request_id = md5(uniqid('', true));
+    }
+
+    return $request_id;
+}
+
 function api_v1_set_cors_headers() {
     $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
     $allowed_origins_raw = getenv('WORTLAB_ADDIN_ALLOWED_ORIGINS');
@@ -32,6 +48,11 @@ function api_v1_send_json($status_code, $data) {
     http_response_code($status_code);
     header('Content-Type: application/json; charset=utf-8');
     api_v1_set_cors_headers();
+    header('X-Request-Id: ' . api_v1_get_request_id());
+
+    if (is_array($data) && !array_key_exists('request_id', $data)) {
+        $data['request_id'] = api_v1_get_request_id();
+    }
 
     echo json_encode($data);
     exit;
@@ -41,6 +62,8 @@ function api_v1_handle_options() {
     if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         api_v1_send_json(200, array('status' => 'ok'));
     }
+
+    api_v1_apply_rate_limit();
 }
 
 function api_v1_get_input() {
@@ -71,6 +94,50 @@ function api_v1_get_input() {
 function api_v1_require_method($method) {
     if ($_SERVER['REQUEST_METHOD'] !== $method) {
         api_v1_send_json(405, array('error' => 'method_not_allowed'));
+    }
+}
+
+function api_v1_apply_rate_limit() {
+    $limit_raw = getenv('WORTLAB_ADDIN_RATE_LIMIT_PER_MIN');
+    if ($limit_raw === false || trim($limit_raw) === '') {
+        return;
+    }
+
+    $limit = intval($limit_raw);
+    if ($limit <= 0) {
+        return;
+    }
+
+    $ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown';
+    $path = isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : 'api';
+    $window = gmdate('YmdHi');
+    $key = md5($ip . '|' . $path . '|' . $window);
+    $file = rtrim(sys_get_temp_dir(), '/\\') . DIRECTORY_SEPARATOR . 'wortlab_api_rl_' . $key;
+
+    $count = 0;
+    $fp = @fopen($file, 'c+');
+    if ($fp === false) {
+        return;
+    }
+
+    if (flock($fp, LOCK_EX)) {
+        $raw = stream_get_contents($fp);
+        if ($raw !== false && trim($raw) !== '') {
+            $count = intval(trim($raw));
+        }
+        $count++;
+
+        ftruncate($fp, 0);
+        rewind($fp);
+        fwrite($fp, (string)$count);
+        fflush($fp);
+        flock($fp, LOCK_UN);
+    }
+
+    fclose($fp);
+
+    if ($count > $limit) {
+        api_v1_send_json(429, array('error' => 'rate_limit_exceeded'));
     }
 }
 
