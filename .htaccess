@@ -1,0 +1,69 @@
+# ---------------------------------
+# Basis-Schutz
+# ---------------------------------
+
+# Kein Directory Listing
+Options -Indexes
+
+# Sensible Dateien sperren
+<FilesMatch "\.(htaccess|git|env|sql|ini|log|sh|bak)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Schutz fuer .htaccess selbst
+<Files ".htaccess">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# ---------------------------------
+# Upload-Ordner absichern
+# ---------------------------------
+
+# user_img Ordner -> nur Bilder erlaubt
+#<Directory "user_img">
+#    # Alles verbieten
+#    <Files "*">
+#        Order allow,deny
+#        Deny from all
+#    </Files>
+#    # Nur bestimmte Bildtypen erlauben
+#    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg)$">
+#        Order allow,deny
+#        Allow from all
+#    </FilesMatch>
+#</Directory>
+#
+# images Ordner -> nur Bilder erlaubt
+#<Directory "images">
+#    <Files "*">
+#        Order allow,deny
+#        Deny from all
+#    </Files>
+#    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg)$">
+#        Order allow,deny
+#        Allow from all
+#    </FilesMatch>
+#</Directory>
+
+# ---------------------------------
+# Sicherheit HTTP-Header
+# ---------------------------------
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ---------------------------------
+# Add-in: Authorization-Header weiterleiten
+# ---------------------------------
+# Apache entfernt den Authorization-Header standardmaessig bevor er PHP erreicht.
+# Diese Regel leitet ihn explizit als Server-Variable weiter.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
