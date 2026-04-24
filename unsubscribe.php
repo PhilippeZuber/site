@@ -35,7 +35,7 @@ if (isset($_GET['uid']) && isset($_GET['token'])) {
                         $message = 'Sie wurden erfolgreich vom Newsletter abgemeldet.';
                         $status = 'success';
                     } else {
-                        $message = 'Moechten Sie sich wirklich vom Newsletter abmelden?';
+                        $message = 'Möchten Sie sich wirklich vom Newsletter abmelden?';
                         $status = 'info';
                         $can_unsubscribe = true;
                     }
@@ -66,7 +66,7 @@ if (isset($_GET['uid']) && isset($_GET['token'])) {
                         $message = 'Sie wurden erfolgreich von weiteren Informationen abgemeldet.';
                         $status = 'success';
                     } else {
-                        $message = 'Moechten Sie sich wirklich von weiteren Informationen abmelden?';
+                        $message = 'Möchten Sie sich wirklich von weiteren Informationen abmelden?';
                         $status = 'info';
                         $can_unsubscribe = true;
                     }
@@ -106,10 +106,10 @@ if (isset($_GET['uid']) && isset($_GET['token'])) {
                         <form method="POST" action="unsubscribe.php?uid=<?php echo htmlspecialchars($user_id); ?>&token=<?php echo htmlspecialchars($token); ?>">
                     <?php endif; ?>
                         <button type="submit" name="confirm_unsubscribe" class="btn btn-danger">Abmelden</button>
-                        <a href="https://wortlab.ch" class="btn btn-default">Zurueck zur Website</a>
+                        <a href="https://wortlab.ch" class="btn btn-default">Zurück zur Website</a>
                     </form>
                 <?php else: ?>
-                    <a href="https://wortlab.ch" class="btn btn-primary">Zurueck zur Website</a>
+                    <a href="https://wortlab.ch" class="btn btn-primary">Zurück zur Website</a>
                 <?php endif; ?>
             </div>
         </div>

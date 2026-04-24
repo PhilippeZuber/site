@@ -15,7 +15,7 @@ $user_id = $_SESSION['id'];
 require_once('system/data.php');
 require_once('system/security.php');
 
-// AJAX: Empfaengeranzahl dynamisch ermitteln (wird von JavaScript aufgerufen)
+// AJAX: Empfängeranzahl dynamisch ermitteln (wird von JavaScript aufgerufen)
 if (isset($_GET['action']) && $_GET['action'] === 'get_count' && isset($_SESSION['role']) && $_SESSION['role'] == 1) {
     $mode = isset($_GET['mode']) ? filter_data($_GET['mode']) : 'users';
     if (!in_array($mode, array('users', 'jobs', 'both'))) { $mode = 'users'; }
@@ -180,7 +180,7 @@ if (isset($_POST['send_newsletter'])) {
             $personalized_content = build_newsletter_content($template_content, $salutation, $unsubscribe_url);
 
             $mail_ok = mail($to, $subject, $personalized_content, $headers);
-            add_newsletter_send_log($user_id, $to, $recipient_type, $recipient_ref_id, $recipient_mode, $subject, $template_file, $mail_ok ? 1 : 0, $mail_ok ? '' : 'mail() hat false zurueckgegeben');
+                add_newsletter_send_log($user_id, $to, $recipient_type, $recipient_ref_id, $recipient_mode, $subject, $template_file, $mail_ok ? 1 : 0, $mail_ok ? '' : 'mail() hat false zurückgegeben');
 
             if ($mail_ok) {
                 $sent_count++;
@@ -198,10 +198,10 @@ if (isset($_POST['send_newsletter'])) {
         }
 
         if ($error_message === '') {
-            $success_message = "Newsletter erfolgreich an $sent_count Empfaenger versendet (Benutzer: $sent_users, Stellenkontakte: $sent_job_contacts).";
+            $success_message = "Newsletter erfolgreich an $sent_count Empfänger versendet (Benutzer: $sent_users, Stellenkontakte: $sent_job_contacts).";
         }
     } else {
-        $error_message = "Keine Empfaenger fuer die gewaehlte Zielgruppe gefunden.";
+        $error_message = "Keine Empfänger für die gewählte Zielgruppe gefunden.";
     }
 }
 
@@ -289,7 +289,7 @@ if ($result_logs) {
                                             <p><strong>PDF-Kontakte total:</strong> <?php echo $job_total; ?></p>
                                             <p><strong>PDF-Kontakte aktiv:</strong> <?php echo $job_mailable; ?></p>
                                             <p><strong>Aktuelle Zielgruppe:</strong> <?php echo htmlspecialchars($recipient_mode); ?></p>
-                                            <p><strong>Schaetzung Versand:</strong> <span id="estimated-count"><?php echo $estimated_recipients; ?></span> Empfaenger</p>
+                                            <p><strong>Schätzung Versand:</strong> <span id="estimated-count"><?php echo $estimated_recipients; ?></span> Empfänger</p>
                                         </div>
                                     </div>
                                 </div>
@@ -321,9 +321,9 @@ if ($result_logs) {
                                 </div>
                                 <div class="panel-body">
                                     <ul>
-                                        <li>Der Newsletter wird an <strong><span id="estimated-count-warning"><?php echo $estimated_recipients; ?></span> Empfaenger</strong> versendet</li>
+                                        <li>Der Newsletter wird an <strong><span id="estimated-count-warning"><?php echo $estimated_recipients; ?></span> Empfänger</strong> versendet</li>
                                         <li>Duplikate werden per E-Mail-Adresse automatisch entfernt</li>
-                                        <li>Bei Stellenkontakten werden nur Eintraege mit dem gewaehlten Status beruecksichtigt (aktuell: <strong><?php echo htmlspecialchars($job_status_filter); ?></strong>)</li>
+                                        <li>Bei Stellenkontakten werden nur Einträge mit dem gewählten Status berücksichtigt (aktuell: <strong><?php echo htmlspecialchars($job_status_filter); ?></strong>)</li>
                                         <li>Jeder Versand wird im Versand-Log protokolliert</li>
                                         <li>Der Versand kann einige Minuten dauern</li>
                                         <li>Stellen Sie sicher, dass die Dateien <code>newsletter_memory.html</code> und <code>newsletter_jobs.html</code> existieren</li>
@@ -333,11 +333,11 @@ if ($result_logs) {
                             
                             <form method="POST" action="">
                                 <div class="form-group" style="max-width: 420px;">
-                                    <label for="recipient_mode">Empfaengergruppe</label>
+                                    <label for="recipient_mode">Empfängergruppe</label>
                                     <select class="form-control" id="recipient_mode" name="recipient_mode">
                                         <option value="users" <?php echo $recipient_mode === 'users' ? 'selected' : ''; ?>>Nur Wortlab-Benutzer (news = on)</option>
                                         <option value="jobs" <?php echo $recipient_mode === 'jobs' ? 'selected' : ''; ?>>Nur Stellen-Ausschreibende (job_pdf_contacts)</option>
-                                        <option value="both" <?php echo $recipient_mode === 'both' ? 'selected' : ''; ?>>Beide Gruppen (mit Duplikat-Pruefung)</option>
+                                        <option value="both" <?php echo $recipient_mode === 'both' ? 'selected' : ''; ?>>Beide Gruppen (mit Duplikat-Prüfung)</option>
                                     </select>
                                 </div>
                                 <div class="form-group" style="max-width: 420px;">
@@ -347,11 +347,11 @@ if ($result_logs) {
                                         <option value="new" <?php echo $job_status_filter === 'new' ? 'selected' : ''; ?>>Nur neue Kontakte (status = new)</option>
                                         <option value="contacted" <?php echo $job_status_filter === 'contacted' ? 'selected' : ''; ?>>Nur bereits Kontaktierte (status = contacted)</option>
                                     </select>
-                                    <span class="help-block">Gilt nur fuer Stellenkontakte, nicht fuer Wortlab-Benutzer.</span>
+                                    <span class="help-block">Gilt nur für Stellenkontakte, nicht für Wortlab-Benutzer.</span>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" name="send_newsletter" class="btn btn-primary btn-lg" 
-                                            onclick="return confirm('Moechten Sie den Newsletter wirklich an ' + document.getElementById('estimated-count').textContent + ' Empfaenger versenden?');">  
+                                            onclick="return confirm('Möchten Sie den Newsletter wirklich an ' + document.getElementById('estimated-count').textContent + ' Empfänger versenden?');">  
                                         <span class="glyphicon glyphicon-send"></span> Newsletter jetzt versenden
                                     </button>
                                     <a href="index.php" class="btn btn-default btn-lg">
@@ -406,7 +406,7 @@ if ($result_logs) {
 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Versand-Log (letzte 100 Eintraege)</h3>
+                                    <h3 class="panel-title">Versand-Log (letzte 100 Einträge)</h3>
                                 </div>
                                 <div class="panel-body table-responsive">
                                     <table class="table table-striped table-bordered">

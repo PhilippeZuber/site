@@ -117,7 +117,7 @@ if ($contacts_result) {
                                         <div class="form-group">
                                             <label for="manual_emails">E-Mail-Adressen</label>
                                             <textarea class="form-control" id="manual_emails" name="manual_emails" rows="5" placeholder="eine Adresse pro Zeile, oder kommagetrennt z.B.&#10;info@praxis-a.ch&#10;kontakt@logopaedie-b.ch"></textarea>
-                                            <span class="help-block">Mehrere Adressen koennen per Zeilenumbruch, Komma oder Semikolon getrennt eingegeben werden. Duplikate werden automatisch erkannt.</span>
+                                            <span class="help-block">Mehrere Adressen können per Zeilenumbruch, Komma oder Semikolon getrennt eingegeben werden. Duplikate werden automatisch erkannt.</span>
                                         </div>
                                         <button type="submit" name="add_manual_emails" class="btn btn-success">
                                             <span class="glyphicon glyphicon-plus"></span> Hinzufügen
