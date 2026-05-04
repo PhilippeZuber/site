@@ -47,6 +47,8 @@ function api_v1_set_cors_headers() {
 function api_v1_send_json($status_code, $data) {
     http_response_code($status_code);
     header('Content-Type: application/json; charset=utf-8');
+    header('Cache-Control: no-store, no-cache, must-revalidate');
+    header('Pragma: no-cache');
     api_v1_set_cors_headers();
     header('X-Request-Id: ' . api_v1_get_request_id());
 
