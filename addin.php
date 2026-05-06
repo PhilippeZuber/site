@@ -56,23 +56,30 @@ $page = 'addin';
                                 <li>Ein Wortlab-Benutzerkonto</li>
                             </ul>
 
-                            <h2>Installation (Sideloading)</h2>
-                            <p>Das Add-in wird aktuell über <strong>Sideloading</strong> installiert – ein einfaches Verfahren, das keine IT-Abteilung benötigt:</p>
+                            <h2>Installation</h2>
+                            <p>Die Installation ist unter Windows stark vereinfacht: Laden Sie das Installationsskript herunter und führen Sie es mit Rechtsklick aus.</p>
+
+                            <div class="alert alert-success">
+                                <strong><span class="glyphicon glyphicon-ok-sign"></span> Empfohlen für Windows:</strong>
+                                Download + Rechtsklick auf die Datei + <em>Öffnen</em>. Das Skript lädt das Manifest automatisch herunter, erstellt den Add-in-Ordner und kopiert den Ordnerpfad in die Zwischenablage.
+                            </div>
+
                             <ol>
-                                <li>Laden Sie die Manifest-Datei herunter (siehe unten).</li>
-                                <li>Legen Sie die Datei in einen freigegebenen Netzwerkordner oder lokalen Ordner.</li>
-                                <li>Öffnen Sie Word → <em>Einfügen</em> → <em>Add-Ins abrufen</em> → <em>Meine Add-Ins</em> → <em>Freigegebener Ordner</em>.</li>
-                                <li>Fügen Sie den Ordnerpfad unter <em>Datei</em> → <em>Optionen</em> → <em>Trust Center</em> → <em>Einstellungen für das Trust Center</em> → <em>Vertrauenswürdige Add-In-Kataloge</em> ein.</li>
-                                <li>Starten Sie Word neu und öffnen Sie das Add-in über <em>Einfügen</em> → <em>Meine Add-Ins</em>.</li>
+                                <li>Installationsskript herunterladen und ausführen (siehe Download-Box unten).</li>
+                                <li>In Word einmalig den vorgeschlagenen Ordner als <em>Vertrauenswürdigen Add-In-Katalog</em> eintragen.</li>
+                                <li>Word neu starten und das Add-in unter <em>Einfügen</em> → <em>Meine Add-Ins</em> öffnen.</li>
                             </ol>
-                            <p>Eine detaillierte Anleitung mit Screenshots erhalten Sie auf Anfrage.</p>
+
+                            <p><strong>macOS oder manuelle Installation:</strong> Nutzen Sie weiterhin die Manifest-Datei und den bisherigen Weg über den freigegebenen Ordner.</p>
 
                             <h2>Anmeldung im Add-in</h2>
                             <p>Nach der Installation müssen Sie sich einmalig mit Ihrem Wortlab-Benutzerkonto anmelden:</p>
                             <ol>
                                 <li>Öffnen Sie <a href="https://www.wortlab.ch/get_addin_token.php" target="_blank">wortlab.ch/get_addin_token.php</a> im Browser und loggen Sie sich ein.</li>
                                 <li>Kopieren Sie den angezeigten Token.</li>
-                                <li>Fügen Sie ihn im Add-in unter <em>Einstellungen</em> ein.</li>
+                                <li>Fügen Sie ihn im Add-in unter <em>Bearer-Token</em> ein.</li>
+                                <li>Klicken Sie dann <em>Speichern</em> und <em>Verbindung testen</em>.</li>
+                                <li>Geschafft! Gratuliere, Sie können Wortlab in Word nutzen.</li>
                             </ol>
 
                             <div class="panel panel-primary" style="margin-top: 30px;">
@@ -80,11 +87,16 @@ $page = 'addin';
                                     <h3 class="panel-title"><span class="glyphicon glyphicon-download-alt"></span> Manifest-Datei herunterladen</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <p>Laden Sie die aktuelle Manifest-Datei (v0.1.0) herunter, um das Add-in zu installieren:</p>
+                                    <p>Laden Sie das Windows-Installationsskript (empfohlen) oder alternativ die Manifest-Datei herunter:</p>
+                                    <p>
+                                        <a href="downloads/install-wortlab-addin.cmd" class="btn btn-success btn-lg" download="install-wortlab-addin.cmd">
+                                            <span class="glyphicon glyphicon-flash"></span> Windows-Installer herunterladen (.cmd)
+                                        </a>
+                                    </p>
                                     <a href="downloads/wortlab-addin-manifest.xml" class="btn btn-primary btn-lg" download="wortlab-addin-manifest.xml">
                                         <span class="glyphicon glyphicon-download-alt"></span> wortlab-addin-manifest.xml herunterladen
                                     </a>
-                                    <p class="text-muted" style="margin-top: 10px;"><small>XML-Datei, ca. 5 KB · Version 0.1.0.0</small></p>
+                                    <p class="text-muted" style="margin-top: 10px;"><small>Installer: Windows CMD-Datei · Manifest: XML-Datei, ca. 5 KB · Version 0.1.0.0</small></p>
                                 </div>
                             </div>
 
