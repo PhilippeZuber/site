@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides"
+  xsi:type="TaskPaneApp">
+  <Id>8fa7d63a-60cf-404f-a136-d86ab2b365e0</Id>
+  <Version>0.1.0.0</Version>
+  <ProviderName>Wortlab</ProviderName>
+  <DefaultLocale>de-CH</DefaultLocale>
+  <DisplayName DefaultValue="Wortlab für Word" />
+  <Description DefaultValue="Suche Wörter und Bilder aus Wortlab direkt in Microsoft Word." />
+  <IconUrl DefaultValue="https://addin.wortlab.ch/assets/icon-32.png" />
+  <HighResolutionIconUrl DefaultValue="https://addin.wortlab.ch/assets/icon-80.png" />
+  <SupportUrl DefaultValue="https://wortlab.ch" />
+  <AppDomains>
+    <AppDomain>https://addin.wortlab.ch</AppDomain>
+    <AppDomain>https://wortlab.ch</AppDomain>
+  </AppDomains>
+  <Hosts>
+    <Host Name="Document" />
+  </Hosts>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://addin.wortlab.ch/index.html" />
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Document">
+        <DesktopFormFactor>
+          <GetStarted>
+            <Title resid="GetStarted.Title" />
+            <Description resid="GetStarted.Description" />
+            <LearnMoreUrl resid="GetStarted.LearnMoreUrl" />
+          </GetStarted>
+          <FunctionFile resid="Commands.Url" />
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="Wortlab.Group">
+                <Label resid="Wortlab.GroupLabel" />
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16" />
+                  <bt:Image size="32" resid="Icon.32" />
+                  <bt:Image size="80" resid="Icon.80" />
+                </Icon>
+                <Control xsi:type="Button" id="Wortlab.ShowTaskpane">
+                  <Label resid="Wortlab.ButtonLabel" />
+                  <Supertip>
+                    <Title resid="Wortlab.ButtonLabel" />
+                    <Description resid="Wortlab.ButtonDescription" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16" />
+                    <bt:Image size="32" resid="Icon.32" />
+                    <bt:Image size="80" resid="Icon.80" />
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>ButtonId1</TaskpaneId>
+                    <SourceLocation resid="Taskpane.Url" />
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16" DefaultValue="https://addin.wortlab.ch/assets/icon-16.png" />
+        <bt:Image id="Icon.32" DefaultValue="https://addin.wortlab.ch/assets/icon-32.png" />
+        <bt:Image id="Icon.80" DefaultValue="https://addin.wortlab.ch/assets/icon-80.png" />
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="https://wortlab.ch" />
+        <bt:Url id="Commands.Url" DefaultValue="https://addin.wortlab.ch/commands.html" />
+        <bt:Url id="Taskpane.Url" DefaultValue="https://addin.wortlab.ch/index.html" />
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="GetStarted.Title" DefaultValue="Wortlab für Word" />
+        <bt:String id="Wortlab.GroupLabel" DefaultValue="Wortlab" />
+        <bt:String id="Wortlab.ButtonLabel" DefaultValue="Wortlab öffnen" />
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="GetStarted.Description" DefaultValue="Suche Wörter und Bilder direkt aus Wortlab im Word-Dokument." />
+        <bt:String id="Wortlab.ButtonDescription" DefaultValue="Öffnet die Wortlab-Suche im Aufgabenbereich." />
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>

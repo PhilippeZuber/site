@@ -130,6 +130,12 @@
                 Über Wortlab
 			</a>
         </li>
+        <li class="<?php echo $page=='addin' ? 'active' : ''; ?>">
+            <a href="addin.php">
+                <i class="glyphicon glyphicon-th-large"></i>
+                Add-in für Word
+			</a>
+        </li>
 		<?php
         if ($_SESSION['role'] == 2) {/*visible for non-admin only*/
             ?>
