@@ -37,7 +37,7 @@ $page = 'addin';
                             <div class="alert alert-info">
                                 <strong><span class="glyphicon glyphicon-info-sign"></span> Pilotphase</strong> – Das Add-in befindet sich aktuell in der Pilotphase. Bei Interesse melde dich direkt bei uns.
                             </div>
-
+                            <img src="img/addin_screenshot.png" alt="Screenshot Wortlab Add-in" class="img-responsive" style="margin: 20px 0; border: 1px solid #ddd;">
                             <h2>Was kann das Add-in?</h2>
                             <p>Mit dem Wortlab-Add-in für Microsoft Word arbeiten Sie mit der gesamten Wortlab-Datenbank direkt in Ihrem Textdokument:</p>
                             <ul>
