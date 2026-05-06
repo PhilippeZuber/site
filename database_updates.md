@@ -89,3 +89,25 @@ CREATE TABLE `newsletter_send_log` (
 ```
 
 **Status:** ✅ In Produktion (ausgeführt am 13.04.2026)
+
+---
+
+## 7. Tabelle fuer Nutzungsstatistik (Logins)
+
+```sql
+CREATE TABLE IF NOT EXISTS `usage_logins` (
+	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`user_id` INT UNSIGNED NOT NULL,
+	`role` TINYINT UNSIGNED NOT NULL,
+	`login_source` VARCHAR(50) NOT NULL DEFAULT 'web_login',
+	`ip_hash` CHAR(64) NOT NULL DEFAULT '',
+	`user_agent` VARCHAR(255) NOT NULL DEFAULT '',
+	`created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`),
+	KEY `idx_usage_logins_created_at` (`created_at`),
+	KEY `idx_usage_logins_user_id` (`user_id`),
+	KEY `idx_usage_logins_role` (`role`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+```
+
+**Status:** ✅ Neu (06.05.2026)

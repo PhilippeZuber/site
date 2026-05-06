@@ -28,6 +28,7 @@ if (isset($_POST['login-submit'])) {
             session_start();
             $_SESSION['id'] = $user['user_id'];
             $_SESSION['role'] = $user['role'];
+            log_login_success($user['user_id'], $user['role'], 'web_login');
             if (!empty($_POST['remember'])) {
                 $cookie = $user['user_id'];
                 $cookie2 = $user['role'];
