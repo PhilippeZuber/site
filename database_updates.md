@@ -111,3 +111,8 @@ CREATE TABLE IF NOT EXISTS `usage_logins` (
 ```
 
 **Status:** ✅ Neu (06.05.2026)
+
+Zusätzlich umgesetzt in der Admin-Seite `usage_stats.php`:
+
+- Wiederkehrende vs. einmalige Nutzer (nach frei wählbarem Zeitraum)
+- Top-Nutzer-Liste (alle Nutzer) mit Login-Anzahl und letztem Login
