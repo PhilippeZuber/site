@@ -2,7 +2,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>WORTLAB</title>
+  <title><?php echo isset($page_title) ? htmlspecialchars($page_title) . ' | WORTLAB' : 'WORTLAB'; ?></title>
+  <?php if (isset($page_meta_desc)): ?>
+  <meta name="description" content="<?php echo htmlspecialchars($page_meta_desc); ?>">
+  <?php endif; ?>
   <!--Including all additional CSS and JS files / Modal Window for User / Sidebar collapse-->
 	<!--**CSS**-->
     <!-- Bootstrap CSS -->

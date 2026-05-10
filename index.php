@@ -20,6 +20,8 @@ $categories = get_records('category');
 $semantic = get_records('semantic');
 $alters = get_records('alters');
 $page = 'index';
+$page_title     = 'Wörter suchen für Logopädie und Schule';
+$page_meta_desc = 'Wortlab: Wörter nach Anfangsbuchstabe, Thema, Wortart und Alter suchen. Die Spezialdatenbank für Logopädinnen, Lehrpersonen und Therapeutinnen in der Schweiz.';
 ?>
 <!DOCTYPE html>
 <html lang="de">

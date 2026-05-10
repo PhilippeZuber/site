@@ -8,6 +8,8 @@ require_once('system/data.php');
 require_once('system/security.php');
 
 $page = 'addin';
+$page_title     = 'Wortlab Add-in für Microsoft Word';
+$page_meta_desc = 'Das Wortlab-Add-in für Microsoft Word: Wörter direkt im Dokument suchen, filtern und einfügen – ohne Browserwechsel. Für Logopädinnen und Lehrpersonen.';
 ?>
 <!DOCTYPE html>
 <html lang="de">

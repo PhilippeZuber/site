@@ -8,6 +8,8 @@ require_once('system/data.php');
 require_once('system/security.php');
 
 $page = 'about';
+$page_title     = 'Über Wortlab';
+$page_meta_desc = 'Wortlab ist eine webbasierte Wortdatenbank für Logopädinnen, Lehrpersonen und Therapeutinnen. Wörter gezielt nach Buchstabe, Thema, Wortart und Alter filtern – für Therapie, Förderung und Unterricht.';
 ?>
 <!DOCTYPE html>
 <html lang="de">

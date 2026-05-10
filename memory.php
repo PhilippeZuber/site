@@ -16,6 +16,8 @@ $mode = isset($_GET['mode']) ? filter_data($_GET['mode']) : 'image';
 $pairs = isset($_GET['pairs']) ? filter_data($_GET['pairs']) : '';
 $mode = in_array($mode, array('image', 'text', 'mixed')) ? $mode : 'image';
 $pairs = preg_replace('/[^0-9]/', '', $pairs);
+$page_title     = 'Memory-Spiel';
+$page_meta_desc = 'Memory-Spiel mit eigenen Wörtern und Bildern aus der Wortlab-Datenbank. Individuell angepasst an das Kind.';
 ?>
 <!DOCTYPE html>
 <html lang="de">

@@ -164,6 +164,29 @@ if ($user_id !== null) {
     $user = mysqli_fetch_assoc(get_user($user_id));
 }
 
+// Alle aktiven Jobs für Structured Data (JSON-LD / SEO) laden
+$jobs_for_schema = get_data_result(
+    "SELECT id, name, kanton, institution, stellenantritt, erscheinen_am, pdf_url, valid_until, created_at "
+    . "FROM jobs WHERE status = 'approved' AND valid_until >= CURDATE() ORDER BY valid_until DESC, name"
+);
+
+// Mapping-Arrays für lesbare Labels
+$schema_kantone = [
+    'ag'=>'Aargau','ar'=>'Appenzell Ausserrhoden','ai'=>'Appenzell Innerrhoden',
+    'bl'=>'Basel-Landschaft','bs'=>'Basel-Stadt','be'=>'Bern','fr'=>'Freiburg',
+    'ge'=>'Genf','gl'=>'Glarus','gr'=>'Graubünden','ju'=>'Jura','lu'=>'Luzern',
+    'ne'=>'Neuenburg','nw'=>'Nidwalden','ow'=>'Obwalden','sh'=>'Schaffhausen',
+    'sz'=>'Schwyz','so'=>'Solothurn','sg'=>'St. Gallen','ti'=>'Tessin',
+    'tg'=>'Thurgau','ur'=>'Uri','vd'=>'Waadt','vs'=>'Wallis','zg'=>'Zug','zh'=>'Zürich',
+];
+$schema_institutionen = [
+    'schule'=>'Schule','klinik'=>'Klinik','praxis'=>'Freie Praxis',
+    'dienst'=>'Logopädischer Dienst','sonderschule'=>'Sonderschule',
+    'spd'=>'SPD','zentrum'=>'Kompetenzzentrum',
+];
+
+$page_title    = 'Stellenangebote für Logopädinnen und Logopäden';
+$page_meta_desc = 'Aktuelle Stellenangebote für Logopädinnen und Logopäden in der Schweiz. Jetzt passende Stellen in Schulen, Kliniken und Praxen finden oder eigene Anzeige aufgeben.';
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -421,5 +444,56 @@ if ($user_id !== null) {
 			});
 		}
     </script>
+
+    <?php if (!empty($jobs_for_schema)): ?>
+    <?php foreach ($jobs_for_schema as $schema_job):
+        $kanton_label  = isset($schema_kantone[$schema_job['kanton']])  ? $schema_kantone[$schema_job['kanton']]  : htmlspecialchars($schema_job['kanton']);
+        $inst_label    = isset($schema_institutionen[$schema_job['institution']]) ? $schema_institutionen[$schema_job['institution']] : htmlspecialchars($schema_job['institution']);
+
+        // datePosted: erscheinen_am bevorzugt, sonst created_at
+        if (!empty($schema_job['erscheinen_am']) && $schema_job['erscheinen_am'] !== '0000-00-00') {
+            $date_posted = $schema_job['erscheinen_am'];
+        } elseif (!empty($schema_job['created_at'])) {
+            $date_posted = date('Y-m-d', strtotime($schema_job['created_at']));
+        } else {
+            $date_posted = date('Y-m-d');
+        }
+
+        $description = 'Stellenangebot für Logopädinnen und Logopäden'
+            . ' bei ' . $inst_label
+            . ' im Kanton ' . $kanton_label . ', Schweiz.'
+            . ' Stellenantritt: ' . htmlspecialchars($schema_job['stellenantritt']) . '.';
+
+        $posting = [
+            '@context'          => 'https://schema.org',
+            '@type'             => 'JobPosting',
+            'title'             => $schema_job['name'],
+            'description'       => $description,
+            'datePosted'        => $date_posted,
+            'validThrough'      => $schema_job['valid_until'] . 'T23:59:59',
+            'hiringOrganization' => [
+                '@type'  => 'Organization',
+                'name'   => $inst_label,
+                'sameAs' => 'https://wortlab.ch/jobs.php',
+            ],
+            'jobLocation' => [
+                '@type'   => 'Place',
+                'address' => [
+                    '@type'         => 'PostalAddress',
+                    'addressRegion' => $kanton_label,
+                    'addressCountry'=> 'CH',
+                ],
+            ],
+        ];
+        if (!empty($schema_job['pdf_url'])) {
+            $posting['url'] = $schema_job['pdf_url'];
+        }
+    ?>
+    <script type="application/ld+json">
+    <?php echo json_encode($posting, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>
+    </script>
+    <?php endforeach; ?>
+    <?php endif; ?>
+
     </body>
 </html>

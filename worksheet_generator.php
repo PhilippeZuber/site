@@ -54,6 +54,8 @@ $layouts = array(
     'bingo' => array('name' => 'Bingo-Karte (3x3)', 'icon' => 'th'),
     'syllables' => array('name' => 'Silbenkarten', 'icon' => 'scissors')
 );
+$page_title     = 'Arbeitsblatt-Generator';
+$page_meta_desc = 'Arbeitsblätter mit Wörtern aus Wortlab erstellen: Bildkarten, Wortlisten, Memory-Karten, Bingo und Silbenkarten – direkt druckfertig.';
 ?>
 <!DOCTYPE html>
 <html lang="de">

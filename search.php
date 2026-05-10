@@ -14,6 +14,8 @@ $categories = get_records('category');
 $semantic = get_records('semantic');
 $alters = get_records('alters');
 $page = 'search';
+$page_title     = 'Wörter suchen';
+$page_meta_desc = 'Wörter nach Anfangsbuchstabe, Thema, Wortart, Alter und Lauttreue filtern. Memory und Arbeitsblätter direkt aus der Suche erstellen.';
 ?>
 <html !DOCTYPE>
     <?php include './header.php'; ?><!--CSS+JS files/modal window/ sidebar collapse-->
