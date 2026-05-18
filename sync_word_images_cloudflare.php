@@ -247,10 +247,12 @@ function build_word_prompt($word, $style_prompt_override) {
     if ($style_prompt_override !== '') {
         $parts[] = $style_prompt_override;
     } else {
-        $parts[] = 'Zeige genau ein zentrales, leicht erkennbares Motiv auf weissem Hintergrund.';
-        $parts[] = 'Freundlicher, moderner Illustrationsstil, sauber, reduziert, hohe visuelle Klarheit.';
-        $parts[] = 'Kein Text, keine Buchstaben, keine Zahlen, kein Rahmen, kein Wasserzeichen, keine Collage.';
-        $parts[] = 'Nur wenige oder keine Nebenelemente, damit das Zielwort eindeutig bleibt.';
+        $parts[] = 'Style: children\'s educational word-picture card, cartoon comic illustration, thick dark outlines, flat colors with slight texture, vivid and friendly palette, pure white background.';
+        $parts[] = 'Show exactly one clearly recognizable central motif on a pure white background.';
+        $parts[] = 'The motif must reflect the everyday life and cultural environment of a child growing up in Switzerland: familiar objects, animals, landscapes, food, clothing, buildings, or activities a Swiss child would instantly recognize.';
+        $parts[] = 'Avoid culturally specific elements from other countries that a Swiss child would not know.';
+        $parts[] = 'No text, no letters, no numbers, no frame, no watermark, no collage, no shadow, no gradient background.';
+        $parts[] = 'Minimal or no secondary elements so the target word remains unambiguous.';
     }
 
     return implode(' ', $parts);
