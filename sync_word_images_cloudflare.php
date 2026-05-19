@@ -249,10 +249,9 @@ function build_word_prompt($word, $style_prompt_override) {
     } else {
         $parts[] = 'Style: children\'s educational word-picture card, cartoon comic illustration, thick dark outlines, flat colors with slight texture, vivid and friendly palette, pure white background.';
         $parts[] = 'Show exactly one clearly recognizable central motif on a pure white background.';
-        $parts[] = 'The motif must reflect the everyday life and cultural environment of a child growing up in Switzerland: familiar objects, animals, landscapes, food, clothing, buildings, or activities a Swiss child would instantly recognize.';
-        $parts[] = 'Avoid culturally specific elements from other countries that a Swiss child would not know.';
+        $parts[] = 'Avoid culturally specific elements from other countries than Switzerland a Swiss child would not know.';
         $parts[] = 'No text, no letters, no numbers, no frame, no watermark, no collage, no shadow, no gradient background.';
-        $parts[] = 'Minimal or no secondary elements so the target word remains unambiguous.';
+        $parts[] = 'Minimal or no secondary elements so the target motif remains unambiguous.';
     }
 
     return implode(' ', $parts);
