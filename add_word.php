@@ -21,6 +21,8 @@ if (isset($_GET['action'])) {
     }
 }
 if (isset($_POST['data'])) {
+    $remove_local_image = isset($_POST['remove_local_image']) ? 1 : 0;
+    $remove_image_url = isset($_POST['remove_image_url']) ? 1 : 0;
     $image = '';
     $file = $_FILES['image'];
 
@@ -60,7 +62,20 @@ if (isset($_POST['data'])) {
     $_POST['data']['alters'] = implode(',', $_POST['data']['alters']);
     $_POST['data']['lauttreu'] = isset($_POST['lauttreu']) ? 1 : 0;
     if ($_POST['data']['id'] != '') { 
-		if($image=='')/*in case no new image is chosen*/
+        if ($remove_local_image == 1) {
+            $existing_word = get_single_record('words', $_POST['data']['id']);
+            if (isset($existing_word['image']) && $existing_word['image'] != '') {
+                $existing_image_path = getcwd() . '/images/' . $existing_word['image'];
+                if (file_exists($existing_image_path)) {
+                    @unlink($existing_image_path);
+                }
+            }
+            $_POST['data']['image'] = '';
+        }
+        if ($remove_image_url == 1) {
+            $_POST['data']['image_url'] = '';
+        }
+		if($image=='' && $remove_local_image == 0)/*in case no new image is chosen*/
         {
             unset($_POST['data']['image']);
         }
@@ -157,6 +172,14 @@ $words = get_words();
                                                             <input type="file" class="form-control" name="image" style="padding:0px">
                                                             <br>oder<br>
                                                             <input type="text" class="form-control" name="data[image_url]" style="padding:0px" value="<?php echo @$word['image_url']; ?>">
+                                                            <?php
+                                                            if (isset($word['image']) && $word['image'] != '') {
+                                                                echo '<div style="margin-top:8px;"><label><input type="checkbox" name="remove_local_image" value="1">&nbsp Lokales Bild löschen</label></div>';
+                                                            }
+                                                            if (isset($word['image_url']) && $word['image_url'] != '') {
+                                                                echo '<div style="margin-top:4px;"><label><input type="checkbox" name="remove_image_url" value="1">&nbsp Bild-URL löschen</label></div>';
+                                                            }
+                                                            ?>
                                                             
                                                             <?php
                                                             if (isset($word['image']) && $word['image'] != '') {

@@ -309,6 +309,8 @@ function sync_images_batch($cf_account, $cf_token, $cf_model, $style_override, $
         
         // Prompt bauen
         $prompt = build_word_prompt_web($word, $style_override, $db);
+        $prompt_preview = preg_replace('/\s+/', ' ', trim($prompt));
+        $stats['details'][] = 'Wort #' . $word_id . ' (' . $word_name . '): Prompt-Laenge ' . strlen($prompt) . ', Vorschau: ' . substr($prompt_preview, 0, 180) . (strlen($prompt_preview) > 180 ? '...' : '');
         
         // Bild generieren
         $image_result = generate_image_cloudflare($cf_account, $cf_token, $resolved_model, $prompt, $reference_images);
@@ -393,7 +395,7 @@ function build_word_prompt_web($word, $style_override, $db) {
 }
 
 function generate_image_cloudflare($account_id, $api_token, $model, $prompt, $reference_images = []) {
-    $url = 'https://api.cloudflare.com/client/v4/accounts/' . rawurlencode($account_id) . '/ai/run/' . rawurlencode($model);
+    $url = 'https://api.cloudflare.com/client/v4/accounts/' . rawurlencode($account_id) . '/ai/run/' . $model;
 
     $supports_reference_images = strpos($model, '@cf/black-forest-labs/flux-2-') === 0;
     $use_multipart = $supports_reference_images && !empty($reference_images);
