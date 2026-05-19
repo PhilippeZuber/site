@@ -1,10 +1,9 @@
 <?php
 session_start();
-
-// Admin-Schutz
-if (!isset($_SESSION['id']) || $_SESSION['role'] != 1) {
-    header("Location: login.php");
-    exit;
+if (!isset($_SESSION['id'])) {
+    header("Location:login.php");
+} else {
+    $user_id = $_SESSION['id'];
 }
 
 require_once(__DIR__ . '/system/data.php');
@@ -36,13 +35,14 @@ if ($action === 'generate_ajax') {
 }
 
 include 'header.php';
-include 'navigation.php';
-include 'sidebar.php';
-
 ?>
 
-<div class="content-wrapper">
-    <div class="container-fluid">
+<div class="wrapper">
+    <?php include 'sidebar.php'; ?>
+    <!-- Page Content Holder -->
+    <div id="content">
+        <?php include 'navigation.php'; ?>
+        <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <h1>Wortbilder generieren (Cloudflare AI)</h1>
@@ -131,6 +131,7 @@ include 'sidebar.php';
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 </div>
@@ -271,6 +272,9 @@ function sync_images_batch($cf_account, $cf_token, $cf_model, $style_override, $
 
     if (!empty($reference_images)) {
         $stats['details'][] = 'Referenzbilder geladen: ' . count($reference_images) . ' Datei(en).';
+        if (strpos($resolved_model, '@cf/black-forest-labs/flux-2-') !== 0) {
+            $stats['details'][] = 'Hinweis: Referenzbilder werden nur mit FLUX-2 genutzt und fuer dieses Modell ignoriert.';
+        }
     }
     $stats['details'][] = 'Verwendetes Modell: ' . $resolved_model;
     
@@ -389,9 +393,10 @@ function build_word_prompt_web($word, $style_override, $db) {
 }
 
 function generate_image_cloudflare($account_id, $api_token, $model, $prompt, $reference_images = []) {
-    $url = 'https://api.cloudflare.com/client/v4/accounts/' . rawurlencode($account_id) . '/ai/run/' . $model;
+    $url = 'https://api.cloudflare.com/client/v4/accounts/' . rawurlencode($account_id) . '/ai/run/' . rawurlencode($model);
 
-    $use_multipart = !empty($reference_images) || strpos($model, '@cf/black-forest-labs/flux-2-') === 0;
+    $supports_reference_images = strpos($model, '@cf/black-forest-labs/flux-2-') === 0;
+    $use_multipart = $supports_reference_images && !empty($reference_images);
 
     $ch = curl_init($url);
     $headers = [
