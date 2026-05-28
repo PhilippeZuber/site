@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wortlab.ch/sitemap.xml
