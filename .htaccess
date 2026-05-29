@@ -67,3 +67,10 @@ Options -Indexes
     RewriteEngine On
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
+
+# ---------------------------------
+# Add-in: Umgebungsvariabeln
+# ---------------------------------
+SetEnv WORTLAB_ADDIN_ALLOWED_ORIGINS "https://addin.wortlab.ch"
+SetEnv WORTLAB_ADDIN_JWT_SECRET "8c4f2d91b7e64a1e9f3c6a2d5b8e1f7047c9a6e2d1f8b3c5a9e4d7f2c6b1a8"
+SetEnv WORTLAB_ADDIN_RATE_LIMIT_PER_MIN "120"

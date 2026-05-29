@@ -47,12 +47,6 @@
 							Pendente Wörter
 						</a>
 					</li>
-                    <li class="<?php echo $page=='sync_images' ? 'active' : ''; ?>">
-						<a href="sync_images.php">
-							<i class="glyphicon glyphicon-picture"></i>
-							Bilder generieren (AI)
-						</a>
-					</li>
 				</ul>
 			</li>
 			<li class="<?php echo $page=='newsletter' ? 'active' : ''; ?>">
