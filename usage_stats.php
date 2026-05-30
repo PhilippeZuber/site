@@ -33,6 +33,25 @@ $summary_30 = get_login_stats_summary(30);
 $daily_logins = get_login_stats_by_day($selected_days);
 $user_distribution = get_user_login_distribution($selected_days);
 $top_users = get_top_users_by_logins($selected_days, $top_limit);
+
+$search_summary = get_search_stats_summary($selected_days);
+$search_by_source_rows = get_search_stats_by_source($selected_days);
+$search_daily_rows = get_search_stats_by_day($selected_days);
+$top_search_terms = get_top_search_terms($selected_days, $top_limit);
+
+$search_by_source = array(
+    'index.php' => 0,
+    'search.php' => 0,
+    'unknown' => 0
+);
+
+foreach ($search_by_source_rows as $entry) {
+    $source_key = isset($entry['source_page']) ? $entry['source_page'] : 'unknown';
+    if (!isset($search_by_source[$source_key])) {
+        $search_by_source[$source_key] = 0;
+    }
+    $search_by_source[$source_key] = (int) $entry['search_count'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -118,6 +137,35 @@ $top_users = get_top_users_by_logins($selected_days, $top_limit);
                                         </div>
                                     </div>
 
+                                    <div class="row" style="margin-bottom: 20px;">
+                                        <div class="col-sm-3">
+                                            <div class="well text-center">
+                                                <h4>Suchen total</h4>
+                                                <p><strong><?php echo (int) $search_summary['search_count']; ?></strong></p>
+                                                <p>(<?php echo (int) $selected_days; ?> Tage)</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="well text-center">
+                                                <h4>Über index.php</h4>
+                                                <p><strong><?php echo (int) $search_by_source['index.php']; ?></strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="well text-center">
+                                                <h4>Über search.php</h4>
+                                                <p><strong><?php echo (int) $search_by_source['search.php']; ?></strong></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="well text-center">
+                                                <h4>Mit Nutzerkonto</h4>
+                                                <p><strong><?php echo (int) $search_summary['unique_users']; ?></strong></p>
+                                                <p>Unterschiedliche Nutzer</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <h4>Top-Nutzer (<?php echo (int) $selected_days; ?> Tage)</h4>
                                     <div class="table-responsive" style="margin-bottom: 25px;">
                                         <table class="table table-striped table-bordered">
@@ -148,6 +196,70 @@ $top_users = get_top_users_by_logins($selected_days, $top_limit);
                                             <?php } else { ?>
                                                 <tr>
                                                     <td colspan="6">Keine Logins im gewählten Zeitraum gefunden.</td>
+                                                </tr>
+                                            <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <h4>Häufigste Suchanfragen (<?php echo (int) $selected_days; ?> Tage)</h4>
+                                    <div class="table-responsive" style="margin-bottom: 25px;">
+                                        <table class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Rang</th>
+                                                    <th>Quelle</th>
+                                                    <th>Suchanfrage</th>
+                                                    <th>Anzahl</th>
+                                                    <th>Ø Treffer</th>
+                                                    <th>Letzte Suche</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php if (!empty($top_search_terms)) { ?>
+                                                <?php $rank = 1; ?>
+                                                <?php foreach ($top_search_terms as $entry) { ?>
+                                                    <tr>
+                                                        <td><?php echo $rank; ?></td>
+                                                        <td><?php echo htmlspecialchars($entry['source_page']); ?></td>
+                                                        <td><?php echo htmlspecialchars($entry['search_term']); ?></td>
+                                                        <td><?php echo (int) $entry['search_count']; ?></td>
+                                                        <td><?php echo number_format((float) $entry['avg_results'], 1, '.', "'"); ?></td>
+                                                        <td><?php echo date('d.m.Y H:i', strtotime($entry['last_search_at'])); ?></td>
+                                                    </tr>
+                                                    <?php $rank++; ?>
+                                                <?php } ?>
+                                            <?php } else { ?>
+                                                <tr>
+                                                    <td colspan="6">Noch keine Suchanfragen im gewählten Zeitraum vorhanden.</td>
+                                                </tr>
+                                            <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <h4>Suchanfragen pro Tag und Quelle (<?php echo (int) $selected_days; ?> Tage)</h4>
+                                    <div class="table-responsive" style="margin-bottom: 25px;">
+                                        <table class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Datum</th>
+                                                    <th>Quelle</th>
+                                                    <th>Suchanfragen</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php if (!empty($search_daily_rows)) { ?>
+                                                <?php foreach ($search_daily_rows as $entry) { ?>
+                                                    <tr>
+                                                        <td><?php echo date('d.m.Y', strtotime($entry['search_date'])); ?></td>
+                                                        <td><?php echo htmlspecialchars($entry['source_page']); ?></td>
+                                                        <td><?php echo (int) $entry['search_count']; ?></td>
+                                                    </tr>
+                                                <?php } ?>
+                                            <?php } else { ?>
+                                                <tr>
+                                                    <td colspan="3">Noch keine Suchdaten vorhanden.</td>
                                                 </tr>
                                             <?php } ?>
                                             </tbody>

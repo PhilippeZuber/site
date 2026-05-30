@@ -116,3 +116,37 @@ Zusätzlich umgesetzt in der Admin-Seite `usage_stats.php`:
 
 - Wiederkehrende vs. einmalige Nutzer (nach frei wählbarem Zeitraum)
 - Top-Nutzer-Liste (alle Nutzer) mit Login-Anzahl und letztem Login
+
+---
+
+## 8. Tabelle fuer Nutzungsstatistik (Suche)
+
+```sql
+CREATE TABLE IF NOT EXISTS `usage_searches` (
+	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`user_id` INT UNSIGNED DEFAULT NULL,
+	`source_page` VARCHAR(20) NOT NULL DEFAULT 'unknown',
+	`search_text` VARCHAR(255) NOT NULL DEFAULT '',
+	`not_letter` VARCHAR(50) NOT NULL DEFAULT '',
+	`category_csv` VARCHAR(255) NOT NULL DEFAULT '',
+	`semantic_csv` VARCHAR(255) NOT NULL DEFAULT '',
+	`alter_csv` VARCHAR(255) NOT NULL DEFAULT '',
+	`lauttreu` TINYINT(1) NOT NULL DEFAULT 0,
+	`result_count` INT NOT NULL DEFAULT 0,
+	`ip_hash` CHAR(64) NOT NULL DEFAULT '',
+	`user_agent` VARCHAR(255) NOT NULL DEFAULT '',
+	`created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`),
+	KEY `idx_usage_searches_created_at` (`created_at`),
+	KEY `idx_usage_searches_source_page` (`source_page`),
+	KEY `idx_usage_searches_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+```
+
+**Status:** ✅ Neu (30.05.2026)
+
+Zusätzlich umgesetzt in der Admin-Seite `usage_stats.php`:
+
+- Suchanfragen total und nach Quelle (`index.php`/`search.php`)
+- Häufigste Suchanfragen mit Anzahl, Durchschnittstreffern und letzter Suche
+- Tagesübersicht der Suchanfragen pro Quelle

@@ -461,6 +461,7 @@ $page_meta_desc = 'Wörter nach Anfangsbuchstabe, Thema, Wortart, Alter und Laut
                     ajax: {/*giving values*/
                         url: 'search_word.php',
                         data: {
+                            source_page: 'search.php',
                             include_selection: true,
                             search_image: true,
                             image_mode: $('#image_mode_ausmalbild').prop('checked') ? 'ausmalbild' : 'standard',

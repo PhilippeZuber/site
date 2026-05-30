@@ -202,6 +202,7 @@ $page_meta_desc = 'Wortlab: Wörter nach Anfangsbuchstabe, Thema, Wortart und Al
                     ajax: {/*giving values*/
                         url: 'search_word.php',
                         data: {
+                            source_page: 'index.php',
                             include_selection: false,
                             search_image: true,
                             search_text: $('#search_text').val(),
