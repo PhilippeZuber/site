@@ -15,16 +15,15 @@ if ($user_id === false) {
     api_v1_send_json(401, array('error' => 'invalid_or_missing_token'));
 }
 
-// MVP placeholder: Bestandskunden erhalten Zugang. Spaeter durch echtes Abo-Flag ersetzen.
-$entitled = true;
-$plan_code = 'trial';
-$billing_period = 'yearly';
+$entitlement = get_addin_entitlement($user_id);
 
 api_v1_send_json(200, array(
     'data' => array(
         'user_id' => $user_id,
-        'entitled' => $entitled,
-        'plan_code' => $plan_code,
-        'billing_period' => $billing_period
+        'entitled' => $entitlement['entitled'],
+        'plan_code' => $entitlement['plan_code'],
+        'billing_period' => $entitlement['billing_period'],
+        'status' => $entitlement['status'],
+        'expires_at' => $entitlement['expires_at']
     )
 ));

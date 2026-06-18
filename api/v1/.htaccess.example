@@ -1,0 +1,25 @@
+# Wortlab Add-in API: Apache Beispielkonfiguration (Produktion)
+#
+# Anleitung:
+# 1) Datei als api/v1/.htaccess kopieren
+# 2) SECRET ersetzen
+# 3) Origins auf echte produktive Domains einschränken
+#
+# WICHTIG: Keine echten Secrets committen.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
+
+# Produktionsmodus aktiviert strikte Sicherheitsprüfungen im API-Bootstrap.
+SetEnv WORTLAB_ADDIN_ENV production
+
+# Starkes Secret (mindestens 32 Zeichen) einsetzen.
+SetEnv WORTLAB_ADDIN_JWT_SECRET REPLACE_WITH_STRONG_SECRET
+
+# Kommagetrennte Whitelist erlaubter Origins.
+SetEnv WORTLAB_ADDIN_ALLOWED_ORIGINS "https://addin.wortlab.ch,https://word.office.com"
+
+# Optionales API-Rate-Limit pro Minute und IP+Endpoint.
+SetEnv WORTLAB_ADDIN_RATE_LIMIT_PER_MIN 120

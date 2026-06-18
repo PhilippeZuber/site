@@ -25,6 +25,38 @@ Diese Endpunkte bilden das API-Fundament fuer ein Word-Add-in.
 { "error": "not_authenticated" }
 ```
 
+## 1b) Direkt im Add-in einloggen
+
+**Endpoint**: `POST /api/v1/login.php`
+
+**Request (JSON)**:
+
+```json
+{
+  "identifier": "name@schule.ch",
+  "password": "<passwort>"
+}
+```
+
+Hinweis: `identifier` ist aktuell die E-Mail-Adresse des Benutzers.
+
+**Response (200)**:
+
+```json
+{
+  "token": "<jwt>",
+  "token_type": "Bearer",
+  "expires_in": 28800,
+  "user_id": 123,
+  "role": 2
+}
+```
+
+**Fehler**:
+
+- `400` -> `{ "error": "missing_credentials" }` oder `{ "error": "invalid_payload" }`
+- `401` -> `{ "error": "invalid_credentials" }`
+
 ## 2) Woerter suchen
 
 **Endpoint**: `POST /api/v1/search_words.php` (auch GET unterstuetzt)
@@ -143,7 +175,7 @@ Diese Endpunkte bilden das API-Fundament fuer ein Word-Add-in.
 }
 ```
 
-## 5) Entitlement-Status (MVP-Platzhalter)
+## 5) Entitlement-Status
 
 **Endpoint**: `GET /api/v1/entitlement_status.php` (POST auch moeglich)
 
@@ -158,13 +190,15 @@ Diese Endpunkte bilden das API-Fundament fuer ein Word-Add-in.
   "data": {
     "user_id": 123,
     "entitled": true,
-    "plan_code": "trial",
-    "billing_period": "yearly"
+    "plan_code": "yearly_manual",
+    "billing_period": "yearly",
+    "status": "active",
+    "expires_at": "2027-06-18 12:00:00"
   }
 }
 ```
 
-Hinweis: Dieser Endpoint ist bewusst als MVP-Hook angelegt und muss spaeter mit echter Abo-/Freischaltlogik verbunden werden.
+Hinweis: Wenn die neuen Abo-Spalten in der Tabelle `user` noch nicht vorhanden sind, liefert der Endpoint aus Kompatibilitaetsgruenden weiterhin einen offenen Legacy-Zugang (`entitled=true`, `plan_code=trial`).
 
 ## 6) Filteroptionen laden
 
@@ -189,9 +223,11 @@ Hinweis: Dieser Endpoint ist bewusst als MVP-Hook angelegt und muss spaeter mit 
 
 ## Hinweise fuer Produktion
 
-1. `WORTLAB_ADDIN_JWT_SECRET` als Umgebungsvariable setzen.
-2. CORS-Whitelist per `WORTLAB_ADDIN_ALLOWED_ORIGINS` setzen (kommagetrennt), z. B. `https://localhost:3000,https://word-addin.example.com`.
-3. Optionales Rate-Limit aktivieren mit `WORTLAB_ADDIN_RATE_LIMIT_PER_MIN` (z. B. `120`).
-4. Alle Responses enthalten eine `request_id` und den Header `X-Request-Id` fuer Tracing.
-5. Token-Laufzeit (`expires_in`) bei Bedarf reduzieren.
-6. Optional: Refresh-Token-Flow und Entitlement-Pruefung (5 CHF/Jahr) ergaenzen.
+1. `WORTLAB_ADDIN_ENV=production` setzen, damit strikte Sicherheitspruefungen aktiv sind.
+2. `WORTLAB_ADDIN_JWT_SECRET` als Umgebungsvariable setzen (kein Default/leer).
+3. CORS-Whitelist per `WORTLAB_ADDIN_ALLOWED_ORIGINS` setzen (kommagetrennt), z. B. `https://addin.wortlab.ch,https://word.office.com`.
+4. In Produktion werden Requests mit nicht freigegebenem Origin mit `403 origin_not_allowed` abgewiesen.
+5. Optionales Rate-Limit aktivieren mit `WORTLAB_ADDIN_RATE_LIMIT_PER_MIN` (z. B. `120`).
+6. Alle Responses enthalten eine `request_id` und den Header `X-Request-Id` fuer Tracing.
+7. Token-Laufzeit (`expires_in`) bei Bedarf reduzieren.
+8. Optional: Refresh-Token-Flow ergaenzen.

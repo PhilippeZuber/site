@@ -150,3 +150,30 @@ Zusätzlich umgesetzt in der Admin-Seite `usage_stats.php`:
 - Suchanfragen total und nach Quelle (`index.php`/`search.php`)
 - Häufigste Suchanfragen mit Anzahl, Durchschnittstreffern und letzter Suche
 - Tagesübersicht der Suchanfragen pro Quelle
+
+---
+
+## 9. User-Tabelle fuer Add-in-Abo erweitern
+
+```sql
+ALTER TABLE `user`
+ADD COLUMN `subscription_status` ENUM('free','active','expired') NOT NULL DEFAULT 'free',
+ADD COLUMN `subscription_plan_code` VARCHAR(50) DEFAULT NULL,
+ADD COLUMN `subscription_expires_at` DATETIME DEFAULT NULL,
+ADD COLUMN `subscription_activated_at` DATETIME DEFAULT NULL,
+ADD KEY `idx_subscription_status` (`subscription_status`, `subscription_expires_at`);
+```
+
+Optional fuer bestehende zahlende Nutzer:
+
+```sql
+UPDATE `user`
+SET
+	`subscription_status` = 'active',
+	`subscription_plan_code` = 'yearly_manual',
+	`subscription_activated_at` = NOW(),
+	`subscription_expires_at` = DATE_ADD(NOW(), INTERVAL 1 YEAR)
+WHERE `role` = 2;
+```
+
+**Status:** ✅ Neu (18.06.2026)

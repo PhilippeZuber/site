@@ -50,3 +50,8 @@ Temporary Items
 .apdisk
 system/data.php
 .github/copilot-instructions.md
+
+# Local Apache env file for Add-in API (contains secrets)
+api/v1/.htaccess
+
+.htaccess

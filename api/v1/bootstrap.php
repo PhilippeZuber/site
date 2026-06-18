@@ -1,5 +1,73 @@
 <?php
 
+function api_v1_is_production() {
+    $env = getenv('WORTLAB_ADDIN_ENV');
+    if ($env === false) {
+        $env = getenv('APP_ENV');
+    }
+
+    if ($env === false || trim($env) === '') {
+        return false;
+    }
+
+    $env = strtolower(trim($env));
+    return $env === 'prod' || $env === 'production';
+}
+
+function api_v1_get_allowed_origins() {
+    $allowed_origins_raw = getenv('WORTLAB_ADDIN_ALLOWED_ORIGINS');
+    if ($allowed_origins_raw === false || trim($allowed_origins_raw) === '') {
+        return array();
+    }
+
+    $allowed = array();
+    foreach (explode(',', $allowed_origins_raw) as $item) {
+        $item = trim($item);
+        if ($item !== '') {
+            $allowed[] = $item;
+        }
+    }
+
+    return $allowed;
+}
+
+function api_v1_is_origin_allowed($origin) {
+    if ($origin === '') {
+        return true;
+    }
+
+    $allowed = api_v1_get_allowed_origins();
+    if (!empty($allowed)) {
+        return in_array($origin, $allowed, true);
+    }
+
+    return !api_v1_is_production();
+}
+
+function api_v1_require_security_configuration() {
+    if (!api_v1_is_production()) {
+        return;
+    }
+
+    $secret = getenv('WORTLAB_ADDIN_JWT_SECRET');
+    if ($secret === false || trim($secret) === '' || trim($secret) === 'change-this-in-production') {
+        api_v1_send_json(500, array('error' => 'misconfigured_jwt_secret'));
+    }
+
+    if (count(api_v1_get_allowed_origins()) === 0) {
+        api_v1_send_json(500, array('error' => 'misconfigured_cors_origins'));
+    }
+}
+
+function api_v1_enforce_origin_policy() {
+    $origin = isset($_SERVER['HTTP_ORIGIN']) ? trim($_SERVER['HTTP_ORIGIN']) : '';
+    if (api_v1_is_origin_allowed($origin)) {
+        return;
+    }
+
+    api_v1_send_json(403, array('error' => 'origin_not_allowed'));
+}
+
 function api_v1_get_request_id() {
     static $request_id = null;
 
@@ -18,26 +86,10 @@ function api_v1_get_request_id() {
 
 function api_v1_set_cors_headers() {
     $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
-    $allowed_origins_raw = getenv('WORTLAB_ADDIN_ALLOWED_ORIGINS');
 
-    if ($allowed_origins_raw !== false && trim($allowed_origins_raw) !== '') {
-        $allowed = array();
-        foreach (explode(',', $allowed_origins_raw) as $item) {
-            $item = trim($item);
-            if ($item !== '') {
-                $allowed[] = $item;
-            }
-        }
-
-        if ($origin !== '' && in_array($origin, $allowed, true)) {
-            header('Access-Control-Allow-Origin: ' . $origin);
-            header('Vary: Origin');
-        }
-    } else {
-        if ($origin !== '') {
-            header('Access-Control-Allow-Origin: ' . $origin);
-            header('Vary: Origin');
-        }
+    if ($origin !== '' && api_v1_is_origin_allowed($origin)) {
+        header('Access-Control-Allow-Origin: ' . $origin);
+        header('Vary: Origin');
     }
 
     header('Access-Control-Allow-Headers: Authorization, Content-Type');
@@ -61,6 +113,9 @@ function api_v1_send_json($status_code, $data) {
 }
 
 function api_v1_handle_options() {
+    api_v1_require_security_configuration();
+    api_v1_enforce_origin_policy();
+
     if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
         api_v1_send_json(200, array('status' => 'ok'));
     }
