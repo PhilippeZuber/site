@@ -63,12 +63,12 @@ $page_meta_desc = 'Das Wortlab-Add-in für Microsoft Word: Wörter direkt im Dok
 
                             <div class="alert alert-success">
                                 <strong><span class="glyphicon glyphicon-ok-sign"></span> Empfohlen für Windows:</strong>
-                                Download + Rechtsklick auf die Datei + <em>Öffnen</em>. Das Skript lädt das Manifest automatisch herunter, erstellt den Add-in-Ordner und kopiert den Ordnerpfad in die Zwischenablage.
+                                Download + Rechtsklick auf die Datei + <em>Öffnen</em>. Das Skript lädt das Manifest automatisch herunter, bereitet den freigegebenen Add-in-Ordner vor und kopiert den UNC-Pfad in die Zwischenablage.
                             </div>
 
                             <ol>
                                 <li>Installationsskript herunterladen und ausführen (siehe Download-Box unten).</li>
-                                <li>In Word einmalig den vorgeschlagenen Ordner als <em>Vertrauenswürdigen Add-In-Katalog</em> eintragen.</li>
+                                <li>In Word einmalig den freigegebenen Ordner als <em>Vertrauenswürdigen Add-In-Katalog</em> eintragen.</li>
                                 <li>Word neu starten und das Add-in unter <em>Einfügen</em> → <em>Meine Add-Ins</em> öffnen.</li>
                             </ol>
 
