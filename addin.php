@@ -36,8 +36,8 @@ $page_meta_desc = 'Das Wortlab-Add-in für Microsoft Word: Wörter direkt im Dok
 
                             <p class="lead">Wortlab direkt in Microsoft Word nutzen: Wörter suchen, filtern und mit einem Klick ins Dokument einfügen – ohne den Browser öffnen zu müssen.</p>
 
-                            <div class="alert alert-info">
-                                <strong><span class="glyphicon glyphicon-info-sign"></span> Pilotphase</strong> – Das Add-in befindet sich aktuell in der Pilotphase. Bei Interesse melde dich direkt bei uns.
+                            <div class="alert alert-success">
+                                <strong><span class="glyphicon glyphicon-ok-sign"></span> In Vorbereitung für Microsoft AppSource</strong> – Das Add-in wird in Kürze im Microsoft AppSource-Katalog verfügbar sein.
                             </div>
                             <img src="img/addin_screenshot.png" alt="Screenshot Wortlab Add-in" class="img-responsive" style="margin: 20px 0; border: 1px solid #ddd;">
                             <h2>Was kann das Add-in?</h2>
@@ -75,13 +75,12 @@ $page_meta_desc = 'Das Wortlab-Add-in für Microsoft Word: Wörter direkt im Dok
                             <p><strong>macOS oder manuelle Installation:</strong> Nutzen Sie weiterhin die Manifest-Datei und den bisherigen Weg über den freigegebenen Ordner.</p>
 
                             <h2>Anmeldung im Add-in</h2>
-                            <p>Nach der Installation müssen Sie sich einmalig mit Ihrem Wortlab-Benutzerkonto anmelden:</p>
+                            <p>Nach der Installation melden Sie sich direkt im Add-in an:</p>
                             <ol>
-                                <li>Öffnen Sie <a href="https://www.wortlab.ch/get_addin_token.php" target="_blank">wortlab.ch/get_addin_token.php</a> im Browser und loggen Sie sich ein.</li>
-                                <li>Kopieren Sie den angezeigten Token.</li>
-                                <li>Fügen Sie ihn im Add-in unter <em>Bearer-Token</em> ein.</li>
-                                <li>Klicken Sie dann <em>Speichern</em> und <em>Verbindung testen</em>.</li>
-                                <li>Geschafft! Gratuliere, Sie können Wortlab in Word nutzen.</li>
+                                <li>Öffnen Sie das Add-in in Word (Einfügen → Meine Add-Ins → Wortlab).</li>
+                                <li>Geben Sie Ihre E-Mail und Ihr Passwort ein.</li>
+                                <li>Klicken Sie <em>Anmelden</em>.</li>
+                                <li>Geschafft! Sie können sofort Wörter suchen und einfügen.</li>
                             </ol>
 
                             <div class="panel panel-primary" style="margin-top: 30px;">
@@ -102,8 +101,8 @@ $page_meta_desc = 'Das Wortlab-Add-in für Microsoft Word: Wörter direkt im Dok
                                 </div>
                             </div>
 
-                            <h2>Interesse oder Fragen?</h2>
-                            <p>Das Add-in befindet sich aktuell in der Pilotphase. Wenn Sie es ausprobieren möchten oder Fragen haben, melden Sie sich gerne:</p>
+                            <h2>Support &amp; Feedback</h2>
+                            <p>Haben Sie Fragen zum Add-in oder möchten Sie Feedback geben? Kontaktieren Sie uns gerne:</p>
                             <p>
                                 <a href="mailto:info@wortlab.ch" class="btn btn-default">
                                     <span class="glyphicon glyphicon-envelope"></span> info@wortlab.ch
@@ -120,7 +119,7 @@ $page_meta_desc = 'Das Wortlab-Add-in für Microsoft Word: Wörter direkt im Dok
                                 <div class="panel-body">
                                     <dl class="dl-horizontal">
                                         <dt>Status</dt>
-                                        <dd><span class="label label-warning">Pilot</span></dd>
+                                        <dd><span class="label label-success">AppSource (Beta)</span></dd>
                                         <dt>Version</dt>
                                         <dd>0.1.0</dd>
                                         <dt>Plattform</dt>
