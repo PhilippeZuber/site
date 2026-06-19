@@ -9,9 +9,9 @@ echo ==============================================
 echo.
 
 set "MANIFEST_URL=https://www.wortlab.ch/downloads/wortlab-addin-manifest.xml"
-set "TARGET_DIR=%USERPROFILE%\Documents\Wortlab\OfficeAddins"
+set "TARGET_DIR=C:\OfficeAddins"
 set "TARGET_FILE=%TARGET_DIR%\wortlab-addin-manifest.xml"
-set "SHARE_NAME=WortlabOfficeAddins"
+set "SHARE_NAME=OfficeAddins"
 set "UNC_PATH=\\%COMPUTERNAME%\%SHARE_NAME%"
 set "COPY_VALUE=%UNC_PATH%"
 

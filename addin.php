@@ -59,7 +59,7 @@ $page_meta_desc = 'Das Wortlab-Add-in für Microsoft Word: Wörter direkt im Dok
                             </ul>
 
                             <h2>Installation</h2>
-                            <p>Die Installation ist unter Windows stark vereinfacht: Laden Sie das Installationsskript herunter und führen Sie es mit Rechtsklick aus.</p>
+                            <p>Die Installation ist unter Windows stark vereinfacht: Laden Sie das Installationsskript herunter und führen Sie es mit Rechtsklick aus (muss als Administrator ausgeführt werden).</p>
 
                             <div class="alert alert-success">
                                 <strong><span class="glyphicon glyphicon-ok-sign"></span> Empfohlen für Windows:</strong>
@@ -67,17 +67,23 @@ $page_meta_desc = 'Das Wortlab-Add-in für Microsoft Word: Wörter direkt im Dok
                             </div>
 
                             <ol>
-                                <li>Installationsskript herunterladen und ausführen (siehe Download-Box unten).</li>
-                                <li>In Word einmalig den freigegebenen Ordner als <em>Vertrauenswürdigen Add-In-Katalog</em> eintragen.</li>
-                                <li>Word neu starten und das Add-in unter <em>Einfügen</em> → <em>Meine Add-Ins</em> öffnen.</li>
+                                <li>Installationsskript herunterladen und als Administrator ausführen (siehe Download-Box unten).</li>
+                                <li>Kontollieren, ob C:\OfficeAddins existiert und freigegeben ist.</li>
+                                <li>In Word einmalig den freigegebenen Ordner als <em>Vertrauenswürdigen Add-In-Katalog</em> eintragen (Netzwerkpfad verwenden).</li>
+                                <div class="alert alert-info">
+                                    <strong><span class="glyphicon glyphicon-ok-sign"></span> Nicht vergessen:</strong><br>
+                                     <img src="img/wortlab_addin_im_menue_anzeigen.png" alt="Installation_in_Word"> Diesen Haken <em>setzen</em>. Damit das Add-in angezeigt wird.
+                                </div>
+                                <li>Word neu starten und das Add-in unter <em>Start</em> → <em>Add-Ins</em> → <em>Erweitert</em> öffnen.</li>
                             </ol>
+
 
                             <p><strong>macOS oder manuelle Installation:</strong> Nutzen Sie weiterhin die Manifest-Datei und den bisherigen Weg über den freigegebenen Ordner.</p>
 
                             <h2>Anmeldung im Add-in</h2>
                             <p>Nach der Installation melden Sie sich direkt im Add-in an:</p>
                             <ol>
-                                <li>Öffnen Sie das Add-in in Word (Einfügen → Meine Add-Ins → Wortlab).</li>
+                                <li>Öffnen Sie das Add-in in Word (Start → Add-Ins → Erweitert).</li>
                                 <li>Geben Sie Ihre E-Mail und Ihr Passwort ein.</li>
                                 <li>Klicken Sie <em>Anmelden</em>.</li>
                                 <li>Geschafft! Sie können sofort Wörter suchen und einfügen.</li>
@@ -138,7 +144,7 @@ $page_meta_desc = 'Das Wortlab-Add-in für Microsoft Word: Wörter direkt im Dok
                                         <li>Manifest herunterladen</li>
                                         <li>In freigegebenen Ordner legen</li>
                                         <li>In Word als Add-in-Katalog eintragen</li>
-                                        <li>Word-Konto verbinden</li>
+                                        <li>Wortlab-Konto verbinden</li>
                                         <li>Wörter suchen &amp; einfügen</li>
                                     </ol>
                                 </div>
