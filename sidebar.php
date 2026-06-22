@@ -9,7 +9,7 @@
 
     <ul class="list-unstyled components">
         <?php
-        if ($_SESSION['role'] == 1) {/*visible for admin only*/
+        if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {/*visible for admin only*/
             ?>
 			<li>
 				<a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false">

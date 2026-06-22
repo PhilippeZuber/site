@@ -1,10 +1,7 @@
 <?php
 session_start();
-if (!isset($_SESSION['id'])) {
-    header("Location:login.php");
-    exit;
-}
-$user_id = $_SESSION['id'];
+
+$user_id = isset($_SESSION['id']) ? $_SESSION['id'] : null;
 require_once('system/data.php');
 require_once('system/security.php');
 

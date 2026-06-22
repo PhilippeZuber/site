@@ -11,11 +11,11 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse" aria-expanded="false" style="height: 1px;">
             <?php
-                if ($_SESSION['role'] == 1 OR $_SESSION['role'] == 2) {/*visible for logged-in only*/
+                if (isset($_SESSION['id']) && isset($user) && (isset($_SESSION['role']) && ($_SESSION['role'] == 1 OR $_SESSION['role'] == 2))) {/*visible for logged-in only*/
             ?>
             <ul class="nav navbar-nav navbar-right">
-                <li><img src="user_img/<?php echo $user['img_src']; ?>" alt="Profilbild" width="50px"/></a></li>
-                <li><a href="#" data-toggle="modal" data-target="#UserModal"><?php echo $user['firstname'] . " " . $user['lastname']; ?></a></li>
+                <li><img src="user_img/<?php echo isset($user['img_src']) ? htmlspecialchars($user['img_src']) : 'default.png'; ?>" alt="Profilbild" width="50px"/></a></li>
+                <li><a href="#" data-toggle="modal" data-target="#UserModal"><?php echo htmlspecialchars($user['firstname'] . " " . $user['lastname']); ?></a></li>
                 <li><a href="login.php"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>
             </ul>
             <?php
