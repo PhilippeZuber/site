@@ -2,12 +2,6 @@
 session_start();
 header('Content-Type: application/json');
 
-if (!isset($_SESSION['id'])) {
-    http_response_code(401);
-    echo json_encode(array("ok" => false, "code" => "UNAUTHORIZED", "message" => "Nicht eingeloggt."));
-    exit;
-}
-
 require_once('system/data.php');
 require_once('system/security.php');
 

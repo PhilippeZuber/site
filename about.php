@@ -33,6 +33,7 @@ $page_meta_desc = 'Wortlab ist eine webbasierte Wortdatenbank für Logopädinnen
                         <div class="col-md-4">
                             <div class="alert alert-success"><span class="glyphicon glyphicon-glass" aria-hidden="true"></span> Wortlab steht nun allen offen! Bitte erzähle das weiter. ;-)</div>
                             <div class="alert alert-success"><span class="glyphicon glyphicon-gift" aria-hidden="true"></span> In den letzten Monaten sind neue Funktionen (z.B. Memory) dazugekommen.</div>
+                            <div class="alert alert-info"><span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span> <strong>Neu für alle:</strong> Memory und Arbeitsblatt-Generator sind ab sofort ohne Anmeldung verfügbar!</div>
                         </div>
                     </div><!--/row-->
                     <div class="row">
