@@ -67,11 +67,25 @@
 					Stellen freigeben
 				</a>
 			</li>
-            <li class="<?php echo $page=='subscription_management' ? 'active' : ''; ?>">
-                <a href="subscription_management.php">
+            <li>
+                <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false">
                     <i class="glyphicon glyphicon-credit-card"></i>
                     Abo-Verwaltung
                 </a>
+                <ul class="collapse list-unstyled" id="pageSubmenu2">
+                    <li class="<?php echo $page=='subscription_management' ? 'active' : ''; ?>">
+                        <a href="subscription_management.php">
+                            <i class="glyphicon glyphicon-credit-card"></i>
+                            Abos
+                        </a>
+                    </li>
+                    <li class="<?php echo $page=='canton_flatrate_management' ? 'active' : ''; ?>">
+                        <a href="canton_flatrate_management.php">
+                            <i class="glyphicon glyphicon-globe"></i>
+                            Kantons-Pauschale
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="<?php echo $page=='import_job_pdf_contacts' ? 'active' : ''; ?>">
                 <a href="import_job_pdf_contacts.php">

@@ -82,7 +82,7 @@ if ($search_filter !== '') {
         . "OR lastname LIKE '%" . $search_filter . "%') ";
 }
 
-$sql_users = "SELECT user_id, firstname, lastname, email, subscription_status, subscription_plan_code, subscription_expires_at, subscription_activated_at "
+$sql_users = "SELECT user_id, firstname, lastname, email, canton, subscription_status, subscription_plan_code, subscription_expires_at, subscription_activated_at "
     . "FROM user "
     . $where
     . "ORDER BY subscription_status ASC, subscription_expires_at ASC, lastname ASC, firstname ASC";
@@ -93,6 +93,11 @@ if ($result_users) {
     while ($row = mysqli_fetch_assoc($result_users)) {
         $users[] = $row;
     }
+}
+
+$flatrate_cantons = array();
+foreach (get_flatrate_cantons() as $flatrate_entry) {
+    $flatrate_cantons[] = strtolower($flatrate_entry['canton']);
 }
 
 function format_dt($value) {
@@ -183,7 +188,12 @@ function format_dt($value) {
                                             <tr>
                                                 <td><?php echo htmlspecialchars(trim($entry['firstname'] . ' ' . $entry['lastname'])); ?></td>
                                                 <td><?php echo htmlspecialchars($entry['email']); ?></td>
-                                                <td><?php echo htmlspecialchars($entry['subscription_status']); ?></td>
+                                                <td>
+                                                    <?php echo htmlspecialchars($entry['subscription_status']); ?>
+                                                    <?php if (in_array(strtolower($entry['canton']), $flatrate_cantons, true)): ?>
+                                                        <span class="label label-info">Kanton <?php echo htmlspecialchars(strtoupper($entry['canton'])); ?> Pauschale</span>
+                                                    <?php endif; ?>
+                                                </td>
                                                 <td><?php echo htmlspecialchars($entry['subscription_plan_code'] === '' ? '-' : $entry['subscription_plan_code']); ?></td>
                                                 <td><?php echo htmlspecialchars(format_dt($entry['subscription_expires_at'])); ?></td>
                                                 <td><?php echo htmlspecialchars(format_dt($entry['subscription_activated_at'])); ?></td>
