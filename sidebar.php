@@ -1,7 +1,7 @@
 <!-- Sidebar Holder -->
 <nav id="sidebar">
     <div class="sidebar-header">
-    	<a href="index.php">
+    	<a href="<?php echo ($_SESSION['role'] == 1 OR $_SESSION['role'] == 2) ? 'search.php' : 'index.php'; ?>">
         	<h3><img src="wortlab_button.svg" alt="WORTLAB"></h3>
         	<strong><img src="wortlab_button.svg" alt="WORTLAB"></strong>
         </a>

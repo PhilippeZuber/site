@@ -13,7 +13,7 @@ $ids_raw = preg_replace('/[^0-9,]/', '', $ids_raw);
 
 // Get layout type
 $layout = isset($_GET['layout']) ? filter_data($_GET['layout']) : 'cards';
-$layout = in_array($layout, array('cards', 'list', 'memory', 'bingo', 'syllables')) ? $layout : 'cards';
+$layout = in_array($layout, array('cards', 'list', 'memory', 'bingo')) ? $layout : 'cards';
 
 // Fetch words
 $words = array();
@@ -48,11 +48,10 @@ $layouts = array(
     'cards' => array('name' => 'Bildkarten (4 pro Seite)', 'icon' => 'th-large'),
     'list' => array('name' => 'Wortliste', 'icon' => 'list'),
     'memory' => array('name' => 'Memory-Karten', 'icon' => 'duplicate'),
-    'bingo' => array('name' => 'Bingo-Karte (3x3)', 'icon' => 'th'),
-    'syllables' => array('name' => 'Silbenkarten', 'icon' => 'scissors')
+    'bingo' => array('name' => 'Bingo-Karte (3x3)', 'icon' => 'th')
 );
 $page_title     = 'Arbeitsblatt-Generator';
-$page_meta_desc = 'Arbeitsblätter mit Wörtern aus Wortlab erstellen: Bildkarten, Wortlisten, Memory-Karten, Bingo und Silbenkarten – direkt druckfertig.';
+$page_meta_desc = 'Arbeitsblätter mit Wörtern aus Wortlab erstellen: Bildkarten, Wortlisten, Memory-Karten und Bingo – direkt druckfertig.';
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -179,39 +178,10 @@ $page_meta_desc = 'Arbeitsblätter mit Wörtern aus Wortlab erstellen: Bildkarte
                 font-weight: bold;
                 margin-top: 5px;
             }
-            
-            /* Silbenkarten Layout */
-            .worksheet-syllables .syllable-card {
-                width: 48%;
-                height: 48vh;
-                float: left;
-                margin: 1%;
-                page-break-inside: avoid;
-                border: 1px solid #ddd;
-                padding: 10px;
-                box-sizing: border-box;
-                text-align: center;
-            }
-            .worksheet-syllables .syllable-card img {
-                max-width: 90%;
-                max-height: 30vh;
-                object-fit: contain;
-            }
-            .worksheet-syllables .syllable-card .word-name {
-                font-size: 28pt;
-                font-weight: bold;
-                margin-top: 10px;
-            }
-            .worksheet-syllables .syllable-card .syllables {
-                font-size: 24pt;
-                color: #0066cc;
-                margin-top: 5px;
-                letter-spacing: 3px;
-            }
         }
         
         /* Screen preview styles */
-        .word-card, .syllable-card, .memory-card {
+        .word-card, .memory-card {
             border: 2px dashed #999;
             padding: 15px;
             margin: 10px;
@@ -230,7 +200,7 @@ $page_meta_desc = 'Arbeitsblätter mit Wörtern aus Wortlab erstellen: Bildkarte
             justify-content: center;
             align-items: center;
         }
-        .word-card img, .syllable-card img, .memory-card img {
+        .word-card img, .memory-card img {
             max-width: 100%;
             max-height: 250px;
             object-fit: contain;
@@ -239,11 +209,6 @@ $page_meta_desc = 'Arbeitsblätter mit Wörtern aus Wortlab erstellen: Bildkarte
             font-size: 24px;
             font-weight: bold;
             margin-top: 10px;
-        }
-        .syllables {
-            font-size: 20px;
-            color: #0066cc;
-            margin-top: 5px;
         }
         .word-item {
             font-size: 18px;
@@ -309,24 +274,6 @@ $page_meta_desc = 'Arbeitsblätter mit Wörtern aus Wortlab erstellen: Bildkarte
                     <div class="row">
                         <div class="col-md-12">
                             <?php
-                            // Simple syllable splitting (basic German rules)
-                            function split_syllables($word) {
-                                $word_lower = mb_strtolower($word);
-                                // Basic approach: split between consonant+vowel
-                                $vowels = array('a', 'e', 'i', 'o', 'u', 'ä', 'ö', 'ü');
-                                $syllables = array();
-                                $current = '';
-                                
-                                // Very simple: just add hyphens at logical points
-                                // This is a placeholder - real syllabification needs linguistic rules
-                                $result = $word;
-                                $len = mb_strlen($word_lower);
-                                
-                                // Simple rule: insert · between consonants followed by vowel
-                                // This is very basic and would need proper implementation
-                                return $result;
-                            }
-                            
                             switch ($layout) {
                                 case 'cards':
                                     // Bildkarten Layout
@@ -404,21 +351,6 @@ $page_meta_desc = 'Arbeitsblätter mit Wörtern aus Wortlab erstellen: Bildkarte
                                         echo '</tr>';
                                     }
                                     echo '</table>';
-                                    break;
-                                    
-                                case 'syllables':
-                                    // Silbenkarten Layout
-                                    echo '<div class="worksheet-syllables">';
-                                    foreach ($words as $word) {
-                                        echo '<div class="syllable-card">';
-                                        if (!empty($word['image'])) {
-                                            echo '<img src="' . htmlspecialchars($word['image']) . '" alt="' . htmlspecialchars($word['name']) . '">';
-                                        }
-                                        echo '<div class="word-name">' . htmlspecialchars($word['name']) . '</div>';
-                                        echo '<div class="syllables">' . split_syllables($word['name']) . '</div>';
-                                        echo '</div>';
-                                    }
-                                    echo '<div style="clear:both;"></div></div>';
                                     break;
                             }
                             ?>

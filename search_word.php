@@ -65,6 +65,13 @@ if ($lauttreu_value) {
     $wh .= "  and lauttreu = 1";
 }
 
+if (!empty($_REQUEST['word_ids'])) {
+    $word_id_values = array_filter(array_map('intval', explode(',', $_REQUEST['word_ids'])));
+    if (!empty($word_id_values)) {
+        $wh .= "  and id in ('" . implode("','", $word_id_values) . "')";
+    }
+}
+
 $data3 = get_result("select count(*) as count from words $wh ");
 $data3 = mysqli_fetch_assoc($data3);
 

@@ -175,7 +175,6 @@ $page_meta_desc = 'Wörter nach Anfangsbuchstabe, Thema, Wortart, Alter und Laut
                                                 <option value="list">Wortliste</option>
                                                 <option value="memory">Memory-Karten</option>
                                                 <option value="bingo">Bingo-Karte (3x3)</option>
-                                                <option value="syllables">Silbenkarten</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6" style="margin-top: 24px;">
@@ -226,6 +225,7 @@ $page_meta_desc = 'Wörter nach Anfangsbuchstabe, Thema, Wortart, Alter und Laut
             var table;
             var memorySelectedIds = {};
             var collectionsById = {};
+            var collectionWordIds = null;
 
             function applySelectionToTable() {
                 $('#data-table1 .memory-select').each(function () {
@@ -380,6 +380,7 @@ $page_meta_desc = 'Wörter nach Anfangsbuchstabe, Thema, Wortart, Alter und Laut
                 $('#search_text').val('');
                 $('#not_letter').val('');
                 $('input[type="checkbox"]').prop('checked', false);
+                collectionWordIds = null;
                 updateActiveFilters();
                 search();
             });
@@ -404,15 +405,18 @@ $page_meta_desc = 'Wörter nach Anfangsbuchstabe, Thema, Wortart, Alter und Laut
 
                 // Event listeners for filter changes
                 $('input[type="checkbox"]').on('change', function() {
+                    collectionWordIds = null;
                     updateActiveFilters();
                     search();
                 });
 
                 $('#search_text').on('change', function() {
+                    collectionWordIds = null;
                     updateActiveFilters();
                 });
 
                 $('#not_letter').on('change', function() {
+                    collectionWordIds = null;
                     updateActiveFilters();
                 });
 
@@ -471,6 +475,7 @@ $page_meta_desc = 'Wörter nach Anfangsbuchstabe, Thema, Wortart, Alter und Laut
                             semantic: semantic,
                             alter: alter,
                             lauttreu: $('#lauttreu').prop('checked'),
+                            word_ids: collectionWordIds ? collectionWordIds.join(',') : '',
                         }
                     },
 					dom: 'Blfrtip',/*Position of Buttons*/
@@ -581,12 +586,12 @@ $page_meta_desc = 'Wörter nach Anfangsbuchstabe, Thema, Wortart, Alter und Laut
                 $.post('word_collections.php', { action: 'get', id: selectedId }, function (response) {
                     if (response && response.collection) {
                         var ids = response.collection.word_ids ? response.collection.word_ids.split(',') : [];
+                        ids = ids.filter(function (value) { return value !== ''; });
                         memorySelectedIds = {};
                         $.each(ids, function (index, value) {
-                            if (value !== '') {
-                                memorySelectedIds[value] = true;
-                            }
+                            memorySelectedIds[value] = true;
                         });
+                        collectionWordIds = ids;
                         updateMemorySelectedCount();
                         applySelectionToTable();
                         search();

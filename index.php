@@ -174,7 +174,6 @@ $page_meta_desc = 'Wortlab: Wörter nach Anfangsbuchstabe, Thema, Wortart und Al
                                                 <option value="list">Wortliste</option>
                                                 <option value="memory">Memory-Karten</option>
                                                 <option value="bingo">Bingo-Karte (3x3)</option>
-                                                <option value="syllables">Silbenkarten</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6" style="margin-top: 24px;">
